@@ -4,7 +4,7 @@
 // import 'package:pets_app/controllers/home_controller.dart';
 // import 'package:pets_app/model/AnimalModel.dart';
 // import 'package:pets_app/screens/Animal/PetDetailPage.dart';
-// import 'package:pets_app/utils/Constant.dart';
+// import 'package:pets_app/utils/constant.dart';
 // import 'package:pets_app/utils/CustomWidget.dart';
 // import 'package:pets_app/utils/DataFile.dart';
 // import 'package:pets_app/utils/SizeConfig.dart';

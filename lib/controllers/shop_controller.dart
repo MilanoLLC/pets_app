@@ -89,9 +89,8 @@ class ShopController extends GetxController with StateMixin<dynamic> {
   }
 
   void filterSearchResultsByType(String query) {
-    print("filterSearchResultsByType");
     services = servicesList
-        .where((item) => item.arName!.toLowerCase().contains(query.toLowerCase()))
+        .where((item) => item.enName!.toLowerCase().contains(query.toLowerCase()))
         .toList();
     update();
   }

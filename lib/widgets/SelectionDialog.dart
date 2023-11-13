@@ -2,7 +2,7 @@
 // import 'package:country_code_picker/country_localizations.dart';
 // import 'package:figma_squircle/figma_squircle.dart';
 // import 'package:flutter/material.dart';
-// import 'package:pets_app/utils/Constant.dart';
+// import 'package:pets_app/utils/constant.dart';
 //
 // import '../utils/CustomWidget.dart';
 //

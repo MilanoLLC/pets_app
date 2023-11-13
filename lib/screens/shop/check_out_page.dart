@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pets_app/model/AddressModel.dart';
 import 'package:pets_app/model/PaymentCardModel.dart';
 import 'package:pets_app/screens/shop/confirmation_page.dart';
-import 'package:pets_app/helpers/Constant.dart';
+import 'package:pets_app/helpers/constant.dart';
 import 'package:pets_app/widgets/CustomWidget.dart';
 import 'package:pets_app/widgets/DataFile.dart';
 import 'package:pets_app/widgets/SizeConfig.dart';

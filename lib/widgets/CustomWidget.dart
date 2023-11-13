@@ -1,7 +1,7 @@
 import 'package:figma_squircle/figma_squircle.dart';
 import 'package:flutter/material.dart';
 
-import '../helpers/Constant.dart';
+import '../helpers/constant.dart';
 
 Widget getUnderlineText(String text, Color color, int maxLine,
     TextAlign textAlign, FontWeight fontWeight, double textSizes) {

@@ -1,7 +1,7 @@
 // import 'package:flutter/cupertino.dart';
 // import 'package:flutter/material.dart';
 // import 'package:pets_app/model/ProductModel.dart';
-// import 'package:pets_app/utils/Constant.dart';
+// import 'package:pets_app/utils/constant.dart';
 // import 'package:pets_app/utils/CustomWidget.dart';
 // import 'package:pets_app/utils/SizeConfig.dart';
 // import 'package:google_maps_flutter/google_maps_flutter.dart';

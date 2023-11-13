@@ -2,7 +2,7 @@ import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
 import 'package:pets_app/screens/Home/main_page.dart';
 
-import 'package:pets_app/helpers/Constant.dart';
+import 'package:pets_app/helpers/constant.dart';
 import 'package:pets_app/widgets/CustomWidget.dart';
 
 import 'package:pets_app/widgets/SizeConfig.dart';

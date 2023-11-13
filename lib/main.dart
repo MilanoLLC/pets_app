@@ -11,7 +11,7 @@ import 'package:pets_app/helpers/STORAGE_KEYS.dart';
 import 'package:pets_app/routes/app_pages.dart';
 import 'package:pets_app/service_locator.dart';
 import 'package:pets_app/services/local_storage_service.dart';
-import 'package:pets_app/helpers/Constant.dart';
+import 'package:pets_app/helpers/constant.dart';
 import 'package:pets_app/widgets/CustomWidget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'screens/Home/IntroPage.dart';

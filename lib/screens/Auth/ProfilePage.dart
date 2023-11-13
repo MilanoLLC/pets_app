@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:pets_app/screens/Auth/edit_profile_page.dart';
 // import 'package:pets_app/screens/edit_profile_page.dart';
-import 'package:pets_app/helpers/Constant.dart';
+import 'package:pets_app/helpers/constant.dart';
 import 'package:pets_app/widgets/CustomWidget.dart';
 import 'package:pets_app/widgets/SizeConfig.dart';
 import 'package:image_picker/image_picker.dart';

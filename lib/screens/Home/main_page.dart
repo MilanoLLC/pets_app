@@ -7,7 +7,7 @@ import 'package:pets_app/screens/Auth/settings_page.dart';
 import 'package:pets_app/screens/Animal/pets_page.dart';
 import 'package:pets_app/screens/shop/shop_page.dart';
 import 'package:pets_app/screens/community/community_page.dart';
-import 'package:pets_app/helpers/Constant.dart';
+import 'package:pets_app/helpers/constant.dart';
 import 'package:pets_app/widgets/CustomWidget.dart';
 import '../../widgets/CustomAnimatedBottomBar.dart';
 

@@ -1,9 +1,7 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:pets_app/widgets/PrefData.dart';
-
 
 const secondaryColor = Color(0xFF2A2D3E);
 const bgColor = Color(0xFF212332);

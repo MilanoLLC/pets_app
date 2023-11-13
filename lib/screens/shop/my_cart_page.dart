@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'package:pets_app/controllers/shop_controller.dart';
 import 'package:pets_app/model/OrderItemModel.dart';
 import 'package:pets_app/routes/app_pages.dart';
-import 'package:pets_app/helpers/Constant.dart';
+import 'package:pets_app/helpers/constant.dart';
 import 'package:pets_app/widgets/CustomWidget.dart';
 import 'package:pets_app/widgets/PrefData.dart';
 import 'package:pets_app/widgets/SizeConfig.dart';

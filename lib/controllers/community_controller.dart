@@ -44,7 +44,7 @@ class CommunityController extends GetxController with StateMixin<dynamic> {
     textContentController.clear();
     super.onInit();
     var token = storage.get(STORAGE_KEYS.token);
-    if(token){
+    if(token!=null){
       ever(_paginationFilter, (_) => getPosts());
       _changePaginationFilter(0, 10);
       ever(_paginationFilter2, (_) => getMyPosts());

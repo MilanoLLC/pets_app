@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../helpers/Constant.dart';
+import '../helpers/constant.dart';
 import 'CustomWidget.dart';
 
 class ResetPasswordDialogBox extends StatefulWidget {

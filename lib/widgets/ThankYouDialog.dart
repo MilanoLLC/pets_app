@@ -2,7 +2,7 @@ import 'package:figma_squircle/figma_squircle.dart';
 import 'package:flutter/material.dart';
 import 'package:pets_app/screens/Home/main_page.dart';
 
-import '../helpers/Constant.dart';
+import '../helpers/constant.dart';
 import 'CustomWidget.dart';
 
 
