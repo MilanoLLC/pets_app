@@ -55,7 +55,7 @@ class ShopController extends GetxController with StateMixin<dynamic> {
   @override
   Future<void> onInit() async {
     super.onInit();
-    getAllServicesByTyp("SERVICE");
+    getAllServicesByTyp("GOODS");
 
     // await getAllServicesByTyp();
     // ever(_paginationFilter, (_) => getProducts());

@@ -55,7 +55,6 @@ class PetsByCategoryPage extends GetView<HomeController> {
     padding = getScreenPercentSize(context, 2);
     defMargin = getHorizontalSpace(context);
     height = getScreenPercentSize(context, 5.5);
-    final debouncer = Debouncer();
     double radius = getScreenPercentSize(context, 1.5);
 
     return Scaffold(
@@ -832,18 +831,3 @@ class PetsByCategoryPage extends GetView<HomeController> {
   }
 }
 
-class Debouncer {
-  int? milliseconds;
-  VoidCallback? action;
-  Timer? timer;
-
-  run(VoidCallback action) {
-    if (null != timer) {
-      timer!.cancel();
-    }
-    timer = Timer(
-      const Duration(milliseconds: Duration.millisecondsPerSecond),
-      action,
-    );
-  }
-}

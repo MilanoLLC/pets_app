@@ -2,6 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
+import 'package:pets_app/routes/app_pages.dart';
 import 'package:pets_app/screens/Home/home_page.dart';
 import 'package:pets_app/screens/Auth/settings_page.dart';
 import 'package:pets_app/screens/Animal/pets_page.dart';
@@ -37,17 +39,13 @@ class _MainPage extends State<MainPage> {
 
   Widget getBody() {
     List<Widget> pages = [
-      // CategoriesPage(),
       const ShopPage(),
       PetsPage(),
-
       HomePage(() {
         _currentIndex = 3;
-      }, functionViewAll: () {
-        setState(() {
-          _currentIndex = 0;
-        });
-      }, functionAdoptionAll: () {
+      }, functionViewAllCategories: () {
+        Get.toNamed(Routes.CATEGORIES);
+      }, functionViewAllAnimals: () {
         setState(() {
           _currentIndex = 1;
         });
@@ -115,7 +113,6 @@ class _MainPage extends State<MainPage> {
       curve: Curves.easeIn,
       onItemSelected: (index) => setState(() => _currentIndex = index),
       items: <BottomNavyBarItem>[
-
         BottomNavyBarItem(
           title: 'Categories',
           activeColor: activeColor,
@@ -148,7 +145,6 @@ class _MainPage extends State<MainPage> {
           iconSize: iconHeight,
           imageName: "public.png",
         ),
-
         BottomNavyBarItem(
             iconSize: iconHeight,
             title: 'Settings',

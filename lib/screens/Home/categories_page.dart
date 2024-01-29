@@ -7,6 +7,8 @@ import 'package:pets_app/helpers/Constant.dart';
 import 'package:pets_app/widgets/CustomWidget.dart';
 import 'package:pets_app/widgets/SizeConfig.dart';
 import 'package:get/get.dart';
+import 'package:pets_app/widgets/category_widget.dart';
+import 'package:pets_app/widgets/empty_widget.dart';
 
 class CategoriesPage extends GetView<HomeController> {
   CategoriesPage({Key? key}) : super(key: key);
@@ -92,39 +94,17 @@ class CategoriesPage extends GetView<HomeController> {
                       child: controller.categories.isNotEmpty
                           ? categoryList(context)
                           : Center(
-                              child: emptyWidget(context),
+                              child: emptyWidget(
+                                context,
+                                "There is no data!",
+                                "${iconsPath}box.png",
+                              ),
                             )),
                 ],
               ),
             ),
           );
         });
-  }
-
-  emptyWidget(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Image.asset(
-          "${iconsPath}box.png",
-          height: getScreenPercentSize(context, 20),
-        ),
-        SizedBox(
-          height: getScreenPercentSize(context, 3),
-        ),
-        getCustomTextWithFontFamilyWidget(
-            "There is no data!",
-            Theme.of(context).hintColor,
-            getScreenPercentSize(context, 2.5),
-            FontWeight.w500,
-            TextAlign.center,
-            1),
-        const SizedBox(
-          height: 15,
-        ),
-      ],
-    );
   }
 
   int selectedCategory = 0;
@@ -149,83 +129,7 @@ class CategoriesPage extends GetView<HomeController> {
       mainAxisSpacing: 0,
       childAspectRatio: aspectRatio,
       children: List.generate(controller.categories.length, (index) {
-        Color color = "#F1DDD3".toColor();
-
-        if (index % 3 == 0) {
-          color = "#F7E1BD".toColor();
-        } else if (index % 3 == 1) {
-          color = "#DBF0E5".toColor();
-        } else if (index % 3 == 2) {
-          color = "#F1DDD3".toColor();
-        }
-        return InkWell(
-          child: Container(
-            margin: EdgeInsets.only(top: defMargin, bottom: (defMargin)),
-            height: height,
-            decoration: BoxDecoration(
-              color: color,
-              borderRadius: const BorderRadius.all(Radius.circular(10)),
-            ),
-            child: Column(
-              children: [
-                SizedBox(
-                  width: 90,
-                  child: Center(
-                    child: Image.network(
-                      networkPath + controller.categories[index].imagePath!,
-                      height: getPercentSize(height, 60),
-                    ),
-                  ),
-                ),
-                //
-                Expanded(
-                    child: Text(
-                  controller.categories[index].enName!,
-                  style: const TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18),
-                )),
-              ],
-            ),
-          ),
-          onTap: () async {
-            showDialog(
-                context: context,
-                builder: (context) {
-                  return const Center(
-                    child: CircularProgressIndicator(color: Colors.white),
-                  );
-                });
-
-            // showDialog(
-            //   context: context,
-            //   barrierDismissible: false,
-            //   builder: (BuildContext context) {
-            //     return WillPopScope(
-            //       onWillPop: () async {
-            //         return false;
-            //       },
-            //       child: SpinKitCircle(
-            //         color: Colors.purple,
-            //         size: 50.0,
-            //       ),
-            //     );
-            //   },
-            // );
-
-            //Close the Loader Dialog after 3 seconds (it doesn't close)
-            await controller
-                .getProductsByCategory(controller.categories[index].enName!)
-                .then((value) => Navigator.pop(context));
-
-            selectedCategory = index;
-
-            Get.toNamed(Routes.PETSBYCATEGORY,
-                arguments: {'products': controller.productsByCategory});
-            // Navigator.of(context).pop();
-          },
-        );
+        return categoryWidgetLarge(context,controller,index);
       }),
     );
   }

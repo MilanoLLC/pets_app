@@ -1433,3 +1433,210 @@ Widget getCustomTextWithoutAlign(
         fontWeight: fontWeight),
   );
 }
+
+getShapeDecoration(BuildContext context) {
+  double cellHeight = getScreenPercentSize(context, 6.5);
+  double radius = getPercentSize(cellHeight, 20);
+
+  return ShapeDecoration(
+    color: Theme.of(context).colorScheme.background,
+    shape: SmoothRectangleBorder(
+      side: const BorderSide(color: Colors.transparent, width: 0.3),
+      borderRadius: SmoothBorderRadius(
+        cornerRadius: radius,
+        cornerSmoothing: 0.8,
+      ),
+    ),
+  );
+}
+
+Widget getRadioButton(BuildContext context, String s, String val,
+    String controllerSelected, func) {
+  double cellHeight = getScreenPercentSize(context, 6.5);
+
+  return Expanded(
+    flex: 1,
+    child: Container(
+      height: cellHeight,
+      width: double.infinity,
+      margin:
+          EdgeInsets.symmetric(vertical: getScreenPercentSize(context, 1.2)),
+      padding:
+          EdgeInsets.symmetric(horizontal: getWidthPercentSize(context, 2)),
+      alignment: Alignment.centerLeft,
+      decoration: getShapeDecoration(context),
+      child: ListTile(
+        contentPadding: const EdgeInsets.all(0),
+        title: Text(s),
+        tileColor: Colors.black,
+        selectedTileColor: Colors.black,
+        selectedColor: Colors.black,
+        textColor: Theme.of(context).hintColor,
+        leading: Radio(
+          value: val,
+          groupValue: controllerSelected,
+          onChanged: func,
+          activeColor: Colors.blue,
+          fillColor: MaterialStateColor.resolveWith((states) => Colors.blue),
+        ),
+        iconColor: Colors.black,
+      ),
+    ),
+  );
+}
+
+Widget getDropDownWidget(
+    BuildContext context, String dropdownValue1, List<String> list, func) {
+  double cellHeight = getScreenPercentSize(context, 6.5);
+  double fontSize = getPercentSize(cellHeight, 28);
+
+  return Container(
+    height: cellHeight,
+    width: double.infinity,
+    margin: EdgeInsets.symmetric(vertical: getScreenPercentSize(context, 1.2)),
+    padding: EdgeInsets.symmetric(horizontal: getWidthPercentSize(context, 2)),
+    alignment: Alignment.centerLeft,
+    decoration: getShapeDecoration(context),
+    child: DropdownButton<String>(
+      value: dropdownValue1,
+      isDense: true,
+      isExpanded: true,
+      icon: Image.asset(
+        "${assetsPath}down-arrow.png",
+        color: textColor,
+        height: fontSize,
+      ),
+      // icon: Icon(
+      //   Icons.keyboard_arrow_down,
+      //   color: textColor,
+      // ),
+      elevation: 16,
+      style: TextStyle(
+          fontFamily: fontFamily,
+          fontWeight: FontWeight.w500,
+          fontSize: fontSize),
+      underline: Container(
+        height: 0,
+        color: Colors.transparent,
+      ),
+      onChanged: func,
+      items: list.map<DropdownMenuItem<String>>((String value) {
+        return DropdownMenuItem<String>(
+          value: value,
+          child: Text(value,
+              style: TextStyle(
+                  fontFamily: fontFamily,
+                  color: Theme.of(context).hintColor,
+                  fontWeight: FontWeight.w500,
+                  fontSize: fontSize)),
+        );
+      }).toList(),
+    ),
+  );
+}
+
+Widget getDescTextFiledWidget(BuildContext context, String s,
+    TextEditingController textEditingController) {
+  double cellHeight = getScreenPercentSize(context, 6.5);
+  double fontSize = getPercentSize(cellHeight, 28);
+
+  return Container(
+    margin: EdgeInsets.symmetric(vertical: getScreenPercentSize(context, 1.2)),
+    padding: EdgeInsets.symmetric(vertical: getScreenPercentSize(context, 1.2)),
+    alignment: Alignment.centerLeft,
+    decoration: getShapeDecoration(context),
+    child: TextField(
+      maxLines: 4,
+      controller: textEditingController,
+      textAlign: TextAlign.start,
+      textAlignVertical: TextAlignVertical.center,
+      style: TextStyle(
+          fontFamily: fontFamily,
+          color: Theme.of(context).hintColor,
+          height: 1.3,
+          fontWeight: FontWeight.w500,
+          fontSize: fontSize),
+      decoration: InputDecoration(
+          contentPadding:
+              EdgeInsets.only(left: getWidthPercentSize(context, 2)),
+          border: InputBorder.none,
+          focusedBorder: InputBorder.none,
+          enabledBorder: InputBorder.none,
+          errorBorder: InputBorder.none,
+          disabledBorder: InputBorder.none,
+          hintText: s,
+          suffixIcon: Icon(
+            Icons.add,
+            color: Colors.transparent,
+            size: getPercentSize(cellHeight, 40),
+          ),
+          isDense: true,
+          hintStyle: TextStyle(
+              fontFamily: fontFamily,
+              color: subTextColor,
+              fontWeight: FontWeight.w400,
+              fontSize: fontSize)),
+    ),
+  );
+}
+
+getTitle(BuildContext context, String string) {
+  return Container(
+    margin: EdgeInsets.only(top: getScreenPercentSize(context, 3)),
+    child: getTextWidget(string, textColor, getScreenPercentSize(context, 1.8),
+        FontWeight.w600, TextAlign.start),
+  );
+}
+
+Widget getTextFiledNewPetWidget(BuildContext context, String s,
+    TextEditingController textEditingController, String title) {
+  double cellHeight = getScreenPercentSize(context, 6.5);
+  double fontSize = getPercentSize(cellHeight, 28);
+
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Text(
+        title,
+        style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+      ),
+      Container(
+        height: cellHeight,
+        margin:
+            EdgeInsets.symmetric(vertical: getScreenPercentSize(context, 1.2)),
+        alignment: Alignment.centerLeft,
+        decoration: getShapeDecoration(context),
+        child: TextField(
+          maxLines: 1,
+          controller: textEditingController,
+          textAlign: TextAlign.start,
+          textAlignVertical: TextAlignVertical.center,
+          style: TextStyle(
+              fontFamily: fontFamily,
+              color: Theme.of(context).hintColor,
+              fontWeight: FontWeight.w500,
+              fontSize: fontSize),
+          decoration: InputDecoration(
+              contentPadding:
+                  EdgeInsets.only(left: getWidthPercentSize(context, 2)),
+              border: InputBorder.none,
+              focusedBorder: InputBorder.none,
+              enabledBorder: InputBorder.none,
+              errorBorder: InputBorder.none,
+              disabledBorder: InputBorder.none,
+              hintText: s,
+              suffixIcon: Icon(
+                Icons.add,
+                color: Colors.transparent,
+                size: getPercentSize(cellHeight, 40),
+              ),
+              hintStyle: TextStyle(
+                  fontFamily: fontFamily,
+                  color: subTextColor,
+                  fontWeight: FontWeight.w400,
+                  fontSize: fontSize)),
+        ),
+      ),
+    ],
+  );
+}

@@ -3,8 +3,6 @@ import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 import 'package:pets_app/controllers/shop_controller.dart';
 import 'package:pets_app/model/ServiceModel.dart';
-import 'package:pets_app/routes/app_pages.dart';
-import 'package:pets_app/helpers/Constant.dart';
 import 'package:pets_app/widgets/CustomWidget.dart';
 import 'package:pets_app/widgets/SizeConfig.dart';
 import 'package:get/get.dart';
@@ -21,11 +19,10 @@ class ShopPage extends StatefulWidget {
 
 class _ShopPageState extends State<ShopPage>
     with SingleTickerProviderStateMixin {
-
   final controller = Get.put(ShopController());
   late TabController tabController;
 
-  int _selectedIndex = 0;
+  int selectedIndex = 0;
   double padding = 0;
   double defMargin = 0;
   double height = 0;
@@ -36,9 +33,10 @@ class _ShopPageState extends State<ShopPage>
     tabController = TabController(length: 2, vsync: this);
     tabController.addListener(() {
       setState(() {
-        _selectedIndex = tabController.index;
+        selectedIndex = tabController.index;
       });
-      if (tabController.index == 1) {
+      print("tab = "+tabController.index.toString());
+      if (tabController.index == 0) {
         Loader.show(context,
             isSafeAreaOverlay: false,
             progressIndicator: const CircularProgressIndicator(),
@@ -50,10 +48,8 @@ class _ShopPageState extends State<ShopPage>
             overlayColor: const Color(0x33E8EAF6));
 
         controller.services = [];
-        controller
-            .getAllServicesByTyp("SERVICE")
-            .then((value) => Loader.hide());
-      } else if (tabController.index == 0) {
+        controller.getAllServicesByTyp("GOODS").then((value) => Loader.hide());
+      } else if (tabController.index == 1) {
         Loader.show(context,
             isSafeAreaOverlay: false,
             progressIndicator: const CircularProgressIndicator(),
@@ -64,7 +60,9 @@ class _ShopPageState extends State<ShopPage>
                     .copyWith(secondary: Colors.black38)),
             overlayColor: const Color(0x33E8EAF6));
         controller.services = [];
-        controller.getAllServicesByTyp("GOODS").then((value) => Loader.hide());
+        controller
+            .getAllServicesByTyp("SERVICE")
+            .then((value) => Loader.hide());
       }
     });
   }
@@ -75,7 +73,6 @@ class _ShopPageState extends State<ShopPage>
     padding = getScreenPercentSize(context, 2);
     defMargin = getScreenPercentSize(context, 2);
     height = getScreenPercentSize(context, 6);
-    double bottomHeight = getScreenPercentSize(context, 7.4);
 
     return LoaderOverlay(
       child: GetBuilder<ShopController>(

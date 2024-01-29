@@ -10,6 +10,7 @@ import 'package:pets_app/routes/app_pages.dart';
 import 'package:pets_app/helpers/constant.dart';
 import 'package:pets_app/widgets/CustomWidget.dart';
 import 'package:pets_app/widgets/SizeConfig.dart';
+import 'package:pets_app/widgets/empty_widget.dart';
 
 class MyPetPage extends GetView<ProductController> {
   MyPetPage({Key? key}) : super(key: key);
@@ -97,7 +98,7 @@ class MyPetPage extends GetView<ProductController> {
                                           });
                                         }),
                                   )
-                                : emptyWidget(context),
+                                : emptyWidgetWithButton(context,"${iconsPath}box.png","Your Pets are Empty!","Add New Pet"),
                             flex: 1,
                           ),
                         ],
@@ -135,61 +136,7 @@ class MyPetPage extends GetView<ProductController> {
     );
   }
 
-  emptyWidget(BuildContext context) {
-    double height = getScreenPercentSize(context, 7);
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Image.asset(
-          "${iconsPath}box.png",
-          height: getScreenPercentSize(context, 20),
-        ),
-        SizedBox(
-          height: getScreenPercentSize(context, 3),
-        ),
-        getCustomTextWithFontFamilyWidget(
-            "Your Pets are Empty!",
-            primaryColor,
-            getScreenPercentSize(context, 2.5),
-            FontWeight.w500,
-            TextAlign.center,
-            1),
-        const SizedBox(
-          height: 15,
-        ),
-        MaterialButton(
-          onPressed: () {
-            Get.toNamed(Routes.NEWPET);
-          },
-          minWidth: 100,
-          shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(10))),
-          child: Container(
-            height: getScreenPercentSize(context, 7),
-            margin: EdgeInsets.only(
-                top: getScreenPercentSize(context, 1.2),
-                bottom: getHorizontalSpace(context),
-                left: getHorizontalSpace(context) + 40,
-                right: getHorizontalSpace(context) + 40),
-            decoration: ShapeDecoration(
-              // color: backgroundColor,
-              shape: SmoothRectangleBorder(
-                side: BorderSide(color: primaryColor, width: 1.5),
-                borderRadius: SmoothBorderRadius(
-                  cornerRadius: getPercentSize(height, 25),
-                  cornerSmoothing: 0.8,
-                ),
-              ),
-            ),
-            child: Center(
-                child: getDefaultTextWidget("Add New Pet", TextAlign.center,
-                    FontWeight.w500, 20, primaryColor)),
-          ),
-        ),
-      ],
-    );
-  }
+
 }
 
 class ListItem extends StatefulWidget {
@@ -321,8 +268,8 @@ class RoomEditDeleteItemState extends State<ListItem> {
   }
 
   getCartButton(var icon, var color, var iconColor, Function function) {
-    double height1 = getScreenPercentSize(context, 12);
 
+    double height1 = getScreenPercentSize(context, 12);
     double height = getPercentSize(height1, 20);
 
     return InkWell(
