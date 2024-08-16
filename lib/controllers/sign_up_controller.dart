@@ -24,6 +24,7 @@ class SignUpController extends GetxController with StateMixin<dynamic> {
   bool isTermsCondition = false;
   FocusNode myFocusNode = FocusNode();
   bool isAutoFocus = false;
+  bool passwordVisible = true;
 
   Future<bool> register() async {
     try {
@@ -63,6 +64,7 @@ class SignUpController extends GetxController with StateMixin<dynamic> {
     } else {
       isTermsCondition = true;
     }
+    update();
   }
 
   focus(hasFocus){
@@ -81,5 +83,11 @@ class SignUpController extends GetxController with StateMixin<dynamic> {
   phoneChanged(val){
     textPhoneController
         .value = val!;
+  }
+
+
+  void changePasswordVisible(){
+    passwordVisible=!passwordVisible;
+    update();
   }
 }

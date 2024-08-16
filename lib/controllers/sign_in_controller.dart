@@ -20,6 +20,8 @@ class SignInController extends GetxController with StateMixin<dynamic> {
   String sourceDropdownValue = 'Social Media';
 
   bool isBusy = false;
+  bool passwordVisible = true;
+
 
   Future<void> login() async {
     try {
@@ -46,5 +48,10 @@ class SignInController extends GetxController with StateMixin<dynamic> {
     storage.clearUserData();
     Get.toNamed(Routes.SIGNIN);
 
+  }
+
+  void changePasswordVisible(){
+    passwordVisible=!passwordVisible;
+    update();
   }
 }

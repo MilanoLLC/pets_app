@@ -5,7 +5,6 @@ import 'package:pets_app/screens/Home/main_page.dart';
 import '../helpers/constant.dart';
 import 'CustomWidget.dart';
 
-
 class ThankYouDialog extends StatefulWidget {
   final BuildContext context;
   final ValueChanged<int> onChanged;
@@ -31,7 +30,7 @@ class _ThankYouDialog extends State<ThankYouDialog> {
           ),
           elevation: 0.0,
           insetPadding: EdgeInsets.zero,
-          backgroundColor: Colors.transparent,
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           child: dialogContent(context, setState),
         );
       },
@@ -53,7 +52,7 @@ class _ThankYouDialog extends State<ThankYouDialog> {
       width: width,
       padding: EdgeInsets.all((radius)),
       decoration: BoxDecoration(
-        color: backgroundColor,
+        // color: backgroundColor,
         borderRadius: BorderRadius.circular(radius),
       ),
       child: Column(
@@ -61,13 +60,12 @@ class _ThankYouDialog extends State<ThankYouDialog> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           Expanded(
-              child: Container(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Image.asset(
-                  "${assetsPath}Group.png",
+                  "${assetsPath}confirm.png",
                   height: getPercentSize(height, 27),
                   width: getPercentSize(height, 27),
                 ),
@@ -90,11 +88,11 @@ class _ThankYouDialog extends State<ThankYouDialog> {
                     5,
                   ),
                 ),
-                getCustomTextWidget(
+                getCustomTextWidget2(
                     'Your order has been successfully Completed!',
                     Theme.of(context).hintColor,
-                    getScreenPercentSize(context, 2),
-                    FontWeight.w400,
+                    14,
+                    FontWeight.normal,
                     TextAlign.center,
                     2),
                 SizedBox(
@@ -123,7 +121,7 @@ class _ThankYouDialog extends State<ThankYouDialog> {
                                     right: getWidthPercentSize(context, 3)),
                                 height: getScreenPercentSize(context, 7),
                                 decoration: ShapeDecoration(
-                                  color: alphaColor,
+                                  color: primaryColor,
                                   shape: SmoothRectangleBorder(
                                     side: BorderSide(
                                         color: primaryColor, width: 2),
@@ -137,7 +135,7 @@ class _ThankYouDialog extends State<ThankYouDialog> {
                                 child: Center(
                                   child: getTextWidget(
                                       'Ok',
-                                      primaryColor,
+                                      Colors.white,
                                       getScreenPercentSize(context, 2),
                                       FontWeight.w600,
                                       TextAlign.center),
@@ -188,7 +186,7 @@ class _ThankYouDialog extends State<ThankYouDialog> {
                 )
               ],
             ),
-          )),
+          ),
         ],
       ),
     );

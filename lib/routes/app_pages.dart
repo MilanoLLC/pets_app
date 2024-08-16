@@ -18,8 +18,11 @@ import 'package:pets_app/screens/Animal/add_new_pet_page.dart';
 import 'package:pets_app/screens/Animal/pet_detail_page.dart';
 import 'package:pets_app/screens/Animal/pets_by_category_page.dart';
 import 'package:pets_app/screens/Auth/edit_profile_page.dart';
+import 'package:pets_app/screens/Auth/my_favorite_page.dart';
 import 'package:pets_app/screens/Auth/sign_in_page.dart';
 import 'package:pets_app/screens/Auth/sign_up_page.dart';
+import 'package:pets_app/screens/Shipping/edit_address_page.dart';
+import 'package:pets_app/screens/community/profile_page.dart';
 import 'package:pets_app/screens/shop/check_address_page.dart';
 import 'package:pets_app/screens/shop/confirmation_page.dart';
 import 'package:pets_app/screens/Home/main_page.dart';
@@ -27,18 +30,18 @@ import 'package:pets_app/screens/Auth/PhoneVerification.dart';
 import 'package:pets_app/screens/Home/categories_page.dart';
 import 'package:pets_app/screens/Home/notification_page.dart';
 import 'package:pets_app/screens/Animal/pets_page.dart';
-import 'package:pets_app/screens/Shipping/add_new_address_page.dart';
+import 'package:pets_app/screens/Shipping/add_address_page.dart';
 import 'package:pets_app/screens/shop/TrackOrderPage.dart';
-import 'package:pets_app/screens/community/add_post.dart';
+import 'package:pets_app/screens/community/add_post_page.dart';
 import 'package:pets_app/screens/community/comments_page.dart';
 import 'package:pets_app/screens/community/community_page.dart';
-import 'package:pets_app/screens/community/edit_post.dart';
+import 'package:pets_app/screens/community/edit_post_page.dart';
 import 'package:pets_app/screens/community/my_posts_page.dart';
 import 'package:pets_app/screens/shop/my_cart_page.dart';
 import 'package:pets_app/screens/shop/my_order_page.dart';
 import 'package:pets_app/screens/shop/product_detail_page.dart';
 import '../screens/Animal/my_pet_page.dart';
-import '../screens/shop/check_out_page.dart';
+import '../screens/shop/check_payment_page.dart';
 part './app_routes.dart';
 
 class AppPages {
@@ -55,8 +58,13 @@ class AppPages {
     ),
     GetPage(
       name: Routes.SIGNUP,
-      page: () => const SignUpPage(),
+      page: () =>  SignUpPage(),
       binding: SignUpBinding(),
+    ),
+    GetPage(
+      name: Routes.FAV,
+      page: () =>  MyFavoritePage(),
+      binding: HomeBinding(),
     ),
     GetPage(
       name: Routes.MAIN,
@@ -94,8 +102,13 @@ class AppPages {
       binding: NotificationBinding(),
     ),
     GetPage(
-      name: Routes.ADDRESS,
+      name: Routes.ADDADDRESS,
       page: () => AddNewAddressPage(),
+      binding: AddressBinding(),
+    ),
+    GetPage(
+      name: Routes.EDITADDRESS,
+      page: () => EditAddressPage(),
       binding: AddressBinding(),
     ),
     GetPage(
@@ -105,7 +118,7 @@ class AppPages {
     ),
     GetPage(
       name: Routes.NEWPET,
-      page: () => AddNewPetPage(),
+      page: () => const AddNewPetPage(),
       binding: ProductBinding(),
     ),
     GetPage(
@@ -115,7 +128,7 @@ class AppPages {
     ),
     GetPage(
       name: Routes.MYPETS,
-      page: () => MyPetPage(),
+      page: () => const MyPetPage(),
       binding: ProductBinding(),
     ),
 
@@ -150,6 +163,11 @@ class AppPages {
       binding: CommunityBinding(),
     ),
     GetPage(
+      name: Routes.PROFILE,
+      page: () => ProfilePage(),
+      binding: CommunityBinding(),
+    ),
+    GetPage(
       name: Routes.MYORDERS,
       page: () => MyOrderPage(),
       binding: CommunityBinding(),
@@ -165,8 +183,8 @@ class AppPages {
       binding: ShopBinding(),
     ),
     GetPage(
-      name: Routes.CHECKOUT,
-      page: () => const CheckOutPage(),
+      name: Routes.CHECKPAYMENT,
+      page: () => const CheckPaymentPage(),
       binding: ShopBinding(),
     ),
 

@@ -3,6 +3,7 @@ import 'package:pets_app/helpers/constant.dart';
 import 'package:pets_app/widgets/CustomDialogBox.dart';
 import 'package:pets_app/widgets/CustomWidget.dart';
 import 'package:pets_app/widgets/SizeConfig.dart';
+import 'package:pets_app/widgets/button_widget.dart';
 import 'package:pin_input_text_field/pin_input_text_field.dart';
 import 'ResetPasswordPage.dart';
 import 'sign_in_page.dart';
@@ -60,7 +61,7 @@ class _PhoneVerification extends State<PhoneVerification> {
             // backgroundColor: backgroundColor,
             elevation: 0,
             title: const Text(""),
-            leading: GestureDetector(
+            leading: InkWell(
               onTap: () {
                 _requestPop();
               },
@@ -175,8 +176,8 @@ class _PhoneVerification extends State<PhoneVerification> {
 
                     child: Column(
                       children: [
-                        getButtonWithoutSpaceWidget(
-                            context, "Next", primaryColor, () {
+                        buttonWidget(
+                            context, "Next", primaryColor,Colors.white, () {
 
 
                               if(widget.isSignUp) {
@@ -193,7 +194,7 @@ class _PhoneVerification extends State<PhoneVerification> {
                                               context,
                                               MaterialPageRoute(
                                                 builder: (context) =>
-                                                    const SignInPage(),
+                                                    SignInPage(),
                                               ));
                                         },
                                       );

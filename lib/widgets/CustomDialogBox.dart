@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pets_app/widgets/button_widget.dart';
 
 import '../helpers/constant.dart';
 import 'CustomWidget.dart';
@@ -53,19 +54,19 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
               SizedBox(
                 height: getScreenPercentSize(context, 3),
               ),
-              getCustomTextWithFontFamilyWidget(widget.title!, textColor, getScreenPercentSize(context, 2.5)
+              getCustomTextWidget(widget.title!, textColor, getScreenPercentSize(context, 2.5)
                   , FontWeight.w400,
-                  TextAlign.center, 1),
+                  TextAlign.center, 1,context),
               SizedBox(
                 height: getScreenPercentSize(context, 1.5),
               ),
               getCustomTextWidget('Your account has been successfully created!', textColor, getScreenPercentSize(context, 2),
-                  FontWeight.normal, TextAlign.center, 2),
+                  FontWeight.normal, TextAlign.center, 2,context),
               SizedBox(
                 height: getScreenPercentSize(context, 4),
               ),
 
-              getButtonWithoutSpaceWidget(context, 'Ok', primaryColor, (){
+              buttonWidget(context, 'Ok', primaryColor,Colors.white, (){
                 Navigator.of(context).pop();
                 widget.func!();
               }),

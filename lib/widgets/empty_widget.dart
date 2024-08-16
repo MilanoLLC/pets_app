@@ -19,7 +19,7 @@ emptyWidget(BuildContext context, text, imgSrc) {
       SizedBox(
         height: getScreenPercentSize(context, 3),
       ),
-      getCustomTextWithFontFamilyWidget(
+      getCustomTextWidget2(
           text,
           Theme.of(context).hintColor,
           getScreenPercentSize(context, 2.5),
@@ -33,20 +33,24 @@ emptyWidget(BuildContext context, text, imgSrc) {
   );
 }
 
-emptyWidgetWithSubtext(BuildContext context, text, subText, imgSrc) {
+emptyWidgetWithSubtext(BuildContext context, text, subText, imgSrc, icon) {
   PrefData.setIsNotification(true);
   return Column(
     mainAxisAlignment: MainAxisAlignment.center,
     crossAxisAlignment: CrossAxisAlignment.center,
     children: [
-      Image.asset(
-        imgSrc, //"${assetsPath}bell-1 1.png",
-        height: getScreenPercentSize(context, 20),
-      ),
+      imgSrc != ""
+          ? Image.asset(
+              imgSrc, //"${assetsPath}bell-1 1.png",
+              height: getScreenPercentSize(context, 20),
+            )
+          : Icon(icon,
+              color: primaryColor,
+              size: MediaQuery.of(context).size.height / 5),
       SizedBox(
-        height: getScreenPercentSize(context, 3),
+        height: getScreenPercentSize(context, 2),
       ),
-      getCustomTextWithFontFamilyWidget(
+      getCustomTextWidget2(
           text, //"No Notification Yet!",
           Theme.of(context).hintColor,
           getScreenPercentSize(context, 2.5),
@@ -56,10 +60,10 @@ emptyWidgetWithSubtext(BuildContext context, text, subText, imgSrc) {
       SizedBox(
         height: getScreenPercentSize(context, 1),
       ),
-      getCustomTextWidget(
+      getCustomTextWidget2(
           subText, //"We'll notify you when something arrives.",
-          Theme.of(context).hintColor,
-          getScreenPercentSize(context, 2),
+          Theme.of(context).hintColor.withOpacity(0.6),
+          getScreenPercentSize(context, 1.8),
           FontWeight.w400,
           TextAlign.center,
           1),
@@ -67,57 +71,150 @@ emptyWidgetWithSubtext(BuildContext context, text, subText, imgSrc) {
   );
 }
 
-emptyWidgetWithButton(BuildContext context, imgSrc, text, buttonTitle) {
+emptyWidgetWithButton(
+    BuildContext context, imgSrc, icon, title, content, buttonTitle, func) {
+  double height = getScreenPercentSize(context, 7);
+
+  return Column(
+    mainAxisAlignment: MainAxisAlignment.center,
+    crossAxisAlignment: CrossAxisAlignment.center,
+    children: [
+      imgSrc != ""
+          ? Image.asset(
+              imgSrc, //"${iconsPath}box.png",
+              height: getScreenPercentSize(context, 20),
+            )
+          : Icon(icon,
+              color: primaryColor,
+              size: MediaQuery.of(context).size.height / 5),
+      SizedBox(
+        height: getScreenPercentSize(context, 2),
+      ),
+      getCustomTextWidget2(
+          title,
+          Theme.of(context).hintColor,
+          getScreenPercentSize(context, 2.5),
+          FontWeight.w500,
+          TextAlign.center,
+          1),
+      SizedBox(
+        height: getScreenPercentSize(context, 1),
+      ),
+      Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 40),
+        child: getCustomTextWidget2(
+            content,
+            Theme.of(context).hintColor.withOpacity(0.6),
+            getScreenPercentSize(context, 2),
+            FontWeight.w400,
+            TextAlign.center,
+            2),
+      ),
+      SizedBox(
+        height: getScreenPercentSize(context, 1),
+      ),
+      Padding(
+        padding: EdgeInsets.symmetric(
+            horizontal: getHorizontalSpace(context) + 60, vertical: 15),
+        child: MaterialButton(
+          onPressed: func,
+          height: height,
+          shape: SmoothRectangleBorder(
+            side: BorderSide(color: primaryColor, width: 1.5),
+            borderRadius: SmoothBorderRadius(
+              cornerRadius: getPercentSize(height, 25),
+              cornerSmoothing: 0.8,
+            ),
+          ),
+          child: Center(
+              child: getDefaultTextWidget(buttonTitle, TextAlign.center,
+                  FontWeight.w500, 18, primaryColor)),
+        ),
+      ),
+    ],
+  );
+}
+
+emptyWidgetUnauthorized(BuildContext context) {
   double height = getScreenPercentSize(context, 7);
   return Column(
     mainAxisAlignment: MainAxisAlignment.center,
     crossAxisAlignment: CrossAxisAlignment.center,
     children: [
       Image.asset(
-        imgSrc, //"${iconsPath}box.png",
+        "${iconsPath}block-user.png",
         height: getScreenPercentSize(context, 20),
       ),
       SizedBox(
         height: getScreenPercentSize(context, 3),
       ),
-      getCustomTextWithFontFamilyWidget(
-          text, //"Your Pets are Empty!",
-          primaryColor,
-          getScreenPercentSize(context, 2.5),
+      getCustomTextWidget2(
+          "Please log in to view this page",
+          Theme.of(context).hintColor,
+          getScreenPercentSize(context, 2.2),
           FontWeight.w500,
           TextAlign.center,
           1),
       const SizedBox(
         height: 15,
       ),
-      MaterialButton(
-        onPressed: () {
-          Get.toNamed(Routes.NEWPET);
-        },
-        minWidth: 100,
-        shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(10))),
-        child: Container(
-          height: getScreenPercentSize(context, 7),
-          margin: EdgeInsets.only(
-              top: getScreenPercentSize(context, 1.2),
-              bottom: getHorizontalSpace(context),
-              left: getHorizontalSpace(context) + 40,
-              right: getHorizontalSpace(context) + 40),
-          decoration: ShapeDecoration(
-            shape: SmoothRectangleBorder(
-              side: BorderSide(color: primaryColor, width: 1.5),
-              borderRadius: SmoothBorderRadius(
-                cornerRadius: getPercentSize(height, 25),
-                cornerSmoothing: 0.8,
-              ),
+      Padding(
+        padding: EdgeInsets.symmetric(
+            horizontal: getHorizontalSpace(context) + 60, vertical: 15),
+        child: MaterialButton(
+          onPressed: () {
+            Get.toNamed(Routes.SIGNIN);
+          },
+          height: height,
+          shape: SmoothRectangleBorder(
+            side: BorderSide(color: primaryColor, width: 1.5),
+            borderRadius: SmoothBorderRadius(
+              cornerRadius: getPercentSize(height, 25),
+              cornerSmoothing: 0.8,
             ),
           ),
           child: Center(
-              child: getDefaultTextWidget(buttonTitle, TextAlign.center,
+              child: getDefaultTextWidget("Login", TextAlign.center,
                   FontWeight.w500, 20, primaryColor)),
         ),
       ),
+
+      Align(
+        alignment: Alignment.bottomCenter,
+        child: Container(
+          margin: EdgeInsets.only(bottom: getScreenPercentSize(context, 2)),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              getTextWidget(
+                  "Don't have an account?",
+                  Theme.of(context).hintColor.withOpacity(0.6),
+                  getScreenPercentSize(context, 2),
+                  FontWeight.w400,
+                  TextAlign.center),
+              const SizedBox(
+                width: 5,
+              ),
+              InkWell(
+                child: getTextWidget(
+                    "Sign Up",
+                    primaryColor,
+                    getScreenPercentSize(context, 2),
+                    FontWeight.w500,
+                    TextAlign.center),
+                onTap: () {
+                  Get.toNamed(Routes.SIGNUP);
+                  // Navigator.push(
+                  //     context,
+                  //     MaterialPageRoute(
+                  //         builder: (context) => SignUpPage()));
+                },
+              )
+            ],
+          ),
+        ),
+      )
     ],
   );
 }
+

@@ -28,30 +28,6 @@ class ShopController extends GetxController with StateMixin<dynamic> {
   bool get lastPage => _lastPage.value;
   final quantity = 1.obs;
 
-  // String selectedAge = "less";
-  // final List<String> age = ["less", "oneTo3", "threeTo6", "more"];
-  //
-  // String selectedGender = "MALE";
-  // final List<String> gender = ["MALE", "FEMALE"];
-  //
-  // String selectedFriendly = "true";
-  // final List<String> friendly = ["true", "false"];
-  //
-  // String selectedVaccinated = "true";
-  // final List<String> vaccinated = ["true", "false"];
-  //
-  // String dropdownValue = 'Dubai';
-  //
-  // var items = [
-  //   'Abu Dhabi',
-  //   'Ajman',
-  //   'Dubai',
-  //   'Fujairah',
-  //   'Ras Al Khaimah',
-  //   'Sharjah',
-  //   'Umm Al Quwain',
-  // ];
-
   @override
   Future<void> onInit() async {
     super.onInit();

@@ -10,6 +10,7 @@ class PostModel {
     this.postContent,
     this.images,
     this.likes,
+    this.likedByUsers,
     this.comments,
     this.commentsSequence,
     this.userImage,
@@ -30,26 +31,35 @@ class PostModel {
         likes!.add(Likes.fromJson(v));
       });
     }
+    // likedByUsers =
+    // json['likedByUsers'] != null ? json['likedByUsers'].cast<String>() : [];
+    if (json['likedByUsers'] != null) {
+      likedByUsers = [];
+      json['likedByUsers'].forEach((v) {
+        likedByUsers!.add((v));
+      });
+    }
     if (json['comments'] != null) {
       comments = [];
       json['comments'].forEach((v) {
         comments!.add(Comments.fromJson(v));
       });
     }
-    commentsSequence = json['commentsSequence'];
+    commentsSequence = json['commentsSequence'] ?? 0;
 
-    userImage = json['userImage'];
+    userImage = json['userImage'] ;
 
-    liked = json['liked'];
-    deleted = json['deleted'];
+    liked = json['liked'] ?? false;
+    deleted = json['deleted'] ?? false;
   }
   String? id;
   String? serial;
-  dynamic createdByUsername;
+  String? createdByUsername;
   String? createdAt;
   String? postContent;
   List<String>? images;
   List<Likes>? likes;
+  List<String>? likedByUsers;
   List<Comments>? comments;
   String? userImage;
   int? commentsSequence;
@@ -67,6 +77,11 @@ class PostModel {
     if (likes != null) {
       map['likes'] = likes!.map((v) => v.toJson()).toList();
     }
+    if (likedByUsers != null) {
+      map['likedByUsers'] = likedByUsers!.map((v) => v).toList();
+    }
+    // map['likedByUsers'] = likedByUsers;
+
     if (comments != null) {
       map['comments'] = comments!.map((v) => v.toJson()).toList();
     }

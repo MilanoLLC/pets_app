@@ -156,6 +156,7 @@ class DataFile {
 
     return subCatList;
   }
+
   //
   static List<AddressModel> getAddressList() {
     List<AddressModel> subCatList = [];
@@ -169,8 +170,6 @@ class DataFile {
     subCatList.add(mainModel);
     return subCatList;
   }
-
-
 
   static List<ReviewModel> getReviewList() {
     List<ReviewModel> subCatList = [];
@@ -270,45 +269,44 @@ class DataFile {
     IntroModel mainModel = IntroModel();
     mainModel.id = 1;
     mainModel.name = "Find The Nearest\nPets From You";
-    mainModel.image = "intro_1.png";
-    mainModel.color = "#C6C7E5".toColor();
-    mainModel.endColor = "#C6C7E5".toColor();
+    mainModel.image = "intro9.jpg";
+    mainModel.color = "#ffffff".toColor();
+    mainModel.endColor = "#f0f1ec".toColor();
     mainModel.desc =
-        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.";
+        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry";
     introList.add(mainModel);
 
     mainModel = IntroModel();
     mainModel.id = 2;
     mainModel.name = "All Pets Deserves\nMore Care";
-    mainModel.color= "#5EB7CB".toColor();
-    mainModel.endColor= "#9BD0DF".toColor();
-    mainModel.image = "intro_2.png";
+    mainModel.color = "#ffffff".toColor();
+    mainModel.endColor = "#ffffff".toColor();
+    mainModel.image = "intro6.jpg";
     mainModel.desc =
-        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.";
+        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry";
     introList.add(mainModel);
 
     mainModel = IntroModel();
     mainModel.id = 3;
     mainModel.name = "Adopt your own pet\nas a friend";
-    mainModel.color = "#FDD7E4".toColor();
-    mainModel.endColor = "#FED8E5".toColor();
-    mainModel.image = "intro_3.png";
+    mainModel.color = "#ffffff".toColor();
+    mainModel.endColor = "#ffffff".toColor();
+    mainModel.image = "intro7.png";
 
     mainModel.desc =
-        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.";
+        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry";
     introList.add(mainModel);
 
-
-    mainModel = IntroModel();
-    mainModel.id = 4;
-    mainModel.name = "All Pets Adopt\nNeeds Are here";
-    mainModel.color = "#FED845".toColor();
-    mainModel.endColor = "#FED845".toColor();
-    mainModel.image = "intro_4.png";
-
-    mainModel.desc =
-        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.";
-    introList.add(mainModel);
+    // mainModel = IntroModel();
+    // mainModel.id = 4;
+    // mainModel.name = "All Pets Adopt\nNeeds Are here";
+    // mainModel.color = "#FED845".toColor();
+    // mainModel.endColor = "#FED845".toColor();
+    // mainModel.image = "intro_4.png";
+    //
+    // mainModel.desc =
+    //     "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.";
+    // introList.add(mainModel);
 
     return introList;
   }
@@ -519,12 +517,6 @@ class DataFile {
     model.description = "Female, 1.5 Years";
     subList.add(model);
 
-
     return subList;
   }
-
-
-
-
-
 }

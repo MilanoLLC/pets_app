@@ -3,6 +3,7 @@ import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:pets_app/helpers/STORAGE_KEYS.dart';
 import 'package:pets_app/helpers/global_data.dart';
 import 'package:pets_app/model/Post_model.dart';
+import 'package:pets_app/model/UserPost.dart';
 import 'package:pets_app/service_locator.dart';
 import 'package:pets_app/services/http_service.dart';
 import 'package:pets_app/services/local_storage_service.dart';
@@ -10,6 +11,7 @@ import 'package:http/http.dart' as http;
 
 abstract class ICommunityRepository {
   Future<List<PostModel>> getPosts(pageNumber, pageSize);
+  Future<UserPost> getUserPosts(pageNumber, pageSize,userName);
   Future<List<PostModel>> getMyPosts(pageNumber, pageSize);
   Future likePost(postSerial, liked);
   Future addPost(content, images);
@@ -44,6 +46,25 @@ class CommunityRepository extends ICommunityRepository {
   }
 
   @override
+  Future<UserPost> getUserPosts(pageNumber, pageSize,userName) async {
+    var result = await InternetConnectionChecker().hasConnection;
+    if (!result) {
+      throw const SocketException("No Internet Connection");
+    }
+    final response = await httpService.get(
+        'api/community/getUserPosts?pageNumber=$pageNumber&pageSize=$pageSize&username=$userName',
+        headers: httpService.headers);
+    print("status code = ${response.statusCode}");
+    print("response getUserPosts = ${response.body}");
+    if (response.hasError || response.unauthorized) {
+      throw SocketException(response.body ?? "Something is wrong");
+    }
+    var posts = UserPost.fromJson(response.body);
+
+    return posts;
+  }
+
+  @override
   Future<List<PostModel>> getMyPosts(pageNumber, pageSize) async {
     var result = await InternetConnectionChecker().hasConnection;
     if (!result) {
@@ -57,6 +78,8 @@ class CommunityRepository extends ICommunityRepository {
     if (response.hasError || response.unauthorized) {
       throw SocketException(response.body?? "Something is wrong");
     }
+    print("response my posts = ${response.body}");
+
     var posts =
         (response.body as List).map((e) => PostModel.fromJson(e)).toList();
 

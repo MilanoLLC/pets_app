@@ -18,7 +18,6 @@ import 'screens/Home/IntroPage.dart';
 import 'screens/Home/main_page.dart';
 import 'generated/l10n.dart';
 
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await setupServiceLocator();
@@ -72,8 +71,7 @@ class _MyApp extends State<MyApp> {
         buttonColor: Colors.blue,
         disabledColor: Colors.grey,
       ),
-      cardColor: Colors.white
-      );
+      cardColor: Colors.white);
 
   @override
   void initState() {
@@ -145,8 +143,8 @@ class _SplashScreen extends State<SplashScreen> {
 
     Timer(const Duration(seconds: 3), () {
       if (isIntro) {
-        Navigator.pushReplacement(context,
-            MaterialPageRoute(builder: (context) => const IntroPage()));
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => IntroPage()));
       } else {
         Navigator.pushReplacement(
             context,
@@ -197,13 +195,14 @@ class _SplashScreen extends State<SplashScreen> {
               height: getScreenPercentSize(context, 1.2),
             ),
             Center(
-              child: getSplashTextWidget(
-                  "Petshops",
-                  Colors.white,
-                  getScreenPercentSize(context, 4),
-                  FontWeight.w500,
-                  TextAlign.center),
-            ),
+                child: Text("Petshops",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: getScreenPercentSize(context, 4),
+                        decoration: TextDecoration.none,
+                        fontFamily: 'Sniglet',
+                        color: Colors.white))),
           ],
         ),
       ),

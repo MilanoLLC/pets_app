@@ -165,7 +165,7 @@ class _OrderTrackMap extends State<OrderTrackMap> {
 
                                 FontWeight.w500,
                                 TextAlign.start,
-                                1),
+                                1,context),
                             Row(
                               children: [
                                 Icon(
@@ -184,7 +184,7 @@ class _OrderTrackMap extends State<OrderTrackMap> {
 
                                     FontWeight.normal,
                                     TextAlign.start,
-                                    1)
+                                    1,context)
                               ],
                             )
                           ],

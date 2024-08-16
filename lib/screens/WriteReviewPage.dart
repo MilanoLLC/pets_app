@@ -126,7 +126,7 @@ class _WriteReviewPage extends State<WriteReviewPage> {
                                   getScreenPercentSize(context, 1.8),
                                   FontWeight.bold,
                                   TextAlign.start,
-                                  1),
+                                  1,context),
                             )),
                         Container(
                           margin: EdgeInsets.only(bottom: margin),
@@ -159,7 +159,7 @@ class _WriteReviewPage extends State<WriteReviewPage> {
                                   getScreenPercentSize(context, 1.8),
                                   FontWeight.bold,
                                   TextAlign.start,
-                                  1),
+                                  1,context),
                             )),
                         Container(
                           margin: EdgeInsets.only(bottom: margin),
@@ -188,17 +188,17 @@ class _WriteReviewPage extends State<WriteReviewPage> {
                             getScreenPercentSize(context, 1.8),
                             FontWeight.w400,
                             TextAlign.start,
-                            1)
+                            1,context)
                       ],
                     ),
                   )),
 
-                  Container(
-                    margin: EdgeInsets.only(top: (margin/2)),
-                    child: getButtonWidget(context, "Submit", primaryColor, (){
-
-                    }),
-                  )
+                  // Container(
+                  //   margin: EdgeInsets.only(top: (margin/2)),
+                  //   child: getButtonWidget(context, "Submit", primaryColor, (){
+                  //
+                  //   }),
+                  // )
 
 
                 ],

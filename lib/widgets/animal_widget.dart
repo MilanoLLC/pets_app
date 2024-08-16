@@ -5,10 +5,11 @@ import 'package:pets_app/model/AnimalModel.dart';
 import 'package:pets_app/routes/app_pages.dart';
 import 'package:pets_app/widgets/CustomWidget.dart';
 import 'package:get/get.dart';
+import 'package:pets_app/widgets/custom_icon.dart';
 
 Widget animalWidget(BuildContext context, AnimalModel model) {
   double defMargin = getScreenPercentSize(context, 1.5);
-  double height = getScreenPercentSize(context, 35);
+  double height = getScreenPercentSize(context, 40);
   double width = getWidthPercentSize(context, 40);
   double imgHeight = getPercentSize(height, 45);
   double remainHeight = height - imgHeight;
@@ -17,82 +18,68 @@ Widget animalWidget(BuildContext context, AnimalModel model) {
   return InkWell(
     child: Container(
       width: width,
-      margin: EdgeInsets.only(top: defMargin, bottom: (defMargin)),
-      decoration: ShapeDecoration(
-        color: Theme.of(context).cardColor,
-        shadows: [
-          BoxShadow(
-              color: subTextColor.withOpacity(0.1),
-              blurRadius: 0,
-              spreadRadius: 2,
-              offset: const Offset(0, 1))
-        ],
-        shape: SmoothRectangleBorder(
-          borderRadius: SmoothBorderRadius(
-            cornerRadius: radius,
-            cornerSmoothing: 0.8,
-          ),
-        ),
-      ),
+      color: Colors.transparent,
+      margin: EdgeInsets.all(defMargin),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           AspectRatio(
-            aspectRatio: 1,
-            child: Container(
-              decoration: BoxDecoration(
-                color: const Color(0xff7c94b6),
-                image: DecorationImage(
-                  image: NetworkImage(networkPath + model.images![0]),
-                  fit: BoxFit.fill,
-                ),
-                borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(defMargin),
-                    topRight: Radius.circular(defMargin)),
-              ),
-            ),
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          Expanded(
-            child: Container(
-              margin:
-                  EdgeInsets.symmetric(horizontal: getPercentSize(width, 5)),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
+            aspectRatio: 0.8,
+            child:
+            Container(
+              height: height,
+              margin: const EdgeInsets.all(10),
+              child: Stack(
                 children: [
-                  Row(
-                    children: [
-                      Expanded(
-                          child: getCustomTextWidget(
-                              model.animalName!,
-                              Theme.of(context).hintColor,
-                              getPercentSize(remainHeight, 10),
-                              FontWeight.bold,
-                              TextAlign.center,
-                              1)),
-                    ],
-                  ),
-                  SizedBox(
-                    height: getPercentSize(remainHeight, 5),
-                  ),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: getTextWidget(
-                            model.type.toString(),
-                            Colors.grey,
-                            getPercentSize(remainHeight, 8),
-                            FontWeight.w400,
-                            TextAlign.center),
+                  Positioned.fill(
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(20.0),
+                      child: Image.network(
+                        networkPath + model.images![0],
+                        fit: BoxFit.cover,
                       ),
-                    ],
+                    ),
+                  ),
+                  Positioned(
+                    top: 0,
+                    right: 0,
+                    child: customIcon((){}, Icons.favorite),
                   ),
                 ],
               ),
             ),
+
+
+            // Container(
+            //   decoration: BoxDecoration(
+            //     // color: const Color(0xff7c94b6),
+            //     image: DecorationImage(
+            //       image: NetworkImage(networkPath + model.images![0]),
+            //       fit: BoxFit.cover,
+            //     ),
+            //     borderRadius: const BorderRadius.all(Radius.circular(15)),
+            //   ),
+            // ),
+          ),
+          const SizedBox(
+            height: 5,
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 5),
+            child: getCustomTextWidget(model.animalName!, Theme.of(context).hintColor,
+                16, FontWeight.bold, TextAlign.start, 1,context),
+          ),
+          SizedBox(
+            height: getPercentSize(remainHeight, 2),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 5),
+            child: getTextWidget(
+                model.type.toString(),
+                Colors.grey,
+                13,
+                FontWeight.w400,
+                TextAlign.start),
           ),
         ],
       ),

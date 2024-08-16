@@ -3,8 +3,10 @@
 import 'dart:io';
 
 import 'package:card_swiper/card_swiper.dart';
+import 'package:figma_squircle/figma_squircle.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
+import 'package:im_stepper/stepper.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 import 'package:pets_app/controllers/edit_animal_controller.dart';
 import 'package:pets_app/model/AnimalModel.dart';
@@ -12,6 +14,9 @@ import 'package:pets_app/helpers/Constant.dart';
 import 'package:pets_app/widgets/CustomWidget.dart';
 import 'package:pets_app/widgets/SizeConfig.dart';
 import 'package:get/get.dart';
+import 'package:pets_app/widgets/app_bar_custom.dart';
+import 'package:pets_app/widgets/button_widget.dart';
+import 'package:pets_app/widgets/photos_widget.dart';
 
 class EditPetPage extends StatelessWidget {
   dynamic argumentData = Get.arguments;
@@ -35,8 +40,6 @@ class EditPetPage extends StatelessWidget {
     SizeConfig().init(context);
 
     defaultMargin = getHorizontalSpace(context);
-    double margin = getWidthPercentSize(context, 2.5);
-    double height = getScreenPercentSize(context, 17);
     cellHeight = getScreenPercentSize(context, 6.5);
     defMargin = getHorizontalSpace(context);
     fontSize = getPercentSize(cellHeight, 28);
@@ -45,358 +48,403 @@ class EditPetPage extends StatelessWidget {
       child: GetBuilder<EditAnimalController>(
           init: EditAnimalController(model),
           builder: (controller) {
+            print("model pet");
+            print(model.toJson());
+
             return Scaffold(
-              // backgroundColor: backgroundColor,
-              appBar: AppBar(
-                title: const Text("Edit Pet Details"),
-                elevation: 0,
-                centerTitle: true,
-              ),
-              body: Column(
-                children: [
-                  SizedBox(
-                    height: margin,
-                  ),
-                  Expanded(
-                    flex: 1,
-                    child: ListView(
-                      shrinkWrap: true,
-                      primary: true,
-                      padding: EdgeInsets.symmetric(horizontal: defMargin),
-                      children: [
-                        //
-                        SizedBox(
-                            width: MediaQuery.of(context).size.width,
-                            height: 350,
-                            child: Swiper(
-                              outer: false,
-                              itemBuilder: (BuildContext context, int index) {
-                                return Image.network(
-                                  networkPath + model.images![index],
-                                  fit: BoxFit.fill,
-                                );
-                              },
-                              pagination: const SwiperPagination(
-                                  margin: EdgeInsets.all(5.0)),
-                              itemCount: model.images!.length,
-                            )),
-                        SizedBox(
-                          height: margin,
-                        ),
-                        SizedBox(
-                          height: margin,
-                        ),
-
-                        getTextFiledNewPetWidget(context, "",
-                            controller.textNameController, "Animal Name"),
-                        SizedBox(
-                          height: margin,
-                        ),
-                        getTextFiledNewPetWidget(
-                            context, "", controller.textColorController, "Color"),
-                        SizedBox(
-                          height: margin,
-                        ),
-                        //gender
-                        const Text(
-                          "Gender",
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 18),
-                        ),
-                        Row(
-                          children: [
-                            getRadioButton(
-                                context,
-                                "Male",
-                                controller.gender[0],
-                                controller.selectedGender,
-                                controller.changeGender),
-                            SizedBox(
-                              width: (margin),
-                            ),
-                            getRadioButton(
-                                context,
-                                "Female",
-                                controller.gender[1],
-                                controller.selectedGender,
-                                controller.changeGender),
-                          ],
-                        ),
-                        //friendly
-                        SizedBox(
-                          height: margin,
-                        ),
-                        const Text(
-                          "Friendly",
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 18),
-                        ),
-                        Row(
-                          children: [
-                            getRadioButton(
-                                context,
-                                "Yes",
-                                controller.friendly[0],
-                                controller.selectedFriendly,
-                                controller.changeFriendly),
-                            SizedBox(
-                              width: (margin),
-                            ),
-                            getRadioButton(
-                                context,
-                                "No",
-                                controller.friendly[1],
-                                controller.selectedFriendly,
-                                controller.changeFriendly),
-                          ],
-                        ),
-                        // SizedBox(
-                        //   height: margin,
-                        // ),
-                        // getTextFiledNewPetWidget(context, "",
-                        //     controller.textOriginController, "Origin"),
-                        SizedBox(
-                          height: margin,
-                        ),
-                        const Text(
-                          "Category",
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 18),
-                        ),
-                        getDropDownWidget(
-                            context,
-                            controller.selectedCategory!,
-                            controller.categoriesNames,
-                            controller.changeCategory),
-                        SizedBox(
-                          height: margin,
-                        ),
-                        getTextFiledNewPetWidget(context, "",
-                            controller.textWeightController, "Weight"),
-                        SizedBox(
-                          height: margin,
-                        ),
-                        const Text(
-                          "Description",
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 18),
-                        ),
-                        getDescTextFiledWidget(
-                            context, "", controller.textDescController),
-                        SizedBox(
-                          height: margin,
-                        ),
-                        getTextFiledNewPetWidget(
-                            context, "", controller.textTypeController, "Type"),
-                        SizedBox(
-                          height: margin,
-                        ),
-                        const Text(
-                          "Vaccinated",
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 18),
-                        ),
-                        Row(
-                          children: [
-                            getRadioButton(
-                                context,
-                                "Yes",
-                                controller.vaccinated[0],
-                                controller.selectedVaccinated,
-                                controller.changeVaccinated),
-                            SizedBox(
-                              width: (margin),
-                            ),
-                            getRadioButton(
-                                context,
-                                "No",
-                                controller.vaccinated[1],
-                                controller.selectedVaccinated,
-                                controller.changeVaccinated),
-                          ],
-                        ),
-                        SizedBox(
-                          height: margin,
-                        ),
-                        getTextFiledNewPetWidget(
-                            context,
-                            "",
-                            controller.textNoOfVaccinatedController,
-                            "No of Vaccinated"),
-                        SizedBox(
-                          height: margin,
-                        ),
-                        const Text(
-                          "Passport",
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 18),
-                        ),
-                        Row(
-                          children: [
-                            getRadioButton(
-                                context,
-                                "Yes",
-                                controller.passport[0],
-                                controller.selectedPassport,
-                                controller.changePassport),
-                            SizedBox(
-                              width: (margin),
-                            ),
-                            getRadioButton(
-                                context,
-                                "No",
-                                controller.passport[1],
-                                controller.selectedPassport,
-                                controller.changePassport),
-                          ],
-                        ),
-                        SizedBox(
-                          height: margin,
-                        ),
-                        getTextFiledNewPetWidget(context, "",
-                            controller.textLocationController, "Location"),
-
-                        SizedBox(
-                          height: margin,
-                        ),
-                        getTextFiledNewPetWidget(
-                            context, "", controller.textAgeController, "Age"),
-
-                        SizedBox(
-                          height: margin,
-                        ),
-                        const Text(
-                          "Age prefix",
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 18),
-                        ),
-                        getDropDownWidget(
-                            context,
-                            controller.selectedAgePrefix!,
-                            controller.agePrefixList,
-                            controller.changeAgePrefix),
-                        SizedBox(
-                          height: margin,
-                        ),
-                        const Text(
-                          "List of Images",
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 18),
-                        ),
-                        const SizedBox(
-                          height: 8,
-                        ),
-                        InkWell(
-                          onTap: () {
-                            controller.selectImages();
-                          },
-                          child: Container(
-                            height: height,
-                            decoration: getShapeDecoration(context),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Image.asset(
-                                  "${assetsPath}camera fill.png",
-                                  height: getPercentSize(height, 15),
-                                  color: primaryColor,
-                                ),
-                                SizedBox(
-                                  width: getWidthPercentSize(context, 2),
-                                ),
-                                // getTextWithFontFamilyWidget(
-                                //     'Add Photo',
-                                //     primaryColor,
-                                //     getPercentSize(height, 12),
-                                //     FontWeight.w500,
-                                //     TextAlign.center)
-                                Text('Add Photo',
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: getPercentSize(height, 12),
-                                        decoration: TextDecoration.none,
-                                        fontFamily: customFontFamily,
-                                        color: primaryColor))
-                              ],
-                            ),
+                appBar: appBarBack(context, "Edit Pet", true),
+                body: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    children: [
+                      IconStepper(
+                        icons: const [
+                          Icon(Icons.first_page),
+                          Icon(Icons.pets),
+                          Icon(Icons.last_page),
+                        ],
+                        activeStep: controller.activeStep,
+                        activeStepColor: primaryColor,
+                        stepColor: Colors.grey.withOpacity(0.2),
+                        onStepReached: (index) {
+                          controller.stepReached(index);
+                        },
+                      ),
+                      Expanded(
+                          child: Padding(
+                        padding: const EdgeInsets.all(15.0),
+                        child: stepperWidget(controller, context),
+                      )),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                            child: buttonWidget(
+                                context, "Previous", Colors.white, primaryColor,
+                                () {
+                              controller.previousButton();
+                            }),
                           ),
-                        ),SizedBox(
-                          height: margin,
-                        ),
-                        SizedBox(
-                          height: margin,
-                        ),
-                        controller.imageFileList!.isNotEmpty
-                            ? Column( crossAxisAlignment:
-                        CrossAxisAlignment.start,
-                          children: [
-                            const Text(
-                              "List of Images",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 18),
-                            ),
-                            const SizedBox(
-                              height: 8,
-                            ),
-                            Container(
-                              height: height,
-                              decoration: getShapeDecoration(context),
-                              width: MediaQuery.of(context).size.width,
-                              child: Column(
-                                crossAxisAlignment:
-                                CrossAxisAlignment.start,
-                                children: [
 
-                                  Expanded(
-                                    child: ListView(
-                                      scrollDirection: Axis.horizontal,
-                                      shrinkWrap: true,
-                                      primary: true,
-                                      children: List.generate(
-                                          controller.imageFileList!.length,
-                                              (index) {
-                                            return Padding(
-                                              padding:
-                                              const EdgeInsets.all(8.0),
-                                              child: Image.file(File(controller
-                                                  .imageFileList![0].path)),
-                                            );
-                                          }),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        )
-                            : const SizedBox()
-                      ],
-                    ),
+                          Expanded(
+                              child: controller.activeStep == 2
+                                  ? buttonWidget(context, "Update",
+                                      primaryColor, Colors.white, () {
+                                      Loader.show(context,
+                                          isSafeAreaOverlay: false,
+                                          progressIndicator:
+                                              const CircularProgressIndicator(),
+                                          isBottomBarOverlay: false,
+                                          overlayFromBottom: 0,
+                                          themeData: Theme.of(context).copyWith(
+                                              colorScheme:
+                                                  ColorScheme.fromSwatch()
+                                                      .copyWith(
+                                                          secondary:
+                                                              Colors.black38)),
+                                          overlayColor:
+                                              const Color(0x33E8EAF6));
+
+                                      controller
+                                          .editAnimal(model.serial)
+                                          .then((value) => Loader.hide());
+                                    })
+                                  : buttonWidget(context, "Next", primaryColor,
+                                      Colors.white, () {
+                                      controller.nextButton();
+                                    }))
+
+                          // previousButton(),
+                          // nextButton(),
+                        ],
+                      ),
+                    ],
                   ),
-                  getButtonWidget(context, "Save", primaryColor, () {
-                    Loader.show(context,
-                        isSafeAreaOverlay: false,
-                        progressIndicator: const CircularProgressIndicator(),
-                        isBottomBarOverlay: false,
-                        overlayFromBottom: 0,
-                        themeData: Theme.of(context).copyWith(
-                            colorScheme: ColorScheme.fromSwatch()
-                                .copyWith(secondary: Colors.black38)),
-                        overlayColor: const Color(0x33E8EAF6));
-
-                    controller.editAnimal(model.serial).then((value) => Loader.hide());
-                  
-                  }),
-                  SizedBox(
-                    height: margin,
-                  )
-                ],
-              ),
-            );
+                ));
           }),
     );
   }
 
+  Widget stepperWidget(controller, context) {
+    double margin = getScreenPercentSize(context, 1.2);
+    double height = getScreenPercentSize(context, 17);
+
+    switch (controller.activeStep) {
+      case 0:
+        return ListView(
+          children: [
+            getTextFiledTitleWidget(context, "", controller.textNameController,
+                "Pet Name", TextInputType.text),
+            SizedBox(
+              height: margin,
+            ),
+            const Text(
+              "Category",
+              style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.normal,
+                  color: Colors.grey),
+            ),
+            getDropDownWidget(context, controller.selectedCategory!,
+                controller.categoriesNames, controller.changeCategory),
+            SizedBox(
+              height: margin,
+            ),
+            getTextFiledTitleWidget(context, "", controller.textTypeController,
+                "Type", TextInputType.text),
+            SizedBox(
+              height: margin,
+            ),
+            controller.images.isNotEmpty
+                ? Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        "Pet Photos",
+                        style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.normal,
+                            color: Colors.grey),
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      showListOfImagesWidget(
+                          context, controller, controller.imagesModel)
+                    ],
+                  )
+                : const SizedBox(),
+            SizedBox(
+              height: margin * 2,
+            ),
+            const Text(
+              "Upload Photos",
+              style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.normal,
+                  color: Colors.grey),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            InkWell(
+              onTap: () {
+                controller.selectImages();
+              },
+              child: Container(
+                height: 80,
+                decoration: getShapeDecoration(context),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Image.asset(
+                      "${assetsPath}camera fill.png",
+                      height: getPercentSize(height, 15),
+                      color: primaryColor,
+                    ),
+                    SizedBox(
+                      width: getWidthPercentSize(context, 2),
+                    ),
+                    Text('Photos/Videos',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            fontWeight: FontWeight.w500,
+                            fontSize: getPercentSize(height, 12),
+                            decoration: TextDecoration.none,
+                            fontFamily: customFontFamily,
+                            color: primaryColor))
+                  ],
+                ),
+              ),
+            ),
+            SizedBox(
+              height: margin * 2,
+            ),
+            controller.imageFileList!.isNotEmpty
+                ? Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        "Uploading Photos",
+                        style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.normal,
+                            color: Colors.grey),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      listOfImagesWidget(context, controller)
+                    ],
+                  )
+                : const SizedBox(),
+          ],
+        );
+
+      case 1:
+        return ListView(
+          // crossAxisAlignment: CrossAxisAlignment.start,
+          // mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            const Text(
+              "Location",
+              style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.normal,
+                  color: Colors.grey),
+            ),
+            getDropDownWidget(context, controller.selectedLocation!,
+                controller.locationList, controller.changeLocation),
+            SizedBox(
+              height: margin,
+            ),
+            const Text(
+              "Gender",
+              style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.normal,
+                  color: Colors.grey),
+            ),
+            SizedBox(
+              height: margin,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                getRadioButton(context, "Male", controller.gender[0],
+                    controller.selectedGender, controller.changeGender),
+                const SizedBox(
+                  width: (8),
+                ),
+                getRadioButton(context, "Female", controller.gender[1],
+                    controller.selectedGender, controller.changeGender),
+              ],
+            ),
+            SizedBox(
+              height: margin * 2,
+            ),
+            getTextFiledTitleWidget(context, "", controller.textColorController,
+                "Color", TextInputType.text),
+            const SizedBox(
+              height: 10,
+            ),
+            Row(
+              children: [
+                Expanded(
+                  child: getTextFiledTitleWidget(
+                      context,
+                      "",
+                      controller.textWeightController,
+                      "Weight",
+                      TextInputType.number),
+                ),
+                const SizedBox(
+                  width: 20,
+                ),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 20),
+                    child: getDropDownWidget(
+                        context,
+                        controller.selectedWeight!,
+                        controller.weightList,
+                        controller.changeWeight),
+                  ),
+                )
+              ],
+            ),
+            Row(
+              children: [
+                Expanded(
+                  child: getTextFiledTitleWidget(
+                      context,
+                      "",
+                      controller.textAgeController,
+                      "Age",
+                      TextInputType.number),
+                ),
+                const SizedBox(
+                  width: 20,
+                ),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 20),
+                    child: getDropDownWidget(
+                        context,
+                        controller.selectedAgePrefix!,
+                        controller.agePrefixList,
+                        controller.changeAgePrefix),
+                  ),
+                )
+              ],
+            ),
+          ],
+        );
+
+      case 2:
+        return ListView(
+          children: [
+            const Text(
+              "Vaccinated",
+              style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.normal,
+                  color: Colors.grey),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Row(
+              children: [
+                getRadioButton(context, "Yes", controller.vaccinated[0],
+                    controller.selectedVaccinated, controller.changeVaccinated),
+                const SizedBox(
+                  width: (10),
+                ),
+                getRadioButton(context, "No", controller.vaccinated[1],
+                    controller.selectedVaccinated, controller.changeVaccinated),
+              ],
+            ),
+            SizedBox(
+              height: margin * 2,
+            ),
+            controller.selectedVaccinated == "true"
+                ? getTextFiledTitleWidget(
+                    context,
+                    "",
+                    controller.textNoOfVaccinatedController,
+                    "Number of vaccines",
+                    TextInputType.number)
+                : const SizedBox(),
+            SizedBox(
+              height: margin,
+            ),
+            const Text(
+              "Passport",
+              style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.normal,
+                  color: Colors.grey),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Row(
+              children: [
+                getRadioButton(context, "Yes", controller.passport[0],
+                    controller.selectedPassport, controller.changePassport),
+                const SizedBox(
+                  width: (10),
+                ),
+                getRadioButton(context, "No", controller.passport[1],
+                    controller.selectedPassport, controller.changePassport),
+              ],
+            ),
+            SizedBox(
+              height: margin * 2,
+            ),
+            const Text(
+              "Friendly",
+              style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.normal,
+                  color: Colors.grey),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Row(
+              children: [
+                getRadioButton(context, "Yes", controller.friendly[0],
+                    controller.selectedFriendly, controller.changeFriendly),
+                const SizedBox(
+                  width: (10),
+                ),
+                getRadioButton(context, "No", controller.friendly[1],
+                    controller.selectedFriendly, controller.changeFriendly),
+              ],
+            ),
+            SizedBox(
+              height: margin * 2,
+            ),
+            const Text(
+              "More Description",
+              style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.normal,
+                  color: Colors.grey),
+            ),
+            // const SizedBox(
+            //   height: 5,
+            // ),
+            textFiledWidgetLarge(context, "", controller.textDescController),
+          ],
+        );
+
+      default:
+        return Text("Default");
+    }
+  }
 }

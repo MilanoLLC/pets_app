@@ -136,18 +136,18 @@ class _TrackOrderPage extends State<TrackOrderPage> {
                                       getPercentSize(height, 14),
                                       FontWeight.w400,
                                       TextAlign.start,
-                                      1),
+                                      1,context),
 
                                 ),
 
-                                getCustomTextWithFontFamilyWidget(
+                                getCustomTextWidget(
                                     '8 PM',
                                     textColor,
                                     getPercentSize(height, 14),
                                     FontWeight.w400,
                                     TextAlign.start,
 
-                                    1)
+                                    1,context)
 
                               ],
                             ),
@@ -336,7 +336,7 @@ class _TrackOrderPage extends State<TrackOrderPage> {
                       //         color: subTextColor)),
 
                       getCustomTextWidget(desc, primaryColor, getScreenPercentSize(context, 1.5), FontWeight.w600,
-                          TextAlign.start,2),
+                          TextAlign.start,2,context),
 
 
                       // SizedBox(height: getScreenPercentSize(context, 0.5),),

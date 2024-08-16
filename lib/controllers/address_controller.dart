@@ -10,6 +10,7 @@ import 'package:pets_app/services/local_storage_service.dart';
 class AddressController extends GetxController with StateMixin<dynamic> {
   var authRepository = getIt<IAuthRepository>();
   var storage = getIt<ILocalStorageService>();
+  bool haveAddress=false;
 
   TextEditingController additionalInstructionsController =
       TextEditingController();

@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:pets_app/widgets/PrefData.dart';
 
-const secondaryColor = Color(0xFF2A2D3E);
-const bgColor = Color(0xFF212332);
+const secondaryColor = Color(0xFF1c1f26);  //Color(0xFF2A2D3E);
+const bgColor = Color(0xFF0e1116); //Color(0xFF212332);
 Color borderColor = "#E7E4EF".toColor();
 Color primaryColor = "#7A6DB7".toColor();
 
@@ -20,7 +20,7 @@ Color themeCellColor = "#7F3C8A".toColor();
 Color textColor = Colors.black87;
 Color subTextColor = "#746F7A".toColor();
 Color backgroundColor = Colors.grey.shade500;
-Color scaffoldBackground="#eeeeee".toColor();
+Color scaffoldBackground="#fbf8ff".toColor();
 Color cellColor = "#F9F9FC".toColor();
 // Color cellColor = "#E2E7F1".toColor();
 Color accentColor = "#7F3C8A".toColor();
@@ -34,6 +34,8 @@ String iconsPath = "assets/icons/";
 String networkPath="http://animalsos.milanollc.com/getLocalFile/";
 const double avatarRadius = 40;
 const double padding = 20;
+
+const double theRadius = 15;
 
 setThemePosition({BuildContext? context}) async {
   bool isNightMode = await PrefData.getNightTheme();

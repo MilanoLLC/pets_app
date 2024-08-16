@@ -33,11 +33,29 @@ class EditAnimalController extends GetxController with StateMixin<dynamic> {
   TextEditingController textAgeController = TextEditingController();
   TextEditingController textAgePrefixController = TextEditingController();
   List<String> images = [];
+  List<String> imagesModel = [];
 
   String? selectedCategory = "";
   String? selectedAgePrefix = "";
 
   var isChecked = false.obs;
+
+  String? selectedLocation = "Dubai";
+  List<String> locationList = [
+    "Abu Dhabi",
+    "Dubai",
+    "Sharjah",
+    "Ajman",
+    "Umm Al Quwain",
+    "Ras Al Khaimah",
+    "Fujairah"
+  ];
+
+  String? selectedWeight = "Kilograms";
+  List<String> weightList = [
+    "Grams",
+    "Kilograms",
+  ];
 
   String selectedGender = "MALE";
   final List<String> gender = ["MALE", "FEMALE"];
@@ -53,15 +71,18 @@ class EditAnimalController extends GetxController with StateMixin<dynamic> {
 
   final ImagePicker imagePicker = ImagePicker();
   List<XFile>? imageFileList = [];
+  int activeStep = 0;
+  int activeStepIndex = 0;
+  int upperBound = 3;
 
   @override
   Future<void> onInit() async {
     super.onInit();
-    Map<String, AnimalModel?> args = Get.arguments;
+    Map<String, dynamic> args = Get.arguments;
 
     model = args['model']!;
-    await getPetDetails();
     await getCategories();
+    await getPetDetails();
     agePrefixList = ["Days", "Weeks", "Months", "Years"];
   }
 
@@ -69,6 +90,7 @@ class EditAnimalController extends GetxController with StateMixin<dynamic> {
     textNameController.text = model.animalName!;
     textColorController.text = model.color!;
     selectedGender = model.gender!;
+    selectedLocation = model.location!;
     selectedFriendly = model.friendly == true ? "true" : "false";
     selectedCategory = model.category!.enName;
     textWeightController.text = model.weight!.toString();
@@ -82,6 +104,7 @@ class EditAnimalController extends GetxController with StateMixin<dynamic> {
     textAgeController.text = model.age!;
     textAgePrefixController.text = model.agePrefix!;
     images = model.images!;
+    imagesModel = model.images!;
     selectedAgePrefix = model.agePrefix!;
   }
 
@@ -90,6 +113,11 @@ class EditAnimalController extends GetxController with StateMixin<dynamic> {
     if (selectedImages.isNotEmpty) {
       imageFileList!.addAll(selectedImages);
     }
+    update();
+  }
+
+  void removeImages(index) async {
+    imageFileList!.removeAt(index);
     update();
   }
 
@@ -128,6 +156,16 @@ class EditAnimalController extends GetxController with StateMixin<dynamic> {
     update();
   }
 
+  void changeWeight(value) {
+    selectedWeight = value;
+    update();
+  }
+
+  void changeLocation(value) {
+    selectedLocation = value;
+    update();
+  }
+
   Future<void> getCategories() async {
     try {
       await homeRepository.getCategories().then((value) {
@@ -147,7 +185,6 @@ class EditAnimalController extends GetxController with StateMixin<dynamic> {
     selectedCategory = categoriesNames[0];
     update();
   }
-
 
   Future<void> getMyPets() async {
     try {
@@ -188,7 +225,6 @@ class EditAnimalController extends GetxController with StateMixin<dynamic> {
               imageFileList)
           .then((value) {
         if (value.statusCode == 200) {
-
           getMyPets();
           // ProductController().updateData(myPets);
           Get.find<ProductController>().updateData(myPets);
@@ -197,7 +233,6 @@ class EditAnimalController extends GetxController with StateMixin<dynamic> {
           Get.snackbar('Success'.tr, "Animal Edited successfully",
               backgroundColor: Colors.green, colorText: Colors.white);
           update();
-
         }
       });
     } on SocketException catch (ex) {
@@ -207,5 +242,46 @@ class EditAnimalController extends GetxController with StateMixin<dynamic> {
       Get.snackbar('Error'.tr, ex.toString(),
           backgroundColor: Colors.red, colorText: Colors.white);
     }
+  }
+
+  nextButton() {
+    if (activeStep < upperBound) {
+      activeStep++;
+      update();
+    }
+  }
+
+  previousButton() {
+    if (activeStep > 0) {
+      activeStep--;
+      update();
+    }
+  }
+
+  stepReached(index) {
+    activeStep = index;
+    update();
+  }
+
+  stepCancel() {
+    if (activeStepIndex == 0) {
+      return;
+    }
+    activeStepIndex -= 1;
+    // update();
+  }
+
+  stepTapped(int index) {
+    activeStepIndex = index;
+    // update();
+  }
+
+  stepContinue() {
+    if (activeStepIndex < (3)) {
+      activeStepIndex += 1;
+    } else {
+      print('Submited');
+    }
+    // update();
   }
 }

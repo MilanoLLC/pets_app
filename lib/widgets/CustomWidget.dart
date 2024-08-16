@@ -1,59 +1,60 @@
+import 'package:country_code_picker/country_code_picker.dart';
 import 'package:figma_squircle/figma_squircle.dart';
 import 'package:flutter/material.dart';
 
 import '../helpers/constant.dart';
 
-Widget getUnderlineText(String text, Color color, int maxLine,
-    TextAlign textAlign, FontWeight fontWeight, double textSizes) {
-  return Text(
-    text,
-    overflow: TextOverflow.ellipsis,
-    style: TextStyle(
-        decoration: TextDecoration.underline,
-        fontSize: textSizes,
-        color: color,
-        fontFamily: fontFamily,
-        fontWeight: fontWeight),
-    maxLines: maxLine,
-    textAlign: textAlign,
-  );
-}
+// Widget getUnderlineText(String text, Color color, int maxLine,
+//     TextAlign textAlign, FontWeight fontWeight, double textSizes) {
+//   return Text(
+//     text,
+//     overflow: TextOverflow.ellipsis,
+//     style: TextStyle(
+//         decoration: TextDecoration.underline,
+//         fontSize: textSizes,
+//         color: color,
+//         fontFamily: fontFamily,
+//         fontWeight: fontWeight),
+//     maxLines: maxLine,
+//     textAlign: textAlign,
+//   );
+// }
 
-Widget getBottomText(BuildContext context, String s, Function function) {
-  double bottomHeight = getScreenPercentSize(context, 7.6);
-  double radius = getPercentSize(bottomHeight, 18);
-
-  return InkWell(
-    child: Container(
-      height: bottomHeight,
-      margin: EdgeInsets.symmetric(
-          horizontal: getPercentSize(bottomHeight, 50),
-          vertical: getPercentSize(bottomHeight, 15)),
-      decoration: BoxDecoration(
-        color: primaryColor,
-        borderRadius: BorderRadius.all(Radius.circular(radius)),
-      ),
-      child: Center(
-        child: getTextWidget(
-          s,
-          Colors.white,
-          getPercentSize(bottomHeight, 30),
-          FontWeight.bold,
-          TextAlign.start,
-        ),
-      ),
-    ),
-    onTap: () {
-      function();
-    },
-  );
-}
+// Widget getBottomText(BuildContext context, String s, Function function) {
+//   double bottomHeight = getScreenPercentSize(context, 7.6);
+//   double radius = getPercentSize(bottomHeight, 18);
+//
+//   return InkWell(
+//     child: Container(
+//       height: bottomHeight,
+//       margin: EdgeInsets.symmetric(
+//           horizontal: getPercentSize(bottomHeight, 50),
+//           vertical: getPercentSize(bottomHeight, 15)),
+//       decoration: BoxDecoration(
+//         color: primaryColor,
+//         borderRadius: BorderRadius.all(Radius.circular(radius)),
+//       ),
+//       child: Center(
+//         child: getTextWidget(
+//           s,
+//           Colors.white,
+//           getPercentSize(bottomHeight, 30),
+//           FontWeight.bold,
+//           TextAlign.start,
+//         ),
+//       ),
+//     ),
+//     onTap: () {
+//       function();
+//     },
+//   );
+// }
 
 getOutLineBorder(double radius) {
   return OutlineInputBorder(
     borderRadius: BorderRadius.all(Radius.circular(radius)),
     // OutlineInputBorder(
-    borderSide: const BorderSide(width: 0, color: Colors.transparent),
+    borderSide: const BorderSide(width: 0, style: BorderStyle.none),
   );
 }
 
@@ -74,17 +75,17 @@ Widget getTextWithFontFamilyWidget(
       ));
 }
 
-Widget getSplashTextWidget(String string, Color color, double size,
-    FontWeight fontWeight, TextAlign align) {
-  return Text(string,
-      textAlign: align,
-      style: TextStyle(
-          fontWeight: fontWeight,
-          fontSize: size,
-          decoration: TextDecoration.none,
-          fontFamily: 'Sniglet',
-          color: color));
-}
+// Widget getSplashTextWidget(String string, Color color, double size,
+//     FontWeight fontWeight, TextAlign align) {
+//   return Text(string,
+//       textAlign: align,
+//       style: TextStyle(
+//           fontWeight: fontWeight,
+//           fontSize: size,
+//           decoration: TextDecoration.none,
+//           fontFamily: 'Sniglet',
+//           color: color));
+// }
 
 Widget getTextWidget(String string, Color color, double size,
     FontWeight fontWeight, TextAlign align) {
@@ -94,95 +95,94 @@ Widget getTextWidget(String string, Color color, double size,
           fontWeight: fontWeight,
           fontSize: size,
           decoration: TextDecoration.none,
-          fontFamily: fontFamily,
           color: color));
 }
 
-Widget getTextWidgetWithSpacing(String text, Color color, TextAlign textAlign,
-    FontWeight fontWeight, double textSizes) {
-  return Text(
-    text,
-    style: TextStyle(
-        decoration: TextDecoration.none,
-        fontSize: textSizes,
-        color: color,
-        height: 1.5,
-        fontFamily: fontFamily,
-        fontWeight: fontWeight),
-    textAlign: textAlign,
-  );
-}
+// Widget getTextWidgetWithSpacing(String text, Color color, TextAlign textAlign,
+//     FontWeight fontWeight, double textSizes) {
+//   return Text(
+//     text,
+//     style: TextStyle(
+//         decoration: TextDecoration.none,
+//         fontSize: textSizes,
+//         color: color,
+//         height: 1.5,
+//         fontFamily: fontFamily,
+//         fontWeight: fontWeight),
+//     textAlign: textAlign,
+//   );
+// }
 
-Color getOrderColor(String s) {
-  if (s.contains("On Delivery")) {
-    return primaryColor.withOpacity(0.2);
-  } else if (s.contains("Completed")) {
-    return Colors.lightGreen;
-  } else {
-    return Colors.redAccent;
-  }
-}
+// Color getOrderColor(String s) {
+//   if (s.contains("On Delivery")) {
+//     return primaryColor.withOpacity(0.2);
+//   } else if (s.contains("Completed")) {
+//     return Colors.lightGreen;
+//   } else {
+//     return Colors.redAccent;
+//   }
+// }
 
 double getHorizontalSpace(BuildContext context) {
   return getWidthPercentSize(context, 4);
 }
 
-Color getIconColor(String s) {
-  if (s.contains("On Delivery")) {
-    return primaryColor;
-  } else {
-    return Colors.white;
-  }
-}
+// Color getIconColor(String s) {
+//   if (s.contains("On Delivery")) {
+//     return primaryColor;
+//   } else {
+//     return Colors.white;
+//   }
+// }
 
-Widget getTextWidgetWithSpacing1(String text, Color color, TextAlign textAlign,
-    FontWeight fontWeight, double textSizes) {
-  return Text(
-    text,
-    style: TextStyle(
-        decoration: TextDecoration.none,
-        fontSize: textSizes,
-        color: color,
-        height: 1.3,
-        fontFamily: fontFamily,
-        fontWeight: fontWeight),
-    textAlign: textAlign,
-  );
-}
+// Widget getTextWidgetWithSpacing1(String text, Color color, TextAlign textAlign,
+//     FontWeight fontWeight, double textSizes) {
+//   return Text(
+//     text,
+//     style: TextStyle(
+//         decoration: TextDecoration.none,
+//         fontSize: textSizes,
+//         color: color,
+//         height: 1.3,
+//         fontFamily: fontFamily,
+//         fontWeight: fontWeight),
+//     textAlign: textAlign,
+//   );
+// }
 
-Widget getLineTextView(String s, var color, var fontSize) {
-  return Text(
-    s,
-    maxLines: 1,
-    style: TextStyle(
-      color: color,
-      fontFamily: fontFamily,
-      fontWeight: FontWeight.w400,
-      decorationColor: (s.isNotEmpty) ? color : Colors.transparent,
-      decorationStyle: TextDecorationStyle.solid,
-      decoration: TextDecoration.lineThrough,
-      fontSize: fontSize,
-    ),
-  );
-}
+// Widget getLineTextView(String s, var color, var fontSize) {
+//   return Text(
+//     s,
+//     maxLines: 1,
+//     style: TextStyle(
+//       color: color,
+//       fontFamily: fontFamily,
+//       fontWeight: FontWeight.w400,
+//       decorationColor: (s.isNotEmpty) ? color : Colors.transparent,
+//       decorationStyle: TextDecorationStyle.solid,
+//       decoration: TextDecoration.lineThrough,
+//       fontSize: fontSize,
+//     ),
+//   );
+// }
 
-Widget getSpaceTextWidget(String text, Color color, TextAlign textAlign,
-    FontWeight fontWeight, double textSizes) {
-  return Text(
-    text,
-    style: TextStyle(
-        height: 1.5,
-        decoration: TextDecoration.none,
-        fontSize: textSizes,
-        color: color,
-        fontFamily: fontFamily,
-        fontWeight: fontWeight),
-    textAlign: textAlign,
-  );
-}
+// Widget getSpaceTextWidget(String text, Color color, TextAlign textAlign,
+//     FontWeight fontWeight, double textSizes) {
+//   return Text(
+//     text,
+//     style: TextStyle(
+//         height: 1.5,
+//         decoration: TextDecoration.none,
+//         fontSize: textSizes,
+//         color: color,
+//         fontFamily: fontFamily,
+//         fontWeight: fontWeight),
+//     textAlign: textAlign,
+//   );
+// }
 
-Widget getCustomTextWithFontFamilyWidget(String string, Color color,
-    double size, FontWeight fontWeight, TextAlign align, int maxLine) {
+Widget getCustomTextWidget2(String string, Color color, double size,
+    FontWeight fontWeight, TextAlign align, int maxLine) {
   return Text(string,
       textAlign: align,
       maxLines: maxLine,
@@ -196,16 +196,19 @@ Widget getCustomTextWithFontFamilyWidget(String string, Color color,
 }
 
 Widget getCustomTextWidget(String string, Color color, double size,
-    FontWeight fontWeight, TextAlign align, int maxLine) {
-  return Text(string,
-      textAlign: align,
-      maxLines: maxLine,
-      overflow: TextOverflow.ellipsis,
-      style: TextStyle(
-          fontWeight: fontWeight,
-          fontSize: size,
-          fontFamily: fontFamily,
-          color: color));
+    FontWeight fontWeight, TextAlign align, int maxLine, context) {
+  return SizedBox(
+    width: MediaQuery.of(context).size.width * 0.2,
+    child: Text(string,
+        textAlign: align,
+        maxLines: maxLine,
+        overflow: TextOverflow.ellipsis,
+        style: TextStyle(
+            fontWeight: fontWeight,
+            fontSize: size,
+            fontFamily: fontFamily,
+            color: color)),
+  );
 }
 
 double getScreenPercentSize(BuildContext context, double percent) {
@@ -236,7 +239,7 @@ Widget getPrescriptionDesc(BuildContext context, String s,
           EdgeInsets.symmetric(horizontal: getWidthPercentSize(context, 2)),
       alignment: Alignment.topRight,
       decoration: ShapeDecoration(
-        color: cellColor,
+        color: Theme.of(context).cardColor,
         shape: SmoothRectangleBorder(
           side: BorderSide(
               color: isAutoFocus ? primaryColor : borderColor, width: 1),
@@ -307,7 +310,7 @@ Widget getDefaultTextFiledWithoutIconWidget(BuildContext context, String s,
             EdgeInsets.symmetric(horizontal: getWidthPercentSize(context, 4)),
         alignment: Alignment.centerLeft,
         decoration: ShapeDecoration(
-          color: alphaColor,
+          color: Theme.of(context).cardColor,
           shape: SmoothRectangleBorder(
             side: BorderSide(
                 color: isAutoFocus ? primaryColor : borderColor, width: 1),
@@ -364,74 +367,61 @@ Widget getDefaultTextFiledWithoutIconWidget(BuildContext context, String s,
   );
 }
 
-Widget getEditProfileTextFiledWidget(BuildContext context, String s,
-    TextEditingController textEditingController) {
+Widget textFiledWidget(BuildContext context, String s,
+    TextEditingController textEditingController, icon, textType, validFunc) {
   double height = getScreenPercentSize(context, 7);
 
-  double radius = getPercentSize(height, 20);
-  double fontSize = getPercentSize(height, 27);
+  double fontSize = getPercentSize(height, 28);
   FocusNode myFocusNode = FocusNode();
   bool isAutoFocus = false;
   // return StatefulBuilder(builder: (context, setState) {
-  return Container(
-    height: height,
-    margin: EdgeInsets.symmetric(vertical: getScreenPercentSize(context, 1.2)),
-    alignment: Alignment.centerLeft,
-    decoration: ShapeDecoration(
-      color: cellColor,
-      shape: SmoothRectangleBorder(
-        side: BorderSide(
-            color: isAutoFocus ? primaryColor : borderColor, width: 1),
-        borderRadius: SmoothBorderRadius(
-          cornerRadius: radius,
-          cornerSmoothing: 0.8,
-        ),
-      ),
-    ),
-    // child: Focus(
-    //   onFocusChange: (hasFocus) {
-    //     if (hasFocus) {
-    //       setState(() {
-    //         isAutoFocus = true;
-    //         myFocusNode.canRequestFocus = true;
-    //       });
-    //     } else {
-    //       setState(() {
-    //         isAutoFocus = false;
-    //         myFocusNode.canRequestFocus = false;
-    //       });
-    //     }
-    //   },
-    child: TextField(
+  return Padding(
+    padding: EdgeInsets.symmetric(vertical: getScreenPercentSize(context, 1.5)),
+    child: TextFormField(
+      validator: validFunc,
       // focusNode: myFocusNode,
       // autofocus: false,
       maxLines: 1,
       controller: textEditingController,
       textAlign: TextAlign.start,
       textAlignVertical: TextAlignVertical.center,
+      keyboardType: textType,
       style: TextStyle(
-          fontFamily: fontFamily,
-          color: Colors.black,
+          // fontFamily: fontFamily,
+          color: Theme.of(context).hintColor,
           fontWeight: FontWeight.w400,
           fontSize: fontSize),
       decoration: InputDecoration(
+        border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide:
+                BorderSide(color: Colors.grey.withOpacity(0.5), width: 1)),
+        filled: true,
+        fillColor: Theme.of(context).cardColor,
         contentPadding: EdgeInsets.only(left: getWidthPercentSize(context, 4)),
-        border: InputBorder.none,
-        focusedBorder: InputBorder.none,
-        enabledBorder: InputBorder.none,
-        errorBorder: InputBorder.none,
+        focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: BorderSide(color: primaryColor, width: 1)),
+        enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: BorderSide(color: primaryColor, width: 1)),
+        errorBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: const BorderSide(color: Colors.red, width: 1)),
         disabledBorder: InputBorder.none,
+        labelText: s,
+        labelStyle: const TextStyle(fontSize: 14, color: Colors.grey),
         hintText: s,
-        suffixIcon: Icon(
-          Icons.add,
-          color: Colors.transparent,
-          size: getPercentSize(height, 40),
-        ),
         hintStyle: TextStyle(
-            fontFamily: fontFamily,
-            color: Colors.grey,
+            color: subTextColor,
             fontWeight: FontWeight.w400,
             fontSize: fontSize),
+        suffixIcon: Icon(
+          icon,
+          color: primaryColor,
+          size: getPercentSize(height, 40),
+        ),
+        // isDense: true,
       ),
       onChanged: (value) {
         textEditingController.text = value;
@@ -441,98 +431,175 @@ Widget getEditProfileTextFiledWidget(BuildContext context, String s,
             TextSelection.fromPosition(TextPosition(offset: value.length));
       },
     ),
-    // ),
   );
   // });
 }
 
-Widget getEditProfilePhoneTextFiledWidget(BuildContext context, String s,
+Widget passwordFieldWidget(BuildContext context,
+    TextEditingController textEditingController, visible, func) {
+  double height = getScreenPercentSize(context, 7);
+  double fontSize = getPercentSize(height, 28);
+
+  return Padding(
+    padding: EdgeInsets.symmetric(vertical: getScreenPercentSize(context, 1.2)),
+    child: TextFormField(
+      textAlign: TextAlign.start,
+      textAlignVertical: TextAlignVertical.center,
+      controller: textEditingController,
+      style: TextStyle(
+          color: Theme.of(context).hintColor,
+          fontWeight: FontWeight.w400,
+          fontSize: fontSize),
+      obscureText: visible,
+      decoration: InputDecoration(
+        border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide:
+                BorderSide(color: Colors.grey.withOpacity(0.5), width: 1)),
+        filled: true,
+        fillColor: Theme.of(context).cardColor,
+        contentPadding: EdgeInsets.only(left: getWidthPercentSize(context, 4)),
+        focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: BorderSide(color: primaryColor, width: 1)),
+        enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: BorderSide(color: primaryColor, width: 1)),
+        errorBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: const BorderSide(color: Colors.red, width: 1)),
+        disabledBorder: InputBorder.none,
+        hintText: "Password",
+        hintStyle: TextStyle(
+            fontFamily: fontFamily,
+            color: subTextColor,
+            fontWeight: FontWeight.w400,
+            fontSize: fontSize),
+        labelText: "Password *",
+        labelStyle: const TextStyle(fontSize: 14, color: Colors.grey),
+        // helperText:
+        //     "Password must contain special character",
+        helperStyle: const TextStyle(color: Colors.green),
+        suffixIcon: IconButton(
+          icon: Icon(
+            visible ? Icons.visibility : Icons.visibility_off,
+            color: primaryColor,
+          ),
+          onPressed: func,
+        ),
+        alignLabelWithHint: false,
+        // filled: true,
+      ),
+      keyboardType: TextInputType.visiblePassword,
+      textInputAction: TextInputAction.done,
+      validator: (value) {
+        if (value!.isEmpty) {
+          return 'Please enter a password';
+        } else if (value.length < 8 || value.length > 40) {
+          return 'Password should be between 8 and 40 characters';
+        } else if (!RegExp(r'^(?=.*?[a-z])(?=.*?[A-Z])(?=.*?[0-9]).{8,}$')
+            .hasMatch(value)) {
+          return 'Password should contain at least one uppercase letter, one lowercase letter, and one number';
+        }
+        return null;
+      },
+    ),
+  );
+}
+
+Widget phoneTextFiledWidget(BuildContext context, String s,
     TextEditingController textEditingController) {
   double height = getScreenPercentSize(context, 7);
-
-  double radius = getPercentSize(height, 20);
   double fontSize = getPercentSize(height, 27);
-  FocusNode myFocusNode = FocusNode();
-  bool isAutoFocus = false;
+
   return StatefulBuilder(builder: (context, setState) {
     return Row(
       children: [
-        const Image(
-          image: AssetImage("assets/images/united-arab-emirates-uae.gif"),
-          width: 40,
-        ),
-        const SizedBox(
-          width: 10,
-        ),
-        const Text("+971"),
-        const SizedBox(
-          width: 10,
-        ),
-        Expanded(
-          child: Container(
-            // width: MediaQuery.of(context).size.width-140,          height: height,
-            margin: EdgeInsets.symmetric(
-                vertical: getScreenPercentSize(context, 1.2)),
-            alignment: Alignment.centerLeft,
-            decoration: ShapeDecoration(
-              color: cellColor,
-              shape: SmoothRectangleBorder(
-                side: BorderSide(
-                    color: isAutoFocus ? primaryColor : borderColor, width: 1),
-                borderRadius: SmoothBorderRadius(
-                  cornerRadius: radius,
-                  cornerSmoothing: 0.8,
-                ),
+        Container(
+          decoration: ShapeDecoration(
+            color: Theme.of(context).cardColor,
+            shape: SmoothRectangleBorder(
+              side: BorderSide(color: primaryColor, width: 1),
+              borderRadius: SmoothBorderRadius(
+                cornerRadius: 10,
+                cornerSmoothing: 0.8,
               ),
             ),
-            // child: Focus(
-            //   onFocusChange: (hasFocus) {
-            //     if (hasFocus) {
-            //       setState(() {
-            //         isAutoFocus = true;
-            //         myFocusNode.canRequestFocus = true;
-            //       });
-            //     } else {
-            //       setState(() {
-            //         isAutoFocus = false;
-            //         myFocusNode.canRequestFocus = false;
-            //       });
-            //     }
-            //   },
-            child: TextField(
-              // focusNode: myFocusNode,
-              // autofocus: false,
-              maxLines: 1,
-              controller: textEditingController,
-              textAlign: TextAlign.start,
-              textAlignVertical: TextAlignVertical.center,
-              style: TextStyle(
+          ),
+          child: CountryCodePicker(
+            backgroundColor: Theme.of(context).cardColor,
+            textStyle: TextStyle(
+              color: Theme.of(context).hintColor,
+            ),
+            onChanged: print,
+            // Initial selection and favorite can be one of code ('IT') OR dial_code('+39')
+            initialSelection: '+971',
+            favorite: ['+971', 'UAE'],
+            // optional. Shows only country name and flag
+            showCountryOnly: false,
+            // optional. Shows only country name and flag when popup is closed.
+            showOnlyCountryWhenClosed: false,
+            alignLeft: false,
+            boxDecoration: BoxDecoration(
+              color: Theme.of(context).cardColor,
+            ),
+          ),
+        ),
+        // const Image(
+        //   image: AssetImage("assets/images/united-arab-emirates-uae.gif"),
+        //   width: 40,
+        // ),
+        const SizedBox(
+          width: 10,
+        ),
+        // const Text("+971"),
+
+        Expanded(
+          child: TextField(
+            // focusNode: myFocusNode,
+            // autofocus: false,
+            maxLines: 1,
+            controller: textEditingController,
+            textAlign: TextAlign.start,
+            textAlignVertical: TextAlignVertical.center,
+            style: TextStyle(
+                fontFamily: fontFamily,
+                color: Theme.of(context).hintColor,
+                fontWeight: FontWeight.w400,
+                fontSize: fontSize),
+            decoration: InputDecoration(
+              border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                  borderSide: BorderSide(
+                      color: Colors.grey.withOpacity(0.5), width: 1)),
+              filled: true,
+              fillColor: Theme.of(context).cardColor,
+              contentPadding:
+                  EdgeInsets.only(left: getWidthPercentSize(context, 4)),
+              focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                  borderSide: BorderSide(color: primaryColor, width: 1)),
+              enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                  borderSide: BorderSide(color: primaryColor, width: 1)),
+              errorBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                  borderSide: const BorderSide(color: Colors.red, width: 1)),
+              disabledBorder: InputBorder.none,
+              labelText: s,
+              labelStyle: TextStyle(fontSize: 14, color: Colors.grey),
+              hintText: s,
+              hintStyle: TextStyle(
                   fontFamily: fontFamily,
-                  color: Colors.black,
+                  color: Colors.grey,
                   fontWeight: FontWeight.w400,
                   fontSize: fontSize),
-              decoration: InputDecoration(
-                  contentPadding: EdgeInsets.only(
-                      left: getWidthPercentSize(context, 4),
-                      bottom: getWidthPercentSize(context, 3)),
-                  border: InputBorder.none,
-                  focusedBorder: InputBorder.none,
-                  enabledBorder: InputBorder.none,
-                  errorBorder: InputBorder.none,
-                  disabledBorder: InputBorder.none,
-                  hintText: s,
-                  // suffixIcon: Icon(
-                  //   Icons.add,
-                  //   color: Theme.of(context).hintColor,
-                  //   size: getPercentSize(height, 40),
-                  // ),
-                  hintStyle: TextStyle(
-                      fontFamily: fontFamily,
-                      color: Colors.grey,
-                      fontWeight: FontWeight.w400,
-                      fontSize: fontSize)),
+              suffixIcon: Icon(
+                Icons.phone_iphone,
+                color: primaryColor,
+                size: getPercentSize(height, 40),
+              ),
             ),
-            // ),
           ),
         ),
       ],
@@ -541,7 +608,7 @@ Widget getEditProfilePhoneTextFiledWidget(BuildContext context, String s,
 }
 
 Widget getDefaultTextFiledWidget(BuildContext context, String s, var icon,
-    TextEditingController textEditingController) {
+    TextEditingController textEditingController, validFunc) {
   double height = getScreenPercentSize(context, 7);
 
   double radius = getPercentSize(height, 20);
@@ -573,7 +640,7 @@ Widget getDefaultTextFiledWidget(BuildContext context, String s, var icon,
         alignment: Alignment.centerLeft,
 
         decoration: ShapeDecoration(
-          color: cellColor,
+          color: Theme.of(context).cardColor,
           shape: SmoothRectangleBorder(
             side: BorderSide(color: color, width: 1),
             borderRadius: SmoothBorderRadius(
@@ -605,6 +672,7 @@ Widget getDefaultTextFiledWidget(BuildContext context, String s, var icon,
         // }
         // },
         child: TextFormField(
+          validator: validFunc,
           // focusNode: myFocusNode,
           maxLines: 1,
           // autofocus: isAutoFocus,
@@ -726,13 +794,13 @@ Widget getSubMaterialCell(BuildContext context, {Widget? widget}) {
 getDecorationWithColor(double radius, Color color) {
   return ShapeDecoration(
     color: color,
-    // shadows: [
-    //   BoxShadow(
-    //       color: color.withOpacity(0.3),
-    //       blurRadius: 2,
-    //       spreadRadius: 1,
-    //       offset: Offset(0, 1))
-    // ],
+    shadows: [
+      BoxShadow(
+          color: Colors.grey.withOpacity(0.1),
+          blurRadius: 0.5,
+          spreadRadius: 0.5,
+          offset: const Offset(0, 1))
+    ],
     shape: SmoothRectangleBorder(
       side: BorderSide(color: iconColor, width: 0.1),
       borderRadius: SmoothBorderRadius(
@@ -864,7 +932,7 @@ getDecorationWithBorder(double radius, Color backgroundColor, {Color? color}) {
           offset: const Offset(0, 1))
     ],
     shape: SmoothRectangleBorder(
-      side: const BorderSide(color: Colors.transparent, width: 1),
+      side: BorderSide(color: color!, width: 1),
       borderRadius: SmoothBorderRadius(
         cornerRadius: radius,
         cornerSmoothing: 0.8,
@@ -887,32 +955,20 @@ getDecorationWithBorder(double radius, Color backgroundColor, {Color? color}) {
 getDecoration(BuildContext context, double radius) {
   return ShapeDecoration(
     color: Theme.of(context).cardColor,
-    // shadows: [
-    //   BoxShadow(
-    //       color: subTextColor.withOpacity(0.1),
-    //       blurRadius: 22,
-    //       spreadRadius: 1,
-    //       offset: Offset(0, 1))
-    // ],
     shape: SmoothRectangleBorder(
-      side: BorderSide(color: primaryColor, width: 0.2),
       borderRadius: SmoothBorderRadius(
-        cornerRadius: radius,
+        cornerRadius: 10,
         cornerSmoothing: 0.8,
       ),
     ),
+    shadows: [
+      BoxShadow(
+          color: Colors.grey.withOpacity(0.1),
+          blurRadius: 0.5,
+          spreadRadius: 0.5,
+          offset: const Offset(0, 1))
+    ],
   );
-  // return BoxDecoration(
-  //     color: backgroundColor,
-  //     border: Border.all(color: iconColor, width: 0.1),
-  //     borderRadius: BorderRadius.circular(radius),
-  //     boxShadow: [
-  //       BoxShadow(
-  //           color: shadowColor.withOpacity(0.3),
-  //           blurRadius: 3,
-  //           spreadRadius: 1,
-  //           offset: Offset(0, 1))
-  // ]);
 }
 
 Widget getCellWidget(
@@ -1133,119 +1189,61 @@ Widget getPasswordTextFiled(BuildContext context, String s,
   );
 }
 
-Widget getButtonWidget(
-    BuildContext context, String s, var color, Function function) {
-  double height = getScreenPercentSize(context, 7);
-  double radius = getPercentSize(height, 20);
-  double fontSize = getPercentSize(height, 30);
-
-  return InkWell(
-    child: Material(
-      color: Colors.transparent,
-      shadowColor: primaryColor.withOpacity(0.3),
-      elevation: getPercentSize(height, 45),
-      shape: RoundedRectangleBorder(
-          borderRadius:
-              BorderRadius.all(Radius.circular(getPercentSize(radius, 85)))),
-      child: Container(
-        height: height,
-        margin: EdgeInsets.only(
-            top: getScreenPercentSize(context, 1.2),
-            bottom: getHorizontalSpace(context),
-            left: getHorizontalSpace(context),
-            right: getHorizontalSpace(context)),
-        decoration: ShapeDecoration(
-          color: color,
-          // shadows: [
-          // BoxShadow(
-          //     color: color.withOpacity(0.4),
-          //   spreadRadius: 4,
-          //   // blurRadius: 5,
-          //   blurRadius: 25,
-          //   offset: Offset(0, 7),
-          // )
-
-          // BoxShadow(
-          //     color: color.withOpacity(0.2),
-          //     blurRadius: 5,
-          //     spreadRadius: 5,
-          //     offset: Offset(0, 5))
-          // ],
-
-          shape: SmoothRectangleBorder(
-            side: BorderSide(color: subTextColor, width: 0.3),
-            borderRadius: SmoothBorderRadius(
-              cornerRadius: radius,
-              cornerSmoothing: 0.8,
-            ),
-          ),
-        ),
-        child: Center(
-            child: getDefaultTextWidget(
-                s, TextAlign.center, FontWeight.w500, fontSize, Colors.white)),
-      ),
-    ),
-    onTap: () {
-      function();
-    },
-  );
-}
-
-Widget getButtonWithoutSpaceWidget(
-    BuildContext context, String s, var color, Function function) {
-  double height = getScreenPercentSize(context, 7);
-  double radius = getPercentSize(height, 20);
-  double fontSize = getPercentSize(height, 30);
-
-  return InkWell(
-    child: Material(
-      color: Colors.transparent,
-      shadowColor: primaryColor.withOpacity(0.3),
-      elevation: getPercentSize(height, 45),
-      shape: RoundedRectangleBorder(
-          borderRadius:
-              BorderRadius.all(Radius.circular(getPercentSize(radius, 85)))),
-      child: Container(
-        height: height,
-        margin: EdgeInsets.only(
-          bottom: getScreenPercentSize(context, 1.5),
-        ),
-        decoration: ShapeDecoration(
-          color: color,
-          // shadows: [
-          // BoxShadow(
-          //     color: color.withOpacity(0.4),
-          //   spreadRadius: 4,
-          //   // blurRadius: 5,
-          //   blurRadius: 25,
-          //   offset: Offset(0, 7),
-          // )
-
-          // BoxShadow(
-          //     color: color.withOpacity(0.2),
-          //     blurRadius: 5,
-          //     spreadRadius: 5,
-          //     offset: Offset(0, 5))
-          // ],
-
-          shape: SmoothRectangleBorder(
-            side: BorderSide(color: subTextColor, width: 0.3),
-            borderRadius: SmoothBorderRadius(
-              cornerRadius: radius,
-              cornerSmoothing: 0.8,
-            ),
-          ),
-        ),
-        child: Center(
-            child: getDefaultTextWidget(
-                s, TextAlign.center, FontWeight.w500, fontSize, Colors.white)),
-      ),
-    ),
-    onTap: () {
-      function();
-    },
-  );
-}
+// Widget getButtonWithoutSpaceWidget(
+//     BuildContext context, String s, var color, Function function) {
+//   double height = getScreenPercentSize(context, 7);
+//   double radius = getPercentSize(height, 20);
+//   double fontSize = getPercentSize(height, 30);
+//
+//   return InkWell(
+//     child: Material(
+//       color: Colors.transparent,
+//       shadowColor: primaryColor.withOpacity(0.3),
+//       elevation: getPercentSize(height, 45),
+//       shape: RoundedRectangleBorder(
+//           borderRadius:
+//               BorderRadius.all(Radius.circular(getPercentSize(radius, 85)))),
+//       child: Container(
+//         height: height,
+//         margin: EdgeInsets.only(
+//           bottom: getScreenPercentSize(context, 1.5),
+//         ),
+//         decoration: ShapeDecoration(
+//           color: color,
+//           // shadows: [
+//           // BoxShadow(
+//           //     color: color.withOpacity(0.4),
+//           //   spreadRadius: 4,
+//           //   // blurRadius: 5,
+//           //   blurRadius: 25,
+//           //   offset: Offset(0, 7),
+//           // )
+//
+//           // BoxShadow(
+//           //     color: color.withOpacity(0.2),
+//           //     blurRadius: 5,
+//           //     spreadRadius: 5,
+//           //     offset: Offset(0, 5))
+//           // ],
+//
+//           shape: SmoothRectangleBorder(
+//             side: BorderSide(color: subTextColor, width: 0.3),
+//             borderRadius: SmoothBorderRadius(
+//               cornerRadius: radius,
+//               cornerSmoothing: 0.8,
+//             ),
+//           ),
+//         ),
+//         child: Center(
+//             child: getDefaultTextWidget(
+//                 s, TextAlign.center, FontWeight.w500, fontSize, Colors.white)),
+//       ),
+//     ),
+//     onTap: () {
+//       function();
+//     },
+//   );
+// }
 
 Widget getAddButtonWidget(
     BuildContext context, String s, var color, Function function) {
@@ -1332,7 +1330,7 @@ Widget getBlueButton(BuildContext context, Function function, String s) {
   double textSize = getPercentSize(height, 30);
   return SizedBox(
     height: height,
-    child: GestureDetector(
+    child: InkWell(
       onTap: () {
         function();
       },
@@ -1355,7 +1353,7 @@ Widget getButton(BuildContext context, Function function, String s) {
   double textSize = getPercentSize(height, 40);
   return SizedBox(
     height: height,
-    child: GestureDetector(
+    child: InkWell(
       onTap: () {
         function();
       },
@@ -1378,7 +1376,7 @@ Widget getBorderButton(BuildContext context, Function function, String s) {
   double textSize = getPercentSize(height, 40);
   return SizedBox(
     height: height,
-    child: GestureDetector(
+    child: InkWell(
       onTap: () {
         function();
       },
@@ -1439,7 +1437,7 @@ getShapeDecoration(BuildContext context) {
   double radius = getPercentSize(cellHeight, 20);
 
   return ShapeDecoration(
-    color: Theme.of(context).colorScheme.background,
+    color: Theme.of(context).cardColor,
     shape: SmoothRectangleBorder(
       side: const BorderSide(color: Colors.transparent, width: 0.3),
       borderRadius: SmoothBorderRadius(
@@ -1452,35 +1450,32 @@ getShapeDecoration(BuildContext context) {
 
 Widget getRadioButton(BuildContext context, String s, String val,
     String controllerSelected, func) {
-  double cellHeight = getScreenPercentSize(context, 6.5);
+  // double cellHeight = getScreenPercentSize(context, 5.5);
 
   return Expanded(
-    flex: 1,
-    child: Container(
-      height: cellHeight,
-      width: double.infinity,
-      margin:
-          EdgeInsets.symmetric(vertical: getScreenPercentSize(context, 1.2)),
-      padding:
-          EdgeInsets.symmetric(horizontal: getWidthPercentSize(context, 2)),
-      alignment: Alignment.centerLeft,
-      decoration: getShapeDecoration(context),
-      child: ListTile(
-        contentPadding: const EdgeInsets.all(0),
-        title: Text(s),
-        tileColor: Colors.black,
-        selectedTileColor: Colors.black,
-        selectedColor: Colors.black,
-        textColor: Theme.of(context).hintColor,
-        leading: Radio(
-          value: val,
-          groupValue: controllerSelected,
-          onChanged: func,
-          activeColor: Colors.blue,
-          fillColor: MaterialStateColor.resolveWith((states) => Colors.blue),
+    child: ListTile(
+      titleAlignment: ListTileTitleAlignment.center,
+      shape: RoundedRectangleBorder(
+        borderRadius: SmoothBorderRadius(
+          cornerRadius: theRadius,
+          cornerSmoothing: 0.8,
         ),
-        iconColor: Colors.black,
+        side: const BorderSide(color: Colors.transparent, width: 0.3),
       ),
+      contentPadding: const EdgeInsets.all(0),
+      title: Text(s),
+      tileColor: Theme.of(context).cardColor,
+      selectedTileColor: Colors.black,
+      selectedColor: Colors.black,
+      textColor: Theme.of(context).hintColor,
+      leading: Radio(
+        value: val,
+        groupValue: controllerSelected,
+        onChanged: func,
+        activeColor: primaryColor,
+        fillColor: MaterialStateColor.resolveWith((states) => primaryColor),
+      ),
+      iconColor: Colors.black,
     ),
   );
 }
@@ -1498,18 +1493,19 @@ Widget getDropDownWidget(
     alignment: Alignment.centerLeft,
     decoration: getShapeDecoration(context),
     child: DropdownButton<String>(
+      dropdownColor: Theme.of(context).cardColor,
       value: dropdownValue1,
       isDense: true,
       isExpanded: true,
-      icon: Image.asset(
-        "${assetsPath}down-arrow.png",
-        color: textColor,
-        height: fontSize,
-      ),
-      // icon: Icon(
-      //   Icons.keyboard_arrow_down,
-      //   color: textColor,
+      // icon: Image.asset(
+      //   "${assetsPath}down-arrow.png",
+      //   color: Theme.of(context).hintColor,
+      //   height: fontSize,
       // ),
+      icon: Icon(
+        Icons.keyboard_arrow_down,
+        color: Theme.of(context).hintColor,
+      ),
       elevation: 16,
       style: TextStyle(
           fontFamily: fontFamily,
@@ -1535,62 +1531,65 @@ Widget getDropDownWidget(
   );
 }
 
-Widget getDescTextFiledWidget(BuildContext context, String s,
+Widget textFiledWidgetLarge(BuildContext context, String s,
     TextEditingController textEditingController) {
-  double cellHeight = getScreenPercentSize(context, 6.5);
-  double fontSize = getPercentSize(cellHeight, 28);
+  double height = getScreenPercentSize(context, 7);
+  double fontSize = getPercentSize(height, 28);
 
-  return Container(
-    margin: EdgeInsets.symmetric(vertical: getScreenPercentSize(context, 1.2)),
+  return Padding(
     padding: EdgeInsets.symmetric(vertical: getScreenPercentSize(context, 1.2)),
-    alignment: Alignment.centerLeft,
-    decoration: getShapeDecoration(context),
-    child: TextField(
+    child: TextFormField(
       maxLines: 4,
       controller: textEditingController,
       textAlign: TextAlign.start,
       textAlignVertical: TextAlignVertical.center,
       style: TextStyle(
-          fontFamily: fontFamily,
+          // fontFamily: fontFamily,
           color: Theme.of(context).hintColor,
-          height: 1.3,
-          fontWeight: FontWeight.w500,
+          fontWeight: FontWeight.w400,
           fontSize: fontSize),
       decoration: InputDecoration(
-          contentPadding:
-              EdgeInsets.only(left: getWidthPercentSize(context, 2)),
-          border: InputBorder.none,
-          focusedBorder: InputBorder.none,
-          enabledBorder: InputBorder.none,
-          errorBorder: InputBorder.none,
-          disabledBorder: InputBorder.none,
-          hintText: s,
-          suffixIcon: Icon(
-            Icons.add,
-            color: Colors.transparent,
-            size: getPercentSize(cellHeight, 40),
-          ),
-          isDense: true,
-          hintStyle: TextStyle(
-              fontFamily: fontFamily,
-              color: subTextColor,
-              fontWeight: FontWeight.w400,
-              fontSize: fontSize)),
+        border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide:
+                BorderSide(color: Colors.grey.withOpacity(0.5), width: 1)),
+        filled: true,
+        fillColor: Theme.of(context).cardColor,
+        contentPadding: EdgeInsets.all(getWidthPercentSize(context, 4)),
+        focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: BorderSide(color: primaryColor, width: 1)),
+        enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: BorderSide(color: primaryColor, width: 1)),
+        errorBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: const BorderSide(color: Colors.red, width: 1)),
+        disabledBorder: InputBorder.none,
+        labelText: s,
+        labelStyle: const TextStyle(fontSize: 14, color: Colors.grey),
+        hintText: s,
+        hintStyle: TextStyle(
+            color: subTextColor,
+            fontWeight: FontWeight.w400,
+            fontSize: fontSize),
+        // isDense: true,
+      ),
     ),
   );
 }
 
-getTitle(BuildContext context, String string) {
-  return Container(
-    margin: EdgeInsets.only(top: getScreenPercentSize(context, 3)),
-    child: getTextWidget(string, textColor, getScreenPercentSize(context, 1.8),
-        FontWeight.w600, TextAlign.start),
-  );
-}
+// getTitle(BuildContext context, String string) {
+//   return Container(
+//     margin: EdgeInsets.only(top: getScreenPercentSize(context, 3)),
+//     child: getTextWidget(string, textColor, getScreenPercentSize(context, 1.8),
+//         FontWeight.w600, TextAlign.start),
+//   );
+// }
 
-Widget getTextFiledNewPetWidget(BuildContext context, String s,
-    TextEditingController textEditingController, String title) {
-  double cellHeight = getScreenPercentSize(context, 6.5);
+Widget getTextFiledTitleWidget(BuildContext context, String s,
+    TextEditingController textEditingController, String title, textType) {
+  double cellHeight = getScreenPercentSize(context, 6);
   double fontSize = getPercentSize(cellHeight, 28);
 
   return Column(
@@ -1598,7 +1597,7 @@ Widget getTextFiledNewPetWidget(BuildContext context, String s,
     children: [
       Text(
         title,
-        style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+        style: const TextStyle(fontSize: 14, fontWeight: FontWeight.normal,color: Colors.grey),
       ),
       Container(
         height: cellHeight,
@@ -1607,6 +1606,7 @@ Widget getTextFiledNewPetWidget(BuildContext context, String s,
         alignment: Alignment.centerLeft,
         decoration: getShapeDecoration(context),
         child: TextField(
+          keyboardType: textType,
           maxLines: 1,
           controller: textEditingController,
           textAlign: TextAlign.start,

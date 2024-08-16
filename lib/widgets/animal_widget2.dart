@@ -5,125 +5,138 @@ import 'package:pets_app/model/AnimalModel.dart';
 import 'package:pets_app/routes/app_pages.dart';
 import 'package:pets_app/widgets/CustomWidget.dart';
 import 'package:get/get.dart';
+import 'package:pets_app/widgets/custom_icon.dart';
 
-Widget animalWidget2(BuildContext context, AnimalModel model,index) {
-  double height = getScreenPercentSize(context, 15);
+Widget animalWidget2(BuildContext context, AnimalModel model, index) {
+  double height = getScreenPercentSize(context, 18);
+  double defMargin = getScreenPercentSize(context, 1.2);
   double width = getWidthPercentSize(context, 20);
-  double radius = getPercentSize(height, 5);
-  double defMargin = getHorizontalSpace(context);
 
-  return InkWell(
-    child: Container(
-      width: MediaQuery.of(context).size.width - 100,
-      decoration: ShapeDecoration(
-        color: backgroundColor,
-        shadows: [
-          BoxShadow(
-              color: subTextColor.withOpacity(0.1),
-              blurRadius: 2,
-              spreadRadius: 2,
-              offset: const Offset(0, 1))
-        ],
-        shape: SmoothRectangleBorder(
-          borderRadius: SmoothBorderRadius(
-            cornerRadius: radius,
-            cornerSmoothing: 0.8,
-          ),
+  return Container(
+    width: MediaQuery.of(context).size.width / 2,
+    padding: EdgeInsets.all(defMargin),
+    decoration: ShapeDecoration(
+      color: Theme.of(context).cardColor,
+      shape: SmoothRectangleBorder(
+        borderRadius: SmoothBorderRadius(
+          cornerRadius: 10,
+          cornerSmoothing: 1,
         ),
       ),
-      margin: EdgeInsets.only(
-          left: index == 0 ? (defMargin) : (defMargin / 1.5)),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
+      shadows: [
+        BoxShadow(
+            color: Colors.grey.withOpacity(0.1),
+            blurRadius: 0.5,
+            spreadRadius: 0.5,
+            offset: const Offset(0, 1))
+      ],
+    ),
+    margin: EdgeInsets.all(defMargin / 2),
+    // margin:
+    //     EdgeInsets.only(left: index == 0 ? (defMargin) : (defMargin / 1.5)),
+    child: InkWell(
+      onTap: () {
+        Get.toNamed(Routes.PETDETAILS, arguments: [
+          {'model': model}
+        ]);
+      },
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            width: 130.0,
-            decoration: BoxDecoration(
-              color: const Color(0xff7c94b6),
-              image: DecorationImage(
-                image: NetworkImage(networkPath +
-                    model.images![0]),
-                fit: BoxFit.fitHeight,
-              ),
-              borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(20.0),
-                  bottomLeft: Radius.circular(20.0)),
+          SizedBox(
+            height: height,
+            // margin: const EdgeInsets.all(6),
+            child: Stack(
+              children: [
+                Positioned.fill(
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(20.0),
+                    child: Image.network(
+                      networkPath + model.images![0],
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+                Positioned(
+                  top: 0,
+                  right: 0,
+                  child: customIcon(() {}, Icons.favorite),
+                ),
+              ],
             ),
           ),
-          SizedBox(
-            width: getPercentSize(width, 20),
-          ),
+          // Padding(
+          //   padding: EdgeInsets.symmetric(horizontal: defMargin),
+          //   child:
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              const SizedBox(
-                height: 15,
-              ),
               getCustomTextWidget(
                   model.animalName!,
-                  Colors.black,
-                  20,
+                  Theme.of(context).hintColor,
+                  getPercentSize(width, 20),
                   FontWeight.bold,
                   TextAlign.start,
-                  1),
-              const SizedBox(
-                height: 15,
-              ),
+                  1,
+                  context),
               Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  getCustomTextWidget("Gender ", primaryColor, 14,
-                      FontWeight.w500, TextAlign.start, 1),
                   getCustomTextWidget(
-                      model.gender!,
-                      Colors.grey,
-                      14,
+                      model.type!,
+                      Theme.of(context).hintColor,
+                      getPercentSize(width, 16),
                       FontWeight.w500,
                       TextAlign.start,
-                      1)
+                      1,
+                      context),
+                  // SizedBox(
+                  //   width: 65,
+                  //   child: Text(model.type!,
+                  //       overflow: TextOverflow.ellipsis,
+                  //       style: TextStyle(
+                  //           fontWeight: FontWeight.bold,
+                  //           fontSize: 12,
+                  //           fontFamily: fontFamily,
+                  //           color: Colors.grey)),
+                  // ),
+                  // getCustomTextWidget(model.type!, Colors.grey, 12, FontWeight.w500,
+                  //     TextAlign.start, 1),
+                  Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 10, vertical: 8),
+                      decoration: BoxDecoration(
+                        color: Colors.grey.withOpacity(0.4),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(30.0)),
+                      ),
+                      child: Text(
+                        "${model.age!} ${model.agePrefix!}",
+                        style: TextStyle(
+                            fontSize: getPercentSize(width, 14), fontWeight: FontWeight.bold),
+                      )
+                      // getCustomTextWidget(
+                      //     "${model.age!} ${model.agePrefix!}",
+                      //     Theme.of(context).hintColor,
+                      //     12,
+                      //     FontWeight.w500,
+                      //     TextAlign.start,
+                      //     1,
+                      //     context),
+                      )
                 ],
               ),
-              const SizedBox(
-                height: 5,
-              ),
-              Row(
-                children: [
-                  getCustomTextWidget("Age ", primaryColor, 14,
-                      FontWeight.w500, TextAlign.start, 1),
-                  getCustomTextWidget(
-                      "${model.age!} ${model.agePrefix!}",
-                      Colors.grey,
-                      14,
-                      FontWeight.w500,
-                      TextAlign.start,
-                      1)
-                ],
-              ),
-              const SizedBox(
-                height: 5,
-              ),
-              Row(
-                children: [
-                  getCustomTextWidget("Type ", primaryColor, 14,
-                      FontWeight.w500, TextAlign.start, 1),
-                  getCustomTextWidget(
-                     model.type!,
-                      Colors.grey,
-                      14,
-                      FontWeight.w500,
-                      TextAlign.start,
-                      1)
-                ],
-              )
             ],
-          )
+          ),
+          // ),
+          // Padding(
+          //   padding: EdgeInsets.symmetric(horizontal: defMargin),
+          //   child:
+
+          // ),
         ],
       ),
     ),
-    onTap: () {
-      Get.toNamed(Routes.PETDETAILS, arguments: [
-        {'model': model}
-      ]);
-    },
   );
 }

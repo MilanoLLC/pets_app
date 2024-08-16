@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:multi_select_flutter/multi_select_flutter.dart';
 import 'package:pets_app/controllers/pagination_filter_controller.dart';
 import 'package:pets_app/model/CategoryModel.dart';
 import 'package:pets_app/model/AnimalModel.dart';
@@ -14,12 +15,12 @@ class HomeController extends GetxController with StateMixin<dynamic> {
   List<CategoryModel> categoryList = <CategoryModel>[].obs;
   List<String> categoriesNames = <String>[].obs;
 
-  List<AnimalModel> products = <AnimalModel>[].obs;
-  List<AnimalModel> productList = <AnimalModel>[].obs;
+  List<AnimalModel> animals = <AnimalModel>[].obs;
+  List<AnimalModel> animalList = <AnimalModel>[].obs;
 
-  List<AnimalModel> productsByCategory = <AnimalModel>[].obs;
-  List<AnimalModel> productListByCategory = <AnimalModel>[].obs;
-  TextEditingController colorEditingController=TextEditingController();
+  List<AnimalModel> animalsByCategory = <AnimalModel>[].obs;
+  List<AnimalModel> animalListByCategory = <AnimalModel>[].obs;
+  TextEditingController colorEditingController = TextEditingController();
   var homeRepository = getIt<IHomeRepository>();
   var storage = getIt<ILocalStorageService>();
   final _paginationFilter = PaginationFilter().obs;
@@ -30,33 +31,85 @@ class HomeController extends GetxController with StateMixin<dynamic> {
   bool get lastPage => _lastPage.value;
 
   String selectedAge = "less";
-  final List<String> age = ["less", "oneTo3", "threeTo6", "more"];
+  // final List<String> age = ["less", "oneTo3", "threeTo6", "more"];
 
   String selectedGender = "MALE";
-  final List<String> gender = ["MALE", "FEMALE"];
+  // final List<String> gender = ["MALE", "FEMALE"];
 
   String selectedFriendly = "true";
-  final List<String> friendly = ["true", "false"];
+  // final List<String> friendly = ["true", "false"];
 
   String selectedVaccinated = "true";
-  final List<String> vaccinated = ["true", "false"];
+  // final List<String> vaccinated = ["true", "false"];
 
-  String dropdownValue = 'Dubai';
+  String selectedLocation = 'Dubai';
 
-  var items = [
-    'Abu Dhabi',
-    'Ajman',
-    'Dubai',
-    'Fujairah',
-    'Ras Al Khaimah',
-    'Sharjah',
-    'Umm Al Quwain',
+  static List<Emarite> emirateList = [
+    Emarite(name: "Abu Dhabi"),
+    Emarite(name: "Ajman"),
+    Emarite(name: "Dubai"),
+    Emarite(name: "Fujairah"),
+    Emarite(name: "Ras Al Khaimah"),
+    Emarite(name: "Sharjah"),
+    Emarite(name: "Umm Al Quwain"),
   ];
+  final emirates = emirateList
+      .map((element) => MultiSelectItem<Emarite?>(element, element.name))
+      .toList();
+
+  static List<Age> agesList = [
+    Age(name: "Less Than 1 Year"),
+    Age(name: "1 to 3 Years"),
+    Age(name: "3 to 6 Years"),
+    Age(name: "More Than 6 Years"),
+  ];
+
+  final ages = agesList
+      .map((element) => MultiSelectItem<Age?>(element, element.name))
+      .toList();
+
+  static List<Gender> genderList = [
+    Gender(name: "Male"),
+    Gender(name: "Female"),
+  ];
+
+  final gender = genderList
+      .map((element) => MultiSelectItem<Gender?>(element, element.name))
+      .toList();
+
+
+  static List<Friendly> friendlyList = [
+    Friendly(name: "Friendly"),
+    Friendly(name: "UnFriendly"),
+  ];
+  final friendly = friendlyList
+      .map((element) => MultiSelectItem<Friendly?>(element, element.name))
+      .toList();
+
+  static List<Vaccinated> vaccinatedList = [
+    Vaccinated(name: "Vaccinated"),
+    Vaccinated(name: "UnVaccinated"),
+  ];
+
+  final vaccinated = vaccinatedList
+      .map((element) => MultiSelectItem<Vaccinated?>(element, element.name))
+      .toList();
+
+  static List<Color> colorList = [
+    Color(name: "Orange"),
+    Color(name: "Black"),
+    Color(name: "white"),
+    Color(name: "Grey"),
+  ];
+  final colors = colorList
+      .map((element) => MultiSelectItem<Color?>(element, element.name))
+      .toList();
+
   @override
   Future<void> onInit() async {
     super.onInit();
     await getCategories();
-    ever(_paginationFilter, (_) => getProducts());
+    ever(_paginationFilter, (_) => getanimals());
     _changePaginationFilter(0, 8);
   }
 
@@ -82,6 +135,7 @@ class HomeController extends GetxController with StateMixin<dynamic> {
     update();
   }
 
+
   // void changeGender(value) {
   //   selectedGender = value;
   //   update();
@@ -101,14 +155,14 @@ class HomeController extends GetxController with StateMixin<dynamic> {
   //   update();
   // }
 
-  Future<void> getProducts() async {
+  Future<void> getanimals() async {
     try {
       await homeRepository.getAllAnimals(_page, limit).then((value) {
         if (value.isEmpty) {
           _lastPage.value = true;
         }
-        products = products + value;
-        productList = products;
+        animals = animals + value;
+        animalList = animals;
         change(value, status: RxStatus.success());
       });
     } on SocketException catch (ex) {
@@ -121,21 +175,21 @@ class HomeController extends GetxController with StateMixin<dynamic> {
     update();
   }
 
-  Future<void> getProductsByCategory(String category) async {
+  Future<void> getAnimalsByCategory(String category) async {
     try {
       await homeRepository.getAllAnimals(_page, limit).then((value) {
         if (value.isEmpty) {
           _lastPage.value = true;
         }
 
-        productsByCategory = value
+        animalsByCategory = value
             .where(
               (u) => (u.category!.enName!.toLowerCase().contains(
                     category.toLowerCase(),
                   )),
             )
             .toList();
-        productListByCategory = productsByCategory;
+        animalListByCategory = animalsByCategory;
         change(value, status: RxStatus.success());
       });
     } on SocketException catch (ex) {
@@ -149,7 +203,7 @@ class HomeController extends GetxController with StateMixin<dynamic> {
   }
 
   void changeTotalPerPage(int limitValue) {
-    products.clear();
+    animals.clear();
     _lastPage.value = false;
     _changePaginationFilter(1, limitValue);
   }
@@ -177,7 +231,7 @@ class HomeController extends GetxController with StateMixin<dynamic> {
 
   void filterSearchResultsByType(String query) {
     print("filterSearchResultsByType");
-    products = productList
+    animals = animalList
         .where((item) => item.type!.toLowerCase().contains(query.toLowerCase()))
         .toList();
     update();
@@ -185,7 +239,7 @@ class HomeController extends GetxController with StateMixin<dynamic> {
 
   void filterSearchResultsByType2(String query) {
     print("filterSearchResultsByType");
-    productsByCategory = productListByCategory
+    animalsByCategory = animalListByCategory
         .where((item) => item.type!.toLowerCase().contains(query.toLowerCase()))
         .toList();
     update();
@@ -193,16 +247,21 @@ class HomeController extends GetxController with StateMixin<dynamic> {
 
   Future<void> filterAnimals() async {
     try {
-      print("filter = $selectedAge - ${colorEditingController.text} - $selectedFriendly - $selectedGender - $dropdownValue - $selectedVaccinated");
+      // print("filter = $selectedAge - ${colorEditingController.text} - $selectedFriendly - $selectedGender - $dropdownValue - $selectedVaccinated");
       await homeRepository
-          .filterAnimals(selectedAge, colorEditingController.text, selectedFriendly,
-              selectedGender, dropdownValue, selectedVaccinated)
+          .filterAnimals(
+              selectedAge,
+              colorEditingController.text,
+              selectedFriendly,
+              selectedGender,
+              selectedLocation,
+              selectedVaccinated)
           .then((value) {
-        print("value =${value.statusCode}");
-        print("value =$value");
+        // print("value =${value.statusCode}");
+        // print("value =$value");
 
         if (value.statusCode == 200) {
-          products = value;
+          animals = value;
         }
       });
     } on SocketException catch (ex) {
@@ -214,4 +273,59 @@ class HomeController extends GetxController with StateMixin<dynamic> {
     }
     update();
   }
+}
+
+class Emarite {
+  // final int id;
+  final String name;
+  Emarite({
+    // required this.id,
+    required this.name,
+  });
+}
+
+class Color {
+  // final int id;
+  final String name;
+  Color({
+    // required this.id,
+    required this.name,
+  });
+}
+
+
+class Age {
+  // final int id;
+  final String name;
+  Age({
+    // required this.id,
+    required this.name,
+  });
+}
+
+class Gender {
+  // final int id;
+  final String name;
+  Gender({
+    // required this.id,
+    required this.name,
+  });
+}
+
+class Friendly {
+  // final int id;
+  final String name;
+  Friendly({
+    // required this.id,
+    required this.name,
+  });
+}
+
+class Vaccinated {
+  // final int id;
+  final String name;
+  Vaccinated({
+    // required this.id,
+    required this.name,
+  });
 }

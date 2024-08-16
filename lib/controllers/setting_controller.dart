@@ -42,6 +42,7 @@ class SettingController extends GetxController with StateMixin<dynamic> {
       iconColor = "#C4CDDE".toColor();
       defBgColor = "#F4F4F4".toColor();
     }
+    update();
   }
 
   getThemeStatus() async {
@@ -58,5 +59,27 @@ class SettingController extends GetxController with StateMixin<dynamic> {
 
     Get.toNamed(Routes.SIGNIN);
 
+  }
+
+  mode(){
+    isDarkTheme.value=!isDarkTheme.value;
+    if (isDarkTheme.value == true) {
+      textColor = Colors.white;
+      subTextColor = Colors.white70;
+      iconColor = Colors.grey.shade500;
+      defBgColor = Colors.black87;
+    } else {
+      textColor = Colors.black;
+      subTextColor = '#79757F'.toColor();
+      iconColor = "#C4CDDE".toColor();
+      defBgColor = "#F4F4F4".toColor();
+    }
+    Get.changeThemeMode(
+      isDarkTheme.value
+          ? ThemeMode.dark
+          : ThemeMode.light,
+    );
+    saveThemeStatus();
+    update();
   }
 }

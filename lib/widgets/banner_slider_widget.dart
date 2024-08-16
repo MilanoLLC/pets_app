@@ -61,13 +61,14 @@ getSliderCell(BuildContext context, double height, Color color) {
               crossAxisAlignment: CrossAxisAlignment.end,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                getCustomTextWithFontFamilyWidget(
+                getCustomTextWidget(
                     "Pet Adoption\nMade Easy",
                     Colors.white,
                     getPercentSize(height, 11),
                     FontWeight.w500,
                     TextAlign.end,
-                    2),
+                    2,
+                    context),
                 Container(
                   padding: EdgeInsets.symmetric(
                       vertical: getPercentSize(height, 4.5),
@@ -75,14 +76,14 @@ getSliderCell(BuildContext context, double height, Color color) {
                   margin: EdgeInsets.only(top: getPercentSize(height, 6)),
                   decoration: getDefaultDecorationWithColor(
                       Colors.white, (radius / 1.5)),
-                  child: getCustomTextWithFontFamilyWidget(
-                    "Shop Now",
-                    Colors.black,
-                    getPercentSize(height, 7),
-                    FontWeight.w400,
-                    TextAlign.start,
-                    1,
-                  ),
+                  child: getCustomTextWidget(
+                      "Shop Now",
+                      Colors.black,
+                      getPercentSize(height, 7),
+                      FontWeight.w400,
+                      TextAlign.start,
+                      1,
+                      context),
                 ),
               ],
             ),
@@ -144,13 +145,14 @@ getBanner(BuildContext context, double height, String img, {Color? color}) {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                getCustomTextWithFontFamilyWidget(
+                getCustomTextWidget(
                     "Pet Adoption\nMade Easy",
                     Colors.white,
                     getPercentSize(height, 11),
                     FontWeight.w500,
                     TextAlign.start,
-                    2),
+                    2,
+                    context),
                 Container(
                   padding: EdgeInsets.symmetric(
                       vertical: getPercentSize(height, 4.5),
@@ -158,14 +160,14 @@ getBanner(BuildContext context, double height, String img, {Color? color}) {
                   margin: EdgeInsets.only(top: getPercentSize(height, 6)),
                   decoration: getDefaultDecorationWithColor(
                       Colors.white, (radius / 1.5)),
-                  child: getCustomTextWithFontFamilyWidget(
-                    "Shop Now",
-                    Colors.black,
-                    getPercentSize(height, 7),
-                    FontWeight.w400,
-                    TextAlign.start,
-                    1,
-                  ),
+                  child: getCustomTextWidget(
+                      "Shop Now",
+                      Colors.black,
+                      getPercentSize(height, 7),
+                      FontWeight.w400,
+                      TextAlign.start,
+                      1,
+                      context),
                 ),
               ],
             ),

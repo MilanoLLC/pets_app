@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pets_app/helpers/constant.dart';
 import 'package:pets_app/widgets/CustomWidget.dart';
 import 'package:pets_app/widgets/SizeConfig.dart';
+import 'package:pets_app/widgets/button_widget.dart';
 
 import 'PhoneVerification.dart';
 
@@ -110,11 +111,17 @@ class _ForgotPasswordPage extends State<ForgotPasswordPage> {
                   height: getScreenPercentSize(context, 3),
                 ),
                 getDefaultTextFiledWidget(context, "Your Email",
-                    Icons.account_circle_outlined, textNameController),
+                    Icons.account_circle_outlined, textNameController,
+                        (value){
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter your Email';
+                      }
+                      return null;
+                    }),
                 SizedBox(
                   height: getScreenPercentSize(context, 2),
                 ),
-                getButtonWithoutSpaceWidget(context, "Next", primaryColor, () {
+                buttonWidget(context, "Next", primaryColor,Colors.white, () {
                   sendPage();
                 }),
               ],

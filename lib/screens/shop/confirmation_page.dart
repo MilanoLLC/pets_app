@@ -5,6 +5,8 @@ import 'package:pets_app/widgets/CustomWidget.dart';
 import 'package:pets_app/widgets/DataFile.dart';
 import 'package:pets_app/widgets/SizeConfig.dart';
 import 'package:pets_app/widgets/ThankYouDialog.dart';
+import 'package:pets_app/widgets/app_bar_custom.dart';
+import 'package:pets_app/widgets/button_widget.dart';
 
 import '../../widgets/ReviewSlider.dart';
 import '../../generated/l10n.dart';
@@ -63,15 +65,10 @@ class _ConfirmationPage extends State<ConfirmationPage> {
     return WillPopScope(
         onWillPop: _requestPop,
         child: Scaffold(
-          backgroundColor: backgroundColor,
-          appBar: AppBar(
-            title: const Text("CheckOut"),
-            elevation: 0,
-            centerTitle: true,
-          ),
+          // backgroundColor: backgroundColor,
+          appBar:appBarBack(context, "Checkout", true),
           body: Column(
             children: [
-
               SizedBox(
                 height: getScreenPercentSize(context, 1.5),
               ),
@@ -260,7 +257,7 @@ class _ConfirmationPage extends State<ConfirmationPage> {
                                                       CrossAxisAlignment
                                                           .start,
                                                   children: [
-                                                    getCustomTextWithFontFamilyWidget(
+                                                    getCustomTextWidget(
                                                         controller
                                                             .services[index]
                                                             .enName!,
@@ -269,7 +266,7 @@ class _ConfirmationPage extends State<ConfirmationPage> {
                                                             height, 16),
                                                         FontWeight.w500,
                                                         TextAlign.start,
-                                                        1),
+                                                        1,context),
                                                     SizedBox(
                                                       height: getPercentSize(
                                                           height, 2),
@@ -283,18 +280,18 @@ class _ConfirmationPage extends State<ConfirmationPage> {
                                                             height, 14),
                                                         FontWeight.w400,
                                                         TextAlign.start,
-                                                        1),
+                                                        1,context),
                                                   ],
                                                 ),
                                               ),
-                                              getCustomTextWithFontFamilyWidget(
+                                              getCustomTextWidget(
                                                   controller
                                                       .services[index].serviceType!,
                                                   primaryColor,
                                                   getPercentSize(height, 15),
                                                   FontWeight.w400,
                                                   TextAlign.start,
-                                                  1)
+                                                  1,context)
                                             ],
                                           ),
                                         ),
@@ -330,7 +327,7 @@ class _ConfirmationPage extends State<ConfirmationPage> {
               Container(
                 margin:
                     EdgeInsets.only(top: getScreenPercentSize(context, 0.5)),
-                child: getButtonWidget(context, "Confirm", primaryColor, () {
+                child: buttonWidget(context, "Confirm", primaryColor,Colors.white, () {
                   showDialog(
                       context: context,
                       builder: (BuildContext context) {
@@ -518,7 +515,7 @@ class _ConfirmationPage extends State<ConfirmationPage> {
                                 width: fontSize,
                               ),
                               getCustomTextWidget("Save Card", textColor,
-                                  fontSize, FontWeight.w400, TextAlign.start, 1)
+                                  fontSize, FontWeight.w400, TextAlign.start, 1,context)
                             ],
                           ),
                         ),
@@ -527,7 +524,7 @@ class _ConfirmationPage extends State<ConfirmationPage> {
                         margin: EdgeInsets.only(
                             top: getScreenPercentSize(context, 0.5)),
                         child:
-                            getButtonWidget(context, "Add", primaryColor, () {
+                        buttonWidget(context, "Add", primaryColor,Colors.white, () {
                           Navigator.of(context).pop();
                         }),
                       )

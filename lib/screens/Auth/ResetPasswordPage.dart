@@ -5,6 +5,7 @@ import 'package:pets_app/helpers/Constant.dart';
 import 'package:pets_app/widgets/CustomWidget.dart';
 import 'package:pets_app/widgets/ResetPasswordDialogBox.dart';
 import 'package:pets_app/widgets/SizeConfig.dart';
+import 'package:pets_app/widgets/button_widget.dart';
 import 'sign_in_page.dart';
 
 class ResetPasswordPage extends StatefulWidget {
@@ -112,8 +113,6 @@ class _ResetPasswordPage extends State<ResetPasswordPage> {
                 //     FontWeight.w400,
                 //     TextAlign.start,
                 //     ),
-
-
                 SizedBox(
                   height: getScreenPercentSize(context, 2.5),
                 ),
@@ -126,8 +125,8 @@ class _ResetPasswordPage extends State<ResetPasswordPage> {
                    "Confirm Password",
                     textConfirmPasswordController),
                 SizedBox(height: getScreenPercentSize(context,1.5),),
-                getButtonWithoutSpaceWidget(
-                    context, "Next", primaryColor, () {
+                buttonWidget(
+                    context, "Next", primaryColor,Colors.white, () {
                   checkValidation();
                 }),
               ],
@@ -149,7 +148,7 @@ class _ResetPasswordPage extends State<ResetPasswordPage> {
 
             func: () {
 
-              Navigator.push(context, MaterialPageRoute(builder: (context) => const SignInPage(),));
+              Navigator.push(context, MaterialPageRoute(builder: (context) => SignInPage(),));
 
             },
           );

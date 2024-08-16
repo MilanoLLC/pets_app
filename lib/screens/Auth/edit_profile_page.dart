@@ -1,5 +1,4 @@
 // ignore_for_file: must_be_immutable
-
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
@@ -10,6 +9,8 @@ import 'package:pets_app/widgets/CustomWidget.dart';
 import 'package:pets_app/widgets/SizeConfig.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:get/get.dart';
+import 'package:pets_app/widgets/app_bar_custom.dart';
+import 'package:pets_app/widgets/button_widget.dart';
 
 class EditProfilePage extends StatelessWidget {
   EditProfilePage({Key? key}) : super(key: key);
@@ -21,6 +22,169 @@ class EditProfilePage extends StatelessWidget {
   Future<bool> _requestPop() {
     Get.back();
     return Future.value(true);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    SizeConfig().init(context);
+    double profileHeight = getScreenPercentSize(context, 18);
+    defaultMargin = getHorizontalSpace(context);
+    double editSize = getPercentSize(profileHeight, 24);
+
+    return WillPopScope(
+        onWillPop: _requestPop,
+        child: LoaderOverlay(
+          child: Scaffold(
+            // extendBodyBehindAppBar: true,
+            appBar: appBarBack(context, "Edit Profile", true),
+            body:
+                // InkWell(
+                // onTap: () {
+                //   FocusScope.of(context).unfocus();
+                // },
+                // child:
+                Stack(
+              alignment: Alignment.center,
+              children: [
+                SizedBox(
+                  height: getScreenPercentSize(context, 4),
+                ),
+                ListView(
+                  padding: EdgeInsets.symmetric(horizontal: defaultMargin),
+                  children: [
+                    Stack(
+                      children: <Widget>[
+                        Align(
+                          alignment: Alignment.topCenter,
+                          child: Container(
+                            margin: EdgeInsets.only(top: defaultMargin),
+                            height: profileHeight,
+                            width: profileHeight,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(100),
+                              border:
+                              Border.all(width: 5, color: primaryColor),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: ClipOval(
+                                child: Material(
+                                  color: Colors.transparent,
+                                  child: getProfileImage(),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        Align(
+                          alignment: Alignment.bottomCenter,
+                          child: InkWell(
+                            child: Container(
+                              margin: EdgeInsets.only(
+                                  left: getScreenPercentSize(context, 12),
+                                  top: getScreenPercentSize(context, 15)),
+                              height: editSize,
+                              width: editSize,
+                              decoration: const BoxDecoration(
+                                color: Colors.transparent,
+                                shape: BoxShape.circle,
+                              ),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: primaryColor,
+                                  boxShadow: [
+                                    BoxShadow(
+                                        color: primaryColor.withOpacity(0.1),
+                                        blurRadius: 4,
+                                        spreadRadius: 3,
+                                        offset: const Offset(0, 3))
+                                  ],
+                                ),
+                                child: Center(
+                                  child: Image.asset(
+                                    "${assetsPath}edit.png",
+                                    color: Colors.white,
+                                    height: getPercentSize(editSize, 55),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            onTap: () async {
+                              _imgFromGallery();
+                            },
+                          ),
+                        )
+                      ],
+                    ),
+                    SizedBox(
+                      height: (defaultMargin * 2),
+                    ),
+                    textFiledWidget(
+                        context,
+                        "First Name",
+                        controller.firstNameController,
+                        Icons.person_outline,
+                        TextInputType.text, (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter First Name';
+                      }
+                      return null;
+                    }),
+                    textFiledWidget(
+                        context,
+                        "Last Name",
+                        controller.lastNameController,
+                        Icons.person_outline,
+                        TextInputType.text, (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter Last Name';
+                      }
+                      return null;
+                    }),
+                    textFiledWidget(
+                        context,
+                        "Email",
+                        controller.mailController,
+                        Icons.email_outlined,
+                        TextInputType.emailAddress, (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter Email';
+                      }
+                      return null;
+                    }),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    phoneTextFiledWidget(
+                        context, "Phone", controller.phoneController),
+                  ],
+                ),
+                Positioned(
+                  bottom: 1,
+                  child: SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.8,
+                    child: buttonWidget(
+                        context, "Update", primaryColor,Colors.white, () {
+                      Loader.show(context,
+                          isSafeAreaOverlay: false,
+                          progressIndicator: const CircularProgressIndicator(),
+                          isBottomBarOverlay: false,
+                          overlayFromBottom: 0,
+                          themeData: Theme.of(context).copyWith(
+                              colorScheme: ColorScheme.fromSwatch()
+                                  .copyWith(secondary: Colors.black38)),
+                          overlayColor: const Color(0x33E8EAF6));
+                      controller.modify().then((value) => Loader.hide());
+                      controller.onClose();
+                    }),
+                  ),
+                ),
+              ],
+            ),
+            // ),
+          ),
+        ));
   }
 
   _imgFromGallery() async {
@@ -40,151 +204,5 @@ class EditProfilePage extends StatelessWidget {
         fit: BoxFit.cover,
       );
     }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    SizeConfig().init(context);
-    double profileHeight = getScreenPercentSize(context, 12);
-    defaultMargin = getHorizontalSpace(context);
-    double editSize = getPercentSize(profileHeight, 26);
-
-    return WillPopScope(
-        onWillPop: _requestPop,
-        child: LoaderOverlay(
-          child: Scaffold(
-            // backgroundColor: backgroundColor,
-            appBar: AppBar(
-              title: const Text("Edit Profile"),
-              elevation: 0,
-              centerTitle: true,
-            ),
-
-            body: GestureDetector(
-              onTap: () {
-                FocusScope.of(context).unfocus();
-              },
-              child: Column(
-                children: [
-                  // getAppBar(context, "Edit Profile", isBack: true,
-                  //     function: () {
-                  //   _requestPop();
-                  // }),
-                  SizedBox(
-                    height: getScreenPercentSize(context, 2),
-                  ),
-                  Expanded(
-                    flex: 1,
-                    child: ListView(
-                      padding: EdgeInsets.symmetric(horizontal: defaultMargin),
-                      children: [
-                        SizedBox(
-                            height: profileHeight + (profileHeight / 5),
-                            child: Align(
-                              alignment: Alignment.topCenter,
-                              child: Stack(
-                                children: <Widget>[
-                                  Align(
-                                    alignment: Alignment.topCenter,
-                                    child: Container(
-                                      margin: EdgeInsets.only(top: defaultMargin),
-                                      height: profileHeight,
-                                      width: profileHeight,
-                                      decoration: BoxDecoration(
-                                        color: primaryColor,
-                                        shape: BoxShape.circle,
-                                      ),
-                                      child: ClipOval(
-                                        child: Material(
-                                          color: primaryColor,
-                                          child: getProfileImage(),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  // Align(
-                                  //   alignment: Alignment.bottomCenter,
-                                  //   child: InkWell(
-                                  //     child: Container(
-                                  //       margin: EdgeInsets.only(
-                                  //           left:
-                                  //               getScreenPercentSize(context, 9),
-                                  //           bottom: getScreenPercentSize(
-                                  //               context, 1.6)),
-                                  //       height: editSize,
-                                  //       width: editSize,
-                                  //       child: Container(
-                                  //         decoration: BoxDecoration(
-                                  //           shape: BoxShape.circle,
-                                  //           color: Colors.white,
-                                  //           boxShadow: [
-                                  //             BoxShadow(
-                                  //                 color: primaryColor
-                                  //                     .withOpacity(0.1),
-                                  //                 blurRadius: 4,
-                                  //                 spreadRadius: 3,
-                                  //                 offset: const Offset(0, 3))
-                                  //           ],
-                                  //         ),
-                                  //         child: Center(
-                                  //           child: Image.asset(
-                                  //             "${assetsPath}edit.png",
-                                  //             color: primaryColor,
-                                  //             height:
-                                  //                 getPercentSize(editSize, 55),
-                                  //           ),
-                                  //         ),
-                                  //       ),
-                                  //     ),
-                                  //     onTap: () async {
-                                  //       _imgFromGallery();
-                                  //     },
-                                  //   ),
-                                  // )
-                                ],
-                              ),
-                            )),
-                        SizedBox(
-                          height: (defaultMargin * 2),
-                        ),
-                        getEditProfileTextFiledWidget(context, "First Name",
-                            controller.firstNameController),
-                        getEditProfileTextFiledWidget(
-                            context, "Last Name", controller.lastNameController),
-                        getEditProfilePhoneTextFiledWidget(
-                            context, "Phone", controller.phoneController),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(top: (defaultMargin / 2)),
-                    child: getButtonWidget(context, "Save", primaryColor, () {
-                      Loader.show(context,
-                          isSafeAreaOverlay: false,
-                          progressIndicator: const CircularProgressIndicator(),
-                          isBottomBarOverlay: false,
-                          overlayFromBottom: 0,
-                          themeData: Theme.of(context).copyWith(
-                              colorScheme: ColorScheme.fromSwatch()
-                                  .copyWith(secondary: Colors.black38)),
-                          overlayColor: const Color(0x33E8EAF6));
-                      controller.modify().then((value) => Loader.hide());
-                      controller.onClose();
-                      // Navigator.of(context).pop(true);
-                    }),
-                  )
-                ],
-              ),
-            ),
-          ),
-        ));
-  }
-
-  getTitle(BuildContext context, String string) {
-    return Container(
-      margin: EdgeInsets.only(top: getScreenPercentSize(context, 3)),
-      child: getTextWidget(string, textColor,
-          getScreenPercentSize(context, 1.8), FontWeight.w600, TextAlign.start),
-    );
   }
 }

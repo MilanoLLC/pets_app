@@ -1,26 +1,20 @@
-// ignore_for_file: library_private_types_in_public_api
-
 import 'package:figma_squircle/figma_squircle.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:pets_app/helpers/STORAGE_KEYS.dart';
+import 'package:pets_app/helpers/Constant.dart';
+import 'package:pets_app/model/IntroModel.dart';
 import 'package:pets_app/routes/app_pages.dart';
-import 'package:pets_app/service_locator.dart';
-import 'package:pets_app/services/local_storage_service.dart';
-import 'package:pets_app/helpers/constant.dart';
+import 'package:pets_app/screens/Auth/sign_in_page.dart';
+import 'package:pets_app/screens/Auth/sign_up_page.dart';
+import 'package:pets_app/screens/Home/main_page.dart';
 import 'package:pets_app/widgets/CustomWidget.dart';
 import 'package:pets_app/widgets/DataFile.dart';
 import 'package:pets_app/widgets/PrefData.dart';
 import 'package:pets_app/widgets/SizeConfig.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-
-import 'main_page.dart';
-import '../../model/IntroModel.dart';
 import 'package:get/get.dart';
 
 class IntroPage extends StatefulWidget {
-  const IntroPage({Key? key}) : super(key: key);
-
   @override
   _IntroPage createState() {
     return _IntroPage();
@@ -29,7 +23,6 @@ class IntroPage extends StatefulWidget {
 
 class _IntroPage extends State<IntroPage> {
   int _position = 0;
-  var storage = getIt<ILocalStorageService>();
 
   Future<bool> _requestPop() {
     exitApp();
@@ -44,13 +37,14 @@ class _IntroPage extends State<IntroPage> {
   void skip() {
     PrefData.setIsIntro(false);
     Navigator.push(
-        context, MaterialPageRoute(builder: (context) => const MainPage()));
+        context, MaterialPageRoute(builder: (context) => MainPage()));
   }
 
   @override
   void initState() {
+    // TODO: implement initState
     super.initState();
-    storage.set(STORAGE_KEYS.intro, false);
+    introModelList = DataFile.getIntroModel();
     Future.delayed(const Duration(seconds: 0), () {
       setThemePosition(context: context);
       setState(() {});
@@ -80,28 +74,27 @@ class _IntroPage extends State<IntroPage> {
               statusBarBrightness: Brightness.light, // For iOS (dark icons)
             ),
           ),
-          // backgroundColor: backgroundColor,
+          backgroundColor: backgroundColor,
           body: Stack(
             children: [
               PageView.builder(
                 controller: controller,
                 itemBuilder: (context, position) {
                   return Container(
-                    // color: introModelList[position].color!,
-
                     decoration: BoxDecoration(
                         gradient: LinearGradient(
-                            begin: Alignment.topRight,
-                            end: Alignment.bottomLeft,
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
                             colors: [
                           introModelList[position].color!,
-                          introModelList[position].color!.withOpacity(0.8),
+                          introModelList[position].color!,
+                          introModelList[position].endColor!,
                           introModelList[position].endColor!
                         ])),
                     child: Stack(
                       children: [
                         Align(
-                          alignment: Alignment.bottomLeft,
+                          alignment: Alignment.bottomCenter,
                           child: Container(
                             // height: double.infinity,
                             // width: double.infinity,
@@ -119,41 +112,44 @@ class _IntroPage extends State<IntroPage> {
                               horizontal: getHorizontalSpace(context)),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Padding(
                                 padding: EdgeInsets.only(
                                     top: (defMargin * 2), bottom: (defMargin)),
-                                child: getCustomTextWithFontFamilyWidget(
+                                child: getCustomTextWidget2(
                                     introModelList[position].name!,
                                     textColor,
                                     getPercentSize(remainSize, 8),
                                     FontWeight.w500,
-                                    TextAlign.start,
+                                    TextAlign.center,
                                     2),
                               ),
-                              getCustomTextWidget(
-                                  introModelList[position].desc!,
-                                  textColor,
-                                  getScreenPercentSize(context, 2),
-                                  FontWeight.w400,
-                                  TextAlign.start,
-                                  2),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 20),
+                                child: getCustomTextWidget2(
+                                    introModelList[position].desc!,
+                                    textColor,
+                                    getScreenPercentSize(context, 2),
+                                    FontWeight.w300,
+                                    TextAlign.center,
+                                    3),
+                              ),
                             ],
                           ),
                         ),
                         Align(
-                            alignment: Alignment.topRight,
+                            alignment: Alignment.bottomCenter,
                             child: Container(
                               margin: EdgeInsets.only(
                                   right: getHorizontalSpace(context),
-                                  top: defMargin * 2),
+                                  bottom: defMargin * 7),
                               child: AnimatedSmoothIndicator(
                                 activeIndex: _position,
                                 count: introModelList.length,
                                 effect: WormEffect(
-                                    dotColor: Colors.white,
-                                    activeDotColor: Colors.black,
+                                    dotColor: Colors.grey,
+                                    activeDotColor: primaryColor,
                                     dotHeight:
                                         getScreenPercentSize(context, 1.2),
                                     dotWidth:
@@ -260,7 +256,7 @@ class _IntroPage extends State<IntroPage> {
                                 left: getWidthPercentSize(context, 3)),
                             height: getScreenPercentSize(context, 7),
                             decoration: ShapeDecoration(
-                              color: backgroundColor,
+                              color: primaryColor,
                               shadows: [
                                 BoxShadow(
                                     color: textColor.withOpacity(0.1),

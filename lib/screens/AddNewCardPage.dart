@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pets_app/helpers/Constant.dart';
 import 'package:pets_app/widgets/CustomWidget.dart';
 import 'package:pets_app/widgets/SizeConfig.dart';
+import 'package:pets_app/widgets/button_widget.dart';
 
 import '../generated/l10n.dart';
 
@@ -142,7 +143,7 @@ class _AddNewCardPage extends State<AddNewCardPage> {
 
                 Container(
                   margin: EdgeInsets.only(top: getScreenPercentSize(context,0.5)),
-                  child: getButtonWidget(context, "Save", primaryColor, (){
+                  child: buttonWidget(context, "Save", primaryColor,Colors.white, (){
                     Navigator.of(context).pop();
                   }),
                 )

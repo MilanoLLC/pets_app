@@ -119,7 +119,8 @@ class _MainPage extends State<MainPage> {
           inactiveColor: inactiveColor,
           textAlign: TextAlign.center,
           iconSize: iconHeight,
-          imageName: "shopping-cart.png",
+          icon: Icons.shopping_cart
+          // imageName: "shopping-cart.png",
         ),
         BottomNavyBarItem(
           title: 'All Pets',
@@ -127,7 +128,8 @@ class _MainPage extends State<MainPage> {
           inactiveColor: inactiveColor,
           textAlign: TextAlign.center,
           iconSize: iconHeight,
-          imageName: "pet.png",
+          icon: Icons.pets_outlined
+          // imageName: "pet.png",
         ),
         BottomNavyBarItem(
           title: 'Home',
@@ -135,7 +137,8 @@ class _MainPage extends State<MainPage> {
           inactiveColor: inactiveColor,
           textAlign: TextAlign.center,
           iconSize: iconHeight,
-          imageName: "home.png",
+          icon: Icons.home_filled
+          // imageName: "home.png",
         ),
         BottomNavyBarItem(
           title: 'Community',
@@ -143,13 +146,17 @@ class _MainPage extends State<MainPage> {
           inactiveColor: inactiveColor,
           textAlign: TextAlign.center,
           iconSize: iconHeight,
-          imageName: "public.png",
+            icon: Icons.people_alt
+
+          // imageName: "public.png",
         ),
         BottomNavyBarItem(
             iconSize: iconHeight,
             title: 'Settings',
             activeColor: activeColor,
-            imageName: "more.png",
+            // imageName: "user.png",
+            icon: Icons.person,
+
             inactiveColor: inactiveColor,
             textAlign: TextAlign.center),
       ],

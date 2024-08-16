@@ -28,6 +28,7 @@ class EditProfileController extends GetxController with StateMixin<dynamic> {
       await authRepository.getUserInfoByToken().then((value) {
         firstNameController.text = value.firstName!;
         lastNameController.text = value.lastName!;
+        mailController.text=value.email!;
         phoneController.text = value.phoneNumber!;
         countryCodeController.text = value.countryPhoneCode!;
         change(value, status: RxStatus.success());

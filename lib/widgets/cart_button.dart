@@ -46,7 +46,7 @@ Widget cartButtonWidget(BuildContext context,controller){
                     ),
                     controller.orderItems.isNotEmpty
                         ? Text(
-                        "  ${controller.orderItems.length}")
+                        "  ${controller.orderItems.length}",style: TextStyle(color: Colors.white),)
                         : const SizedBox(),
                   ],
                 ),

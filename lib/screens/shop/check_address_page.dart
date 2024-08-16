@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pets_app/controllers/shop_controller.dart';
+import 'package:pets_app/routes/app_pages.dart';
 import 'package:pets_app/screens/EditAddressPage.dart';
-import 'package:pets_app/screens/shop/check_out_page.dart';
+import 'package:pets_app/screens/Shipping/edit_address_page.dart';
+import 'package:pets_app/screens/shop/check_payment_page.dart';
 import 'package:pets_app/helpers/constant.dart';
 import 'package:pets_app/widgets/CustomWidget.dart';
 import 'package:pets_app/widgets/DataFile.dart';
 import 'package:pets_app/widgets/SizeConfig.dart';
+import 'package:pets_app/widgets/app_bar_custom.dart';
+import 'package:pets_app/widgets/button_widget.dart';
 import '../../widgets/ReviewSlider.dart';
 import '../../model/AddressModel.dart';
 import '../../model/PaymentCardModel.dart';
@@ -33,13 +37,7 @@ class CheckAddressPage extends GetView<ShopController> {
     double cellHeight = MediaQuery.of(context).size.width * 0.2;
 
     return Scaffold(
-      backgroundColor: backgroundColor,
-      appBar: AppBar(
-        title: const Text("CheckOut"),
-        elevation: 0,
-        centerTitle: true,
-      ),
-
+      appBar:appBarBack(context, "Checkout", true),
       body: Column(
         children: [
           SizedBox(
@@ -61,172 +59,159 @@ class CheckAddressPage extends GetView<ShopController> {
               options: getOption()),
           Expanded(
             flex: 1,
-            child: Container(
-              margin: EdgeInsets.only(top: (leftMargin)),
-              padding: EdgeInsets.only(left: leftMargin, right: leftMargin),
-              child: ListView(
-                children: [
-                  ListView.builder(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemCount: addressList.length,
-                      itemBuilder: (context, index) {
-                        return InkWell(
-                          child: getMaterialCell(context,
-                              widget: Container(
-                                margin: EdgeInsets.only(
-                                    bottom:
-                                        getWidthPercentSize(context, 3)),
-                                padding: EdgeInsets.all(
-                                    getPercentSize(cellHeight, 10)),
-                                // decoration: getDecoration(getPercentSize(cellHeight,10 )),
-                                decoration: getDecorationWithRadius(
-                                    getPercentSize(cellHeight, 10),
-                                    primaryColor),
+            child: ListView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: addressList.length,
+                padding: EdgeInsets.all(20),
+                itemBuilder: (context, index) {
+                  return InkWell(
+                    child: getMaterialCell(context,
+                        widget: Container(
+                          margin: EdgeInsets.only(
+                              bottom:
+                              getWidthPercentSize(context, 3)),
+                          padding: EdgeInsets.all(
+                              getPercentSize(cellHeight, 10)),
+                          // decoration: getDecoration(getPercentSize(cellHeight,10 )),
+                          decoration: getDecorationWithRadius(
+                              getPercentSize(cellHeight, 10),
+                              primaryColor),
 
-                                height: 100,
+                          height: 100,
 
-                                child: Column(
+                          child: Column(
+                            mainAxisAlignment:
+                            MainAxisAlignment.center,
+                            crossAxisAlignment:
+                            CrossAxisAlignment.center,
+                            children: [
+                              Expanded(
+                                flex: 1,
+                                child: Row(
                                   mainAxisAlignment:
-                                      MainAxisAlignment.center,
+                                  MainAxisAlignment.start,
                                   crossAxisAlignment:
-                                      CrossAxisAlignment.center,
+                                  CrossAxisAlignment.center,
                                   children: [
                                     Expanded(
                                       flex: 1,
-                                      child: Row(
+                                      child: Column(
                                         mainAxisAlignment:
-                                            MainAxisAlignment.start,
+                                        MainAxisAlignment.center,
                                         crossAxisAlignment:
-                                            CrossAxisAlignment.center,
+                                        CrossAxisAlignment.start,
                                         children: [
-                                          Expanded(
-                                            flex: 1,
-                                            child: Column(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Row(
-                                                  children: [
-                                                    Icon(
-                                                      (index ==
-                                                              _selectedAddress)
-                                                          ? Icons
-                                                              .radio_button_checked
-                                                          : Icons
-                                                              .radio_button_unchecked,
-                                                      color: (index ==
-                                                              _selectedAddress)
-                                                          ? primaryColor
-                                                          : subTextColor,
-                                                      size: getPercentSize(
-                                                          cellHeight, 25),
-                                                    ),
-                                                    SizedBox(
-                                                      width:
-                                                          getWidthPercentSize(
-                                                              context, 2),
-                                                    ),
-                                                    Expanded(
-                                                      flex: 1,
-                                                      child: getCustomTextWithoutAlignWithFontFamily(
-                                                          "city : ${addressList[
-                                                                      index]
-                                                                  .city!}",
-                                                          textColor,
-                                                          FontWeight.w500,
-                                                          getPercentSize(
-                                                              cellHeight,
-                                                              20)),
-                                                    ),
-                                                  ],
-                                                ),
-                                                Padding(
-                                                  padding: EdgeInsets.only(
-                                                      top: (topMargin / 2),
-                                                      left: (getWidthPercentSize(
-                                                              context, 2) +
-                                                          getPercentSize(
-                                                              cellHeight,
-                                                              25))),
-                                                  child:
-                                                      getCustomTextWidget(
-                                                          addressList[index]
-                                                              .street!,
-                                                          textColor,
-                                                          getPercentSize(
-                                                              cellHeight,
-                                                              15),
-                                                          FontWeight.w400,
-                                                          TextAlign.start,
-                                                          2),
-                                                )
-                                              ],
-                                            ),
-                                          ),
-                                          Align(
-                                            alignment:
-                                                Alignment.centerRight,
-                                            child: Padding(
-                                              padding:
-                                                 const EdgeInsets.only(right: 3),
-                                              child: InkWell(
-                                                onTap: () {
-                                                  Navigator.push(
-                                                      context,
-                                                      MaterialPageRoute(
-                                                        builder: (context) =>
-                                                            const EditAddressPage(),
-                                                      ));
-                                                },
-                                                child: Image.asset(
-                                                  "${assetsPath}edit.png",
-                                                  height: getPercentSize(
-                                                      cellHeight, 20),
-                                                  // (index ==
-                                                  //     _selectedAddress)
-                                                  //     ? Icons
-                                                  //     .radio_button_checked
-                                                  //     : Icons
-                                                  //     .radio_button_unchecked,
-                                                  // color: (index ==
-                                                  //     _selectedAddress)
-                                                  //     ? primaryColor
-                                                  //     : subTextColor,
-                                                  // size: getPercentSize(cellHeight,
-                                                  //     25),
-                                                ),
+                                          Row(
+                                            children: [
+                                              Icon(
+                                                (index ==
+                                                    _selectedAddress)
+                                                    ? Icons
+                                                    .radio_button_checked
+                                                    : Icons
+                                                    .radio_button_unchecked,
+                                                color: (index ==
+                                                    _selectedAddress)
+                                                    ? primaryColor
+                                                    : subTextColor,
+                                                size: getPercentSize(
+                                                    cellHeight, 25),
                                               ),
-                                            ),
+                                              SizedBox(
+                                                width:
+                                                getWidthPercentSize(
+                                                    context, 2),
+                                              ),
+                                              Expanded(
+                                                flex: 1,
+                                                child: getCustomTextWithoutAlignWithFontFamily(
+                                                    "city : ${addressList[
+                                                    index]
+                                                        .city!}",
+                                                    textColor,
+                                                    FontWeight.w500,
+                                                    getPercentSize(
+                                                        cellHeight,
+                                                        20)),
+                                              ),
+                                            ],
+                                          ),
+                                          Padding(
+                                            padding: EdgeInsets.only(
+                                                top: (topMargin / 2),
+                                                left: (getWidthPercentSize(
+                                                    context, 2) +
+                                                    getPercentSize(
+                                                        cellHeight,
+                                                        25))),
+                                            child:
+                                            getCustomTextWidget(
+                                                addressList[index]
+                                                    .street!,
+                                                textColor,
+                                                getPercentSize(
+                                                    cellHeight,
+                                                    15),
+                                                FontWeight.w400,
+                                                TextAlign.start,
+                                                2,context),
                                           )
                                         ],
                                       ),
                                     ),
+                                    Align(
+                                      alignment:
+                                      Alignment.centerRight,
+                                      child: Padding(
+                                        padding:
+                                        const EdgeInsets.only(right: 3),
+                                        child: InkWell(
+                                          onTap: () {
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      EditAddressPage(),
+                                                ));
+                                          },
+                                          child: Image.asset(
+                                            "${assetsPath}edit.png",
+                                            height: getPercentSize(
+                                                cellHeight, 20),
+                                            // (index ==
+                                            //     _selectedAddress)
+                                            //     ? Icons
+                                            //     .radio_button_checked
+                                            //     : Icons
+                                            //     .radio_button_unchecked,
+                                            // color: (index ==
+                                            //     _selectedAddress)
+                                            //     ? primaryColor
+                                            //     : subTextColor,
+                                            // size: getPercentSize(cellHeight,
+                                            //     25),
+                                          ),
+                                        ),
+                                      ),
+                                    )
                                   ],
                                 ),
-                              )),
-                          onTap: () {
-                            _selectedAddress = index;
-                          },
-                        );
-                      }),
-                ],
-              ),
-            ),
+                              ),
+                            ],
+                          ),
+                        )),
+                    onTap: () {
+                      _selectedAddress = index;
+                    },
+                  );
+                }),
           ),
+          buttonWidget(
+              context, "Next", primaryColor,Colors.white, () {
+            Get.toNamed(Routes.CHECKPAYMENT);
+          }),
 
-          Container(
-            margin: EdgeInsets.only(top: getScreenPercentSize(context, 0.5)),
-            child: getButtonWidget(context, "Next", primaryColor, () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const CheckOutPage(),
-                  ));
-            }),
-          )
         ],
       ),
     );

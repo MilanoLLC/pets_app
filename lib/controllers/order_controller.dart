@@ -19,7 +19,9 @@ class OrderController extends GetxController with StateMixin<dynamic> {
 
   List<AnimalModel> productsByCategory = <AnimalModel>[].obs;
   List<AnimalModel> productListByCategory = <AnimalModel>[].obs;
+
   TextEditingController colorEditingController=TextEditingController();
+
   var homeRepository = getIt<IHomeRepository>();
   var storage = getIt<ILocalStorageService>();
   final _paginationFilter = PaginationFilter().obs;
@@ -52,6 +54,7 @@ class OrderController extends GetxController with StateMixin<dynamic> {
     'Sharjah',
     'Umm Al Quwain',
   ];
+
   @override
   Future<void> onInit() async {
     super.onInit();
@@ -166,7 +169,6 @@ class OrderController extends GetxController with StateMixin<dynamic> {
   }
 
   void filterSearchResults(String query) {
-    print("filterSearchResults");
     categories = categoryList
         .where((item) =>
             item.enName!.toLowerCase().contains(query.toLowerCase()) ||
@@ -176,7 +178,6 @@ class OrderController extends GetxController with StateMixin<dynamic> {
   }
 
   void filterSearchResultsByType(String query) {
-    print("filterSearchResultsByType");
     products = productList
         .where((item) => item.type!.toLowerCase().contains(query.toLowerCase()))
         .toList();
@@ -184,7 +185,6 @@ class OrderController extends GetxController with StateMixin<dynamic> {
   }
 
   void filterSearchResultsByType2(String query) {
-    print("filterSearchResultsByType");
     productsByCategory = productListByCategory
         .where((item) => item.type!.toLowerCase().contains(query.toLowerCase()))
         .toList();
@@ -198,7 +198,6 @@ class OrderController extends GetxController with StateMixin<dynamic> {
           .filterAnimals(selectedAge, colorEditingController.text, selectedFriendly,
               selectedGender, dropdownValue, selectedVaccinated)
           .then((value) {
-        print("value =${value.statusCode}");
         print("value =$value");
 
         if (value.statusCode == 200) {

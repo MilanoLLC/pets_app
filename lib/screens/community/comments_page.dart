@@ -11,6 +11,8 @@ import 'package:pets_app/helpers/constant.dart';
 import 'package:pets_app/widgets/CustomWidget.dart';
 import 'package:get/get.dart';
 import 'package:comment_box/comment/comment.dart';
+import 'package:pets_app/widgets/app_bar_custom.dart';
+import 'package:pets_app/widgets/comment_widget.dart';
 
 class CommentsPage extends StatefulWidget {
   const CommentsPage({Key? key}) : super(key: key);
@@ -51,11 +53,7 @@ class _CommentsPageState extends State<CommentsPage> {
         init: CommunityController(),
         builder: (controller) {
           return Scaffold(
-              appBar: AppBar(
-                title: const Text("Comments"),
-                elevation: 0,
-                centerTitle: true,
-              ),
+              appBar: appBarBack(context, "Comments", true),
               body: CommentBox(
                 userImage: storage.get(STORAGE_KEYS.userImage) == null
                     ? CommentBox.commentImageParser(
@@ -65,7 +63,7 @@ class _CommentsPageState extends State<CommentsPage> {
                         imageURLorPath:
                             networkPath + storage.get(STORAGE_KEYS.userImage),
                       ),
-                labelText: 'Write a comment...',
+                labelText: 'Write a Comment',
                 errorText: 'Comment cannot be blank',
                 withBorder: false,
                 sendButtonMethod: () {
@@ -95,47 +93,13 @@ class _CommentsPageState extends State<CommentsPage> {
                 },
                 formKey: formKey,
                 commentController: commentController,
-                backgroundColor: primaryColor,
-                textColor: Colors.white,
-                sendWidget:
-                    const Icon(Icons.send_sharp, size: 30, color: Colors.white),
+                backgroundColor: Theme.of(context).cardColor,
+                textColor: Theme.of(context).hintColor.withOpacity(0.6),
+                sendWidget: Icon(Icons.send_sharp,
+                    size: 25, color: Theme.of(context).hintColor),
                 child: commentChild(comments),
               ));
         });
   }
 
-  Widget commentChild(data) {
-    return ListView(
-      children: [
-        for (var i = 0; i < data.length; i++)
-          Padding(
-            padding: const EdgeInsets.fromLTRB(2.0, 20, 2.0, 0.0),
-            child: ListTile(
-              // tileColor:Theme.of(context).backgroundColor,
-              leading: CircleAvatar(
-                backgroundImage: data[i].userImage == null
-                    ? CommentBox.commentImageParser(
-                        imageURLorPath: 'assets/images/profile.png',
-                      )
-                    : CommentBox.commentImageParser(
-                        imageURLorPath: networkPath + data[i].userImage),
-                radius: 35,
-                backgroundColor: Colors.transparent,
-              ),
-              title: Text(
-                data[i].displayName!,
-                style: const TextStyle(fontWeight: FontWeight.bold),
-              ),
-              subtitle: Text(data[i].content!),
-              trailing: Text(
-                  // DateFormat('yyyy/MM/dd').parse(data[i].commentedAt).toString(),
-                  DateFormat('yyyy/MM/dd HH:mm a')
-                      .format(DateTime.parse(data[i].commentedAt!))
-                      .toString(),
-                  style: const TextStyle(fontSize: 10)),
-            ),
-          )
-      ],
-    );
-  }
 }

@@ -1,19 +1,25 @@
 // ignore_for_file: must_be_immutable
-
-import 'dart:io';
-
-import 'package:figma_squircle/figma_squircle.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
 import 'package:get/get.dart';
+import 'package:im_stepper/stepper.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 import 'package:pets_app/controllers/product_controller.dart';
 import 'package:pets_app/helpers/constant.dart';
 import 'package:pets_app/widgets/CustomWidget.dart';
 import 'package:pets_app/widgets/SizeConfig.dart';
+import 'package:pets_app/widgets/app_bar_custom.dart';
+import 'package:pets_app/widgets/button_widget.dart';
 
-class AddNewPetPage extends GetView<ProductController> {
-  AddNewPetPage({Key? key}) : super(key: key);
+class AddNewPetPage extends StatefulWidget {
+  const AddNewPetPage({super.key});
+
+  @override
+  State<AddNewPetPage> createState() => _AddNewPetPageState();
+}
+
+class _AddNewPetPageState extends State<AddNewPetPage> {
+  final controller = Get.put(ProductController());
+
   dynamic argumentData = Get.arguments;
   double cellHeight = 0;
   double defMargin = 0;
@@ -33,7 +39,7 @@ class AddNewPetPage extends GetView<ProductController> {
 
     SizeConfig().init(context);
 
-    double margin = getWidthPercentSize(context, 2.5);
+    // double margin = getWidthPercentSize(context, 2.5);
     double height = getScreenPercentSize(context, 20);
     cellHeight = getScreenPercentSize(context, 6.5);
     defMargin = getHorizontalSpace(context);
@@ -43,343 +49,55 @@ class AddNewPetPage extends GetView<ProductController> {
       child: GetBuilder<ProductController>(
           init: ProductController(),
           builder: (controller) {
-            return WillPopScope(
-                onWillPop: _requestPop,
-                child: Scaffold(
-                  // backgroundColor: backgroundColor,
-                  appBar: AppBar(
-                    title: const Text("Add New Pet"),
-                    elevation: 0,
-                    centerTitle: true,
-                  ),
-                  body: Column(
+            return Scaffold(
+                appBar: appBarBack(context, "Add New Pet", true),
+                body: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
                     children: [
-                      // getAppBar(context, "Add New Pet", isBack: true,
-                      //     function: () {
-                      //   _requestPop();
-                      // }),
-                      SizedBox(
-                        height: getScreenPercentSize(context, 1.5),
+                      IconStepper(
+                        icons: const [
+                          Icon(Icons.first_page),
+                          Icon(Icons.pets),
+                          Icon(Icons.last_page),
+                        ],
+                        activeStep: controller.activeStep,
+                        activeStepColor: primaryColor,
+                        stepColor: Colors.grey.withOpacity(0.2),
+                        onStepReached: (index) {
+                          controller.stepReached(index);
+                        },
                       ),
                       Expanded(
-                        flex: 1,
-                        child: ListView(
-                          shrinkWrap: true,
-                          primary: true,
-                          padding: EdgeInsets.symmetric(horizontal: defMargin),
-                          children: [
-                            SizedBox(
-                              height: margin,
-                            ),
-                            getTextFiledNewPetWidget(context, "",
-                                controller.textNameController, "Animal Name"),
-                            SizedBox(
-                              height: margin,
-                            ),
-                            getTextFiledNewPetWidget(context, "",
-                                controller.textColorController, "Color"),
-                            SizedBox(
-                              height: margin,
-                            ),
-                            //gender
-                            const Text(
-                              "Gender",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 18),
-                            ),
-                            Row(
-                              children: [
-                                getRadioButton(
-                                    context,
-                                    "Male",
-                                    controller.gender[0],
-                                    controller.selectedGender,
-                                    controller.changeGender),
-                                SizedBox(
-                                  width: (margin),
-                                ),
-                                getRadioButton(
-                                    context,
-                                    "Female",
-                                    controller.gender[1],
-                                    controller.selectedGender,
-                                    controller.changeGender),
-                              ],
-                            ),
-                            //friendly
-                            SizedBox(
-                              height: margin,
-                            ),
-                            const Text(
-                              "Friendly",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 18),
-                            ),
-                            Row(
-                              children: [
-                                getRadioButton(
-                                    context,
-                                    "Yes",
-                                    controller.friendly[0],
-                                    controller.selectedFriendly,
-                                    controller.changeFriendly),
-                                SizedBox(
-                                  width: (margin),
-                                ),
-                                getRadioButton(
-                                    context,
-                                    "No",
-                                    controller.friendly[1],
-                                    controller.selectedFriendly,
-                                    controller.changeFriendly),
-                              ],
-                            ),
-                            // SizedBox(
-                            //   height: margin,
-                            // ),
-                            // getTextFiledNewPetWidget(context, "",
-                            //     controller.textOriginController, "Origin"),
-                            SizedBox(
-                              height: margin,
-                            ),
-                            const Text(
-                              "Category",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 18),
-                            ),
-                            getDropDownWidget(
-                                context,
-                                controller.selectedCategory!,
-                                controller.categoriesNames,
-                                controller.changeCategory),
-                            SizedBox(
-                              height: margin,
-                            ),
-                            getTextFiledNewPetWidget(context, "",
-                                controller.textWeightController, "Weight"),
-                            SizedBox(
-                              height: margin,
-                            ),
-                            const Text(
-                              "Description",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 18),
-                            ),
-                            getDescTextFiledWidget(
-                                context, "", controller.textDescController),
-                            SizedBox(
-                              height: margin,
-                            ),
-                            getTextFiledNewPetWidget(context, "",
-                                controller.textTypeController, "Type"),
-                            SizedBox(
-                              height: margin,
-                            ),
-                            const Text(
-                              "Vaccinated",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 18),
-                            ),
-                            Row(
-                              children: [
-                                getRadioButton(
-                                    context,
-                                    "Yes",
-                                    controller.vaccinated[0],
-                                    controller.selectedVaccinated,
-                                    controller.changeVaccinated),
-                                SizedBox(
-                                  width: (margin),
-                                ),
-                                getRadioButton(
-                                    context,
-                                    "No",
-                                    controller.vaccinated[1],
-                                    controller.selectedVaccinated,
-                                    controller.changeVaccinated),
-                              ],
-                            ),
-                            SizedBox(
-                              height: margin,
-                            ),
-                            getTextFiledNewPetWidget(
-                                context,
-                                "",
-                                controller.textNoOfVaccinatedController,
-                                "No of Vaccinated"),
-                            SizedBox(
-                              height: margin,
-                            ),
-                            const Text(
-                              "Passport",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 18),
-                            ),
-                            Row(
-                              children: [
-                                getRadioButton(
-                                    context,
-                                    "Yes",
-                                    controller.passport[0],
-                                    controller.selectedPassport,
-                                    controller.changePassport),
-                                SizedBox(
-                                  width: (margin),
-                                ),
-                                getRadioButton(
-                                    context,
-                                    "No",
-                                    controller.passport[1],
-                                    controller.selectedPassport,
-                                    controller.changePassport),
-                              ],
-                            ),
-                            SizedBox(
-                              height: margin,
-                            ),
-                            getTextFiledNewPetWidget(context, "",
-                                controller.textLocationController, "Location"),
+                          child: Padding(
+                        padding: const EdgeInsets.all(15.0),
+                        child: stepperWidget(height),
+                      )),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                            child: buttonWidget(
+                                context, "Previous", Colors.white,primaryColor, () {
+                              controller.previousButton();
+                            }),
+                          ),
 
-                            SizedBox(
-                              height: margin,
-                            ),
-                            getTextFiledNewPetWidget(
-                                context, "", controller.textAgeController, "Age"),
+                          Expanded(
+                              child: controller.activeStep == 2
+                                  ? buttonWidget(
+                                      context, "Save", primaryColor,Colors.white, () {
+                                      controller.saveAnimal();
+                                    })
+                                  : buttonWidget(
+                                      context, "Next", primaryColor,Colors.white, () {
+                                      controller.nextButton();
+                                    }))
 
-                            SizedBox(
-                              height: margin,
-                            ),
-                            const Text(
-                              "Age prefix",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 18),
-                            ),
-                            getDropDownWidget(
-                                context,
-                                controller.selectedAgePrefix!,
-                                controller.agePrefixList,
-                                controller.changeAgePrefix),
-                            // getTextFiledNewPetWidget(context, "",
-                            //     controller.textAgePrefixController, "Age prefix"),
-                            SizedBox(
-                              height: margin,
-                            ),
-                            const Text(
-                              "List of Images",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 18),
-                            ),
-                            const SizedBox(
-                              height: 8,
-                            ),
-                            InkWell(
-                              onTap: () {
-                                controller.selectImages();
-                              },
-                              child: Container(
-                                height: height,
-                                decoration: getShapeDecoration(context),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Image.asset(
-                                      "${assetsPath}camera fill.png",
-                                      height: getPercentSize(height, 15),
-                                      color: primaryColor,
-                                    ),
-                                    SizedBox(
-                                      width: getWidthPercentSize(context, 2),
-                                    ),
-                                    // getTextWithFontFamilyWidget(
-                                    //     'Add Photo',
-                                    //     primaryColor,
-                                    //     getPercentSize(height, 12),
-                                    //     FontWeight.w500,
-                                    //     TextAlign.center)
-                                    Text('Add Photo',
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.w500,
-                                            fontSize: getPercentSize(height, 12),
-                                            decoration: TextDecoration.none,
-                                            fontFamily: customFontFamily,
-                                            color: primaryColor))
-                                  ],
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              height: margin,
-                            ),
-                            SizedBox(
-                              height: margin,
-                            ),
-                            controller.imageFileList!.isNotEmpty
-                                ? Column( crossAxisAlignment:
-                            CrossAxisAlignment.start,
-                                  children: [
-                                    const Text(
-                                      "List of Images",
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold, fontSize: 18),
-                                    ),
-                                    const SizedBox(
-                                      height: 8,
-                                    ),
-                                    Container(
-                                        height: height,
-                                        decoration: getShapeDecoration(context),
-                                        width: MediaQuery.of(context).size.width,
-                                        // height: 150,
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-
-                                            Expanded(
-                                              child: ListView(
-                                                scrollDirection: Axis.horizontal,
-                                                shrinkWrap: true,
-                                                primary: true,
-                                                children: List.generate(
-                                                    controller.imageFileList!.length,
-                                                    (index) {
-                                                  return Padding(
-                                                    padding:
-                                                        const EdgeInsets.all(8.0),
-                                                    child: Image.file(File(controller
-                                                        .imageFileList![0].path)),
-                                                  );
-                                                }),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                  ],
-                                )
-                                : const SizedBox()
-                          ],
-                        ),
+                          // previousButton(),
+                          // nextButton(),
+                        ],
                       ),
-
-                      getButtonWidget(context, "Save", primaryColor, () {
-                        Loader.show(context,
-                            isSafeAreaOverlay: false,
-                            progressIndicator: const CircularProgressIndicator(),
-                            isBottomBarOverlay: false,
-                            overlayFromBottom: 0,
-                            themeData: Theme.of(context).copyWith(
-                                colorScheme: ColorScheme.fromSwatch()
-                                    .copyWith(secondary: Colors.black38)),
-                            overlayColor: const Color(0x33E8EAF6));
-
-                        controller.saveAnimal().then((value) => Loader.hide());
-                      }),
-                      SizedBox(
-                        height: margin,
-                      )
                     ],
                   ),
                 ));
@@ -387,202 +105,281 @@ class AddNewPetPage extends GetView<ProductController> {
     );
   }
 
-  getTitle(BuildContext context, String string) {
-    return Container(
-      margin: EdgeInsets.only(top: getScreenPercentSize(context, 3)),
-      child: getTextWidget(string, textColor,
-          getScreenPercentSize(context, 1.8), FontWeight.w600, TextAlign.start),
-    );
-  }
-
-  Widget getTextFiledNewPetWidget(BuildContext context, String s,
-      TextEditingController textEditingController, String title) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          title,
-          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-        ),
-        Container(
-          height: cellHeight,
-          margin: EdgeInsets.symmetric(
-              vertical: getScreenPercentSize(context, 1.2)),
-          alignment: Alignment.centerLeft,
-          decoration: getShapeDecoration(context),
-          child: TextField(
-            maxLines: 1,
-            controller: textEditingController,
-            textAlign: TextAlign.start,
-            textAlignVertical: TextAlignVertical.center,
-            style: TextStyle(
-                fontFamily: fontFamily,
-                color: Theme.of(context).hintColor,
-                fontWeight: FontWeight.w500,
-                fontSize: fontSize),
-            decoration: InputDecoration(
-                contentPadding:
-                EdgeInsets.only(left: getWidthPercentSize(context, 2)),
-                border: InputBorder.none,
-                focusedBorder: InputBorder.none,
-                enabledBorder: InputBorder.none,
-                errorBorder: InputBorder.none,
-                disabledBorder: InputBorder.none,
-                hintText: s,
-                suffixIcon: Icon(
-                  Icons.add,
-                  color: Colors.transparent,
-                  size: getPercentSize(cellHeight, 40),
-                ),
-                hintStyle: TextStyle(
-                    fontFamily: fontFamily,
-                    color: subTextColor,
-                    fontWeight: FontWeight.w400,
-                    fontSize: fontSize)),
-          ),
-        ),
-      ],
-    );
-  }
-
-  getShapeDecoration(BuildContext context) {
-    double radius = getPercentSize(cellHeight, 20);
-
-    return ShapeDecoration(
-      color: Theme.of(context).colorScheme.background,
-      shape: SmoothRectangleBorder(
-        side: const BorderSide(color: Colors.transparent, width: 0.3),
-        borderRadius: SmoothBorderRadius(
-          cornerRadius: radius,
-          cornerSmoothing: 0.8,
-        ),
-      ),
-    );
-  }
-
-  Widget getRadioButton(BuildContext context, String s, String val,
-      String controllerSelected, func) {
-    return Expanded(
-      flex: 1,
-      child: Container(
-        height: cellHeight,
-        width: double.infinity,
-        margin:
-        EdgeInsets.symmetric(vertical: getScreenPercentSize(context, 1.2)),
-        padding:
-        EdgeInsets.symmetric(horizontal: getWidthPercentSize(context, 2)),
-        alignment: Alignment.centerLeft,
-        decoration: getShapeDecoration(context),
-        child: ListTile(
-          contentPadding: const EdgeInsets.all(0),
-          title: Text(s),
-          tileColor: Colors.black,
-          selectedTileColor: Colors.black,
-          selectedColor: Colors.black,
-          textColor: Theme.of(context).hintColor,
-          leading: Radio(
-            value: val,
-            groupValue: controllerSelected,
-            onChanged: func,
-            activeColor: Colors.blue,
-            fillColor: MaterialStateColor.resolveWith((states) => Colors.blue),
-          ),
-          iconColor: Colors.black,
-        ),
-      ),
-    );
-  }
-
-  Widget getDropDownWidget(
-      BuildContext context, String dropdownValue1, List<String> list, func) {
-    return Container(
-      height: cellHeight,
-      width: double.infinity,
-      margin:
-      EdgeInsets.symmetric(vertical: getScreenPercentSize(context, 1.2)),
-      padding:
-      EdgeInsets.symmetric(horizontal: getWidthPercentSize(context, 2)),
-      alignment: Alignment.centerLeft,
-      decoration: getShapeDecoration(context),
-      child: DropdownButton<String>(
-        value: dropdownValue1,
-        isDense: true,
-        isExpanded: true,
-        icon: Image.asset(
-          "${assetsPath}down-arrow.png",
-          color: textColor,
-          height: fontSize,
-        ),
-        // icon: Icon(
-        //   Icons.keyboard_arrow_down,
-        //   color: textColor,
-        // ),
-        elevation: 16,
-        style: TextStyle(
-            fontFamily: fontFamily,
-            fontWeight: FontWeight.w500,
-            fontSize: fontSize),
-        underline: Container(
-          height: 0,
-          color: Colors.transparent,
-        ),
-        onChanged: func,
-        items: list.map<DropdownMenuItem<String>>((String value) {
-          return DropdownMenuItem<String>(
-            value: value,
-            child: Text(value,
-                style: TextStyle(
-                    fontFamily: fontFamily,
-                    color: Theme.of(context).hintColor,
-                    fontWeight: FontWeight.w500,
-                    fontSize: fontSize)),
-          );
-        }).toList(),
-      ),
-    );
-  }
-
-  Widget getDescTextFiledWidget(BuildContext context, String s,
-      TextEditingController textEditingController) {
-    return Container(
-      margin:
-      EdgeInsets.symmetric(vertical: getScreenPercentSize(context, 1.2)),
-      padding:
-      EdgeInsets.symmetric(vertical: getScreenPercentSize(context, 1.2)),
-      alignment: Alignment.centerLeft,
-      decoration: getShapeDecoration(context),
-      child: TextField(
-        maxLines: 4,
-        controller: textEditingController,
-        textAlign: TextAlign.start,
-        textAlignVertical: TextAlignVertical.center,
-        style: TextStyle(
-            fontFamily: fontFamily,
-            color: Theme.of(context).hintColor,
-            height: 1.3,
-            fontWeight: FontWeight.w500,
-            fontSize: fontSize),
-        decoration: InputDecoration(
-            contentPadding:
-            EdgeInsets.only(left: getWidthPercentSize(context, 2)),
-            border: InputBorder.none,
-            focusedBorder: InputBorder.none,
-            enabledBorder: InputBorder.none,
-            errorBorder: InputBorder.none,
-            disabledBorder: InputBorder.none,
-            hintText: s,
-            suffixIcon: Icon(
-              Icons.add,
-              color: Colors.transparent,
-              size: getPercentSize(cellHeight, 40),
+  Widget stepperWidget(height) {
+    double margin = getScreenPercentSize(context, 1.2);
+    switch (controller.activeStep) {
+      case 0:
+        return ListView(
+          children: [
+            getTextFiledTitleWidget(context, "", controller.textNameController,
+                "Pet Name", TextInputType.text),
+            SizedBox(
+              height: margin,
             ),
-            isDense: true,
-            hintStyle: TextStyle(
-                fontFamily: fontFamily,
-                color: subTextColor,
-                fontWeight: FontWeight.w400,
-                fontSize: fontSize)),
-      ),
-    );
+            const Text(
+              "Category",
+              style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.normal,
+                  color: Colors.grey),
+            ),
+            getDropDownWidget(context, controller.selectedCategory!,
+                controller.categoriesNames, controller.changeCategory),
+            SizedBox(
+              height: margin,
+            ),
+            getTextFiledTitleWidget(context, "", controller.textTypeController,
+                "Type", TextInputType.text),
+            SizedBox(
+              height: margin,
+            ),
+            const Text(
+              "Location",
+              style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.normal,
+                  color: Colors.grey),
+            ),
+            getDropDownWidget(context, controller.selectedLocation!,
+                controller.locationList, controller.changeLocation),
+            SizedBox(
+              height: margin,
+            ),
+            const Text(
+              "Upload Photos",
+              style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.normal,
+                  color: Colors.grey),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            InkWell(
+              onTap: () {
+                controller.selectImages();
+              },
+              child: Container(
+                height: 80,
+                decoration: getShapeDecoration(context),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Image.asset(
+                      "${assetsPath}camera fill.png",
+                      height: getPercentSize(height, 15),
+                      color: primaryColor,
+                    ),
+                    SizedBox(
+                      width: getWidthPercentSize(context, 2),
+                    ),
+                    Text('Photos/Videos',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            fontWeight: FontWeight.w500,
+                            fontSize: getPercentSize(height, 12),
+                            decoration: TextDecoration.none,
+                            fontFamily: customFontFamily,
+                            color: primaryColor))
+                  ],
+                ),
+              ),
+            ),
+          ],
+        );
+
+      case 1:
+        return ListView(
+          // crossAxisAlignment: CrossAxisAlignment.start,
+          // mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            const Text(
+              "Gender",
+              style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.normal,
+                  color: Colors.grey),
+            ),
+            SizedBox(
+              height: margin,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                getRadioButton(context, "Male", controller.gender[0],
+                    controller.selectedGender, controller.changeGender),
+                const SizedBox(
+                  width: (8),
+                ),
+                getRadioButton(context, "Female", controller.gender[1],
+                    controller.selectedGender, controller.changeGender),
+              ],
+            ),
+            SizedBox(
+              height: margin * 2,
+            ),
+            getTextFiledTitleWidget(context, "", controller.textColorController,
+                "Color", TextInputType.text),
+            const SizedBox(
+              height: 10,
+            ),
+            Row(
+              children: [
+                Expanded(
+                  child: getTextFiledTitleWidget(
+                      context,
+                      "",
+                      controller.textWeightController,
+                      "Weight",
+                      TextInputType.number),
+                ),
+                const SizedBox(
+                  width: 20,
+                ),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 20),
+                    child: getDropDownWidget(
+                        context,
+                        controller.selectedWeight!,
+                        controller.weightList,
+                        controller.changeWeight),
+                  ),
+                )
+              ],
+            ),
+            Row(
+              children: [
+                Expanded(
+                  child: getTextFiledTitleWidget(
+                      context,
+                      "",
+                      controller.textAgeController,
+                      "Age",
+                      TextInputType.number),
+                ),
+                const SizedBox(
+                  width: 20,
+                ),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 20),
+                    child: getDropDownWidget(
+                        context,
+                        controller.selectedAgePrefix!,
+                        controller.agePrefixList,
+                        controller.changeAgePrefix),
+                  ),
+                )
+              ],
+            ),
+          ],
+        );
+
+      case 2:
+        return ListView(
+          children: [
+            const Text(
+              "Vaccinated",
+              style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.normal,
+                  color: Colors.grey),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Row(
+              children: [
+                getRadioButton(context, "Yes", controller.vaccinated[0],
+                    controller.selectedVaccinated, controller.changeVaccinated),
+                const SizedBox(
+                  width: (10),
+                ),
+                getRadioButton(context, "No", controller.vaccinated[1],
+                    controller.selectedVaccinated, controller.changeVaccinated),
+              ],
+            ),
+            SizedBox(
+              height: margin * 2,
+            ),
+            controller.selectedVaccinated == "true"
+                ? getTextFiledTitleWidget(
+                    context,
+                    "",
+                    controller.textNoOfVaccinatedController,
+                    "Number of vaccines",
+                    TextInputType.number)
+                : const SizedBox(),
+            SizedBox(
+              height: margin,
+            ),
+            const Text(
+              "Passport",
+              style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.normal,
+                  color: Colors.grey),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Row(
+              children: [
+                getRadioButton(context, "Yes", controller.passport[0],
+                    controller.selectedPassport, controller.changePassport),
+                const SizedBox(
+                  width: (10),
+                ),
+                getRadioButton(context, "No", controller.passport[1],
+                    controller.selectedPassport, controller.changePassport),
+              ],
+            ),
+            SizedBox(
+              height: margin * 2,
+            ),
+            const Text(
+              "Friendly",
+              style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.normal,
+                  color: Colors.grey),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Row(
+              children: [
+                getRadioButton(context, "Yes", controller.friendly[0],
+                    controller.selectedFriendly, controller.changeFriendly),
+                const SizedBox(
+                  width: (10),
+                ),
+                getRadioButton(context, "No", controller.friendly[1],
+                    controller.selectedFriendly, controller.changeFriendly),
+              ],
+            ),
+            SizedBox(
+              height: margin * 2,
+            ),
+            const Text(
+              "More Description",
+              style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.normal,
+                  color: Colors.grey),
+            ),
+            // const SizedBox(
+            //   height: 5,
+            // ),
+            textFiledWidgetLarge(context, "", controller.textDescController),
+          ],
+        );
+
+      default:
+        return Text("Default");
+    }
   }
 }

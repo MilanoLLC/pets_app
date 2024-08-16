@@ -24,8 +24,7 @@ class ProductController extends GetxController with StateMixin<dynamic> {
   AnimalModel animalModel = AnimalModel();
   late String serial;
   var isLoading = true.obs;
-
-  List<String> agePrefixList = ["Days", "Weeks", "Months", "Years"];
+  bool isTermsCondition = false;
 
   TextEditingController textColorController = TextEditingController();
   TextEditingController textOriginController = TextEditingController();
@@ -37,10 +36,33 @@ class ProductController extends GetxController with StateMixin<dynamic> {
   TextEditingController textNameController = TextEditingController();
   TextEditingController textAgeController = TextEditingController();
 
-  String? selectedCategory = "";
-  String? selectedAgePrefix = "";
+  int activeStep = 0;
+  int upperBound = 3;
+  int activeStepIndex = 0;
 
   var isChecked = false.obs;
+
+  String? selectedCategory = "";
+
+  String? selectedAgePrefix = "Days";
+  List<String> agePrefixList = ["Days", "Weeks", "Months", "Years"];
+
+  String? selectedWeight = "Kilograms";
+  List<String> weightList = [
+    "Grams",
+    "Kilograms",
+  ];
+
+  String? selectedLocation = "Abu Dhabi";
+  List<String> locationList = [
+    "Abu Dhabi",
+    "Dubai",
+    "Sharjah",
+    "Ajman",
+    "Umm Al Quwain",
+    "Ras Al Khaimah",
+    "Fujairah"
+  ];
 
   String selectedGender = "MALE";
   final List<String> gender = ["MALE", "FEMALE"];
@@ -63,20 +85,16 @@ class ProductController extends GetxController with StateMixin<dynamic> {
 
     await getCategories();
     var token = storage.get(STORAGE_KEYS.token);
-    print("product controller on init= $token");
     if (token != null) {
       await getMyPets();
     }
-    isLoading.value = false; // Hide loader
-
-    selectedAgePrefix = agePrefixList[0];
+    isLoading.value = false;
   }
 
   void updateData(List<AnimalModel> newData) {
-    isLoading.value=true;
+    isLoading.value = true;
     myPets = newData;
     onInit();
-
   }
 
   void selectImages() async {
@@ -84,6 +102,11 @@ class ProductController extends GetxController with StateMixin<dynamic> {
     if (selectedImages.isNotEmpty) {
       imageFileList!.addAll(selectedImages);
     }
+    update();
+  }
+
+  void removeImages(index) async {
+    imageFileList!.removeAt(index);
     update();
   }
 
@@ -112,6 +135,16 @@ class ProductController extends GetxController with StateMixin<dynamic> {
     update();
   }
 
+  void changeWeight(value) {
+    selectedWeight = value;
+    update();
+  }
+
+  void changeLocation(value) {
+    selectedLocation = value;
+    update();
+  }
+
   void changePassport(value) {
     selectedPassport = value;
     update();
@@ -129,6 +162,7 @@ class ProductController extends GetxController with StateMixin<dynamic> {
           categoriesNames.add(value[i].enName!);
           categoryMaps[value[i].enName] = value[i].serial;
         }
+        selectedCategory = categoriesNames[0];
 
         change(value, status: RxStatus.success());
       });
@@ -164,7 +198,6 @@ class ProductController extends GetxController with StateMixin<dynamic> {
               textAgeController.text,
               imageFileList)
           .then((value) {
-        print("value =${value.statusCode}");
         if (value.statusCode == 200) {
           Get.back();
 
@@ -181,8 +214,6 @@ class ProductController extends GetxController with StateMixin<dynamic> {
           backgroundColor: Colors.black, colorText: Colors.red);
     }
   }
-
-
 
   Future<void> getMyPets() async {
     try {
@@ -240,6 +271,59 @@ class ProductController extends GetxController with StateMixin<dynamic> {
       Get.snackbar('Error'.tr, ex.toString(),
           backgroundColor: Colors.red, colorText: Colors.white);
     }
+    update();
+  }
+
+  nextButton() {
+    if (activeStep < upperBound) {
+      activeStep++;
+      update();
+    }
+  }
+
+  previousButton() {
+    if (activeStep > 0) {
+      activeStep--;
+      update();
+    }
+  }
+
+  stepReached(index) {
+    activeStep = index;
+    update();
+  }
+
+  stepCancel() {
+    if (activeStepIndex == 0) {
+      return;
+    }
+    activeStepIndex -= 1;
+    // update();
+  }
+
+  stepTapped(int index) {
+    activeStepIndex = index;
+    // update();
+  }
+
+  stepContinue() {
+    if (activeStepIndex < (3)) {
+      activeStepIndex += 1;
+    } else {}
+    // update();
+  }
+
+  void checkTerms() {
+    if (isTermsCondition) {
+      isTermsCondition = false;
+    } else {
+      isTermsCondition = true;
+    }
+    update();
+  }
+
+  void agreeTerms() {
+    isTermsCondition = true;
     update();
   }
 }

@@ -3,8 +3,8 @@ import 'package:get/get.dart';
 import 'package:pets_app/controllers/notification_controller.dart';
 import 'package:pets_app/helpers/constant.dart';
 import 'package:pets_app/widgets/CustomWidget.dart';
-import 'package:pets_app/widgets/PrefData.dart';
 import 'package:pets_app/widgets/SizeConfig.dart';
+import 'package:pets_app/widgets/app_bar_custom.dart';
 import 'package:pets_app/widgets/empty_widget.dart';
 import '../../model/ModelNotification.dart';
 
@@ -21,12 +21,7 @@ class NotificationPage extends GetView<NotificationController> {
         builder: (controller) {
           return WillPopScope(
               child: Scaffold(
-                // backgroundColor: backgroundColor,
-                appBar: AppBar(
-                  title: const Text("Notification"),
-                  elevation: 0,
-                  centerTitle: true,
-                ),
+                appBar: appBarBack(context, "Notifications", true),
                 body: SizedBox(
                   width: double.infinity,
                   height: double.infinity,
@@ -109,7 +104,7 @@ class NotificationPage extends GetView<NotificationController> {
                                                     Expanded(
                                                       flex: 1,
                                                       child:
-                                                          getCustomTextWithFontFamilyWidget(
+                                                          getCustomTextWidget(
                                                               notification
                                                                   .title,
                                                               textColor,
@@ -118,7 +113,7 @@ class NotificationPage extends GetView<NotificationController> {
                                                                   16),
                                                               FontWeight.w400,
                                                               TextAlign.start,
-                                                              1),
+                                                              1,context),
                                                     ),
                                                     getCustomTextWidget(
                                                         '2 h ago',
@@ -127,7 +122,7 @@ class NotificationPage extends GetView<NotificationController> {
                                                             itemHeight, 12),
                                                         FontWeight.w400,
                                                         TextAlign.start,
-                                                        2),
+                                                        2,context),
                                                   ],
                                                 ),
                                                 SizedBox(
@@ -140,7 +135,7 @@ class NotificationPage extends GetView<NotificationController> {
                                                         itemHeight, 15),
                                                     FontWeight.w400,
                                                     TextAlign.start,
-                                                    2),
+                                                    2,context),
                                               ],
                                             ),
                                           )
@@ -154,8 +149,8 @@ class NotificationPage extends GetView<NotificationController> {
                                 context,
                                 "No Notification Yet!",
                                 "We'll notify you when something arrives.",
-                                "${assetsPath}bell-1 1.png",
-                              ),
+                                "",
+                                Icons.notifications),
                       ),
                     ],
                   ),

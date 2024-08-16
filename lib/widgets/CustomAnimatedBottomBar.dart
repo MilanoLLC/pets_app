@@ -62,7 +62,7 @@ class CustomAnimatedBottomBar extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: items.map((item) {
               var index = items.indexOf(item);
-              return GestureDetector(
+              return InkWell(
                 onTap: () => onItemSelected(index),
                 child: _ItemWidget(
                   item: item,
@@ -145,7 +145,8 @@ class _ItemWidget extends StatelessWidget {
                     color: isSelected?item.activeColor:Colors.transparent
                   ),
                   child: Center(
-                    child: Image.asset(assetsPath+item.imageName!,height: isSelected?item.iconSize!:(item.iconSize!*1.4),color: isSelected?Colors.white:item.inactiveColor,),
+                    child: Icon(item.icon,size: isSelected?item.iconSize!:(item.iconSize!*1.4),color: isSelected?Colors.white:item.inactiveColor,),
+                    // child: Image.asset(assetsPath+item.imageName!,height: isSelected?item.iconSize!:(item.iconSize!*1.4),color: isSelected?Colors.white:item.inactiveColor,),
                   ),
                 ),
 
@@ -169,6 +170,7 @@ class BottomNavyBarItem {
     this.textAlign,
     this.inactiveColor,
     this.imageName,
+    this.icon,
     this.iconSize,
     this.title,
   });
@@ -177,6 +179,7 @@ class BottomNavyBarItem {
   final Color? inactiveColor;
   final TextAlign? textAlign;
   final String? imageName;
+  final IconData? icon;
   final String? title;
   final double? iconSize;
 

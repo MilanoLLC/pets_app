@@ -41,25 +41,26 @@ class HomePage extends StatelessWidget {
           builder: (controller) {
             return Container(
               padding: EdgeInsets.only(top: getScreenPercentSize(context, 2)),
-              child: GestureDetector(
+              child: InkWell(
                 onTap: () {
                   myFocusNode.canRequestFocus = false;
                 },
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                child: ListView(
+                  // crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Container(
                       margin: EdgeInsets.symmetric(horizontal: defMargin),
                       child: Row(
                         children: [
                           Expanded(
-                            child: getCustomTextWithFontFamilyWidget(
+                            child:
+                            getCustomTextWidget(
                                 'Adopt a Friend',
                                 Theme.of(context).hintColor,
-                                getScreenPercentSize(context, 2.7),
+                                getScreenPercentSize(context, 2.5),
                                 FontWeight.w500,
                                 TextAlign.start,
-                                1),
+                                1,context),
                           ),
                           InkWell(
                             onTap: () {
@@ -71,37 +72,38 @@ class HomePage extends StatelessWidget {
                               color: Theme.of(context).hintColor,
                             ),
                           ),
-                          Icon(
-                            Icons.notifications_none,
-                            color: primaryColor,
-                            size: getScreenPercentSize(context, 3),
-                          ),
+                          // Icon(
+                          //   Icons.notifications_none,
+                          //   color: primaryColor,
+                          //   size: getScreenPercentSize(context, 3),
+                          // ),
                         ],
                       ),
                     ),
-                    Expanded(
-                      child: ListView(
-                        children: [
-                          SizedBox(
-                            height: defMargin,
-                          ),
-                          sliderWidget(context),
-                          SizedBox(
-                            height: getScreenPercentSize(context, 3),
-                          ),
-                          getTitle(context, 'Categories',
-                              function: functionViewAllCategories!),
-                          categoryList(context),
-                          SizedBox(
-                            height: getScreenPercentSize(context, 1),
-                          ),
-                          getTitle(context, 'Our Picks for you',
-                              function: functionViewAllAnimals!),
-                          animalList(context),
-                          // animalList2(context)
-                        ],
-                      ),
-                    )
+                    SizedBox(
+                      height: defMargin,
+                    ),
+                    sliderWidget(context),
+                    SizedBox(
+                      height: getScreenPercentSize(context, 3),
+                    ),
+                    getTitle(context, 'Categories',
+                        function: functionViewAllCategories!),
+                    categoryList(context),
+                    SizedBox(
+                      height: getScreenPercentSize(context, 1),
+                    ),
+                    getTitle(context, 'Our Picks for you',
+                        function: functionViewAllAnimals!),
+                    SizedBox(
+                      height: getScreenPercentSize(context, 1),
+                    ),
+                    // animalList(context),
+                    animalList2(context),
+                    animalList(context),
+                    SizedBox(
+                      height: getScreenPercentSize(context, 1),
+                    ),
                   ],
                 ),
               ),
@@ -140,7 +142,41 @@ class HomePage extends StatelessWidget {
     );
   }
 
+
+
   animalList(BuildContext context) {
+    double height = getScreenPercentSize(context, 40);
+
+    return SizedBox(
+        height: height,
+        child: ListView.builder(
+            padding: EdgeInsets.zero,
+            shrinkWrap: true,
+            itemCount: controller.animals.length,
+            scrollDirection: Axis.horizontal,
+            itemBuilder: (context, index) {
+              AnimalModel model = controller.animals[index];
+              return animalWidget(context, model);
+            }));
+  }
+
+  animalList2(BuildContext context) {
+    double height = getScreenPercentSize(context, 30);
+
+    return SizedBox(
+        height: height,
+        child: ListView.builder(
+            padding: EdgeInsets.zero,
+            shrinkWrap: true,
+            itemCount: controller.animals.length,
+            scrollDirection: Axis.horizontal,
+            itemBuilder: (context, index) {
+              AnimalModel model = controller.animals[index];
+              return animalWidget2(context, model,index);
+            }));
+  }
+
+  animalList3(BuildContext context) {
     defMargin = getScreenPercentSize(context, 1.5);
     var crossAxisCount = 2;
 
@@ -153,32 +189,16 @@ class HomePage extends StatelessWidget {
       crossAxisSpacing: (defMargin * 2),
       mainAxisSpacing: 0,
       childAspectRatio: 0.65,
-      children: List.generate(controller.products.length, (index) {
-        AnimalModel model = controller.products[index];
+      children: List.generate(controller.animals.length, (index) {
+        AnimalModel model = controller.animals[index];
         return animalWidget(context, model);
       }),
     );
   }
 
-  animalList2(BuildContext context) {
-    double height = getScreenPercentSize(context, 15);
-
-    return Container(
-        height: height,
-        margin: EdgeInsets.symmetric(vertical: padding),
-        child: ListView.builder(
-            padding: EdgeInsets.zero,
-            shrinkWrap: true,
-            itemCount: controller.products.length,
-            scrollDirection: Axis.horizontal,
-            itemBuilder: (context, index) {
-              AnimalModel model = controller.products[index];
-              return animalWidget2(context, model, index);
-            }));
-  }
-
   categoryList(BuildContext context) {
     double height = getScreenPercentSize(context, 7);
+
     return Container(
         height: height,
         margin: EdgeInsets.symmetric(vertical: padding),

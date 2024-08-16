@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pets_app/widgets/button_widget.dart';
 
 import '../helpers/constant.dart';
 import 'CustomWidget.dart';
@@ -42,18 +43,18 @@ class _ResetPasswordDialogBoxState extends State<ResetPasswordDialogBox> {
               SizedBox(
                 height: getScreenPercentSize(context, 5),
               ),
-              getCustomTextWithFontFamilyWidget('Password Changed', textColor, getScreenPercentSize(context, 3),
-                  FontWeight.w500, TextAlign.center, 1),
+              getCustomTextWidget('Password Changed', textColor, getScreenPercentSize(context, 3),
+                  FontWeight.w500, TextAlign.center, 1,context),
               SizedBox(
                 height: getScreenPercentSize(context, 1.7),
               ),
               getCustomTextWidget('Your password has been successfully changed!',
-                  textColor, getScreenPercentSize(context, 2), FontWeight.w400, TextAlign.center, 2),
+                  textColor, getScreenPercentSize(context, 2), FontWeight.w400, TextAlign.center, 2,context),
               SizedBox(
                 height: getScreenPercentSize(context, 5),
               ),
 
-              getButtonWithoutSpaceWidget(context, "Ok",primaryColor, (){
+              buttonWidget(context, "Ok",primaryColor,Colors.white, (){
                 Navigator.of(context).pop();
                 widget.func!();
               }),

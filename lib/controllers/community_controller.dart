@@ -17,6 +17,9 @@ class CommunityController extends GetxController with StateMixin<dynamic> {
   List<PostModel> posts = <PostModel>[].obs;
   List<PostModel> postsList = <PostModel>[].obs;
 
+  List<PostModel> userPosts = <PostModel>[].obs;
+  List<PostModel> userPostsList = <PostModel>[].obs;
+
   List<PostModel> myPosts = <PostModel>[].obs;
   List<PostModel> myPostsList = <PostModel>[].obs;
 
@@ -24,9 +27,11 @@ class CommunityController extends GetxController with StateMixin<dynamic> {
   var storage = getIt<ILocalStorageService>();
   final _paginationFilter = PaginationFilter().obs;
   final _paginationFilter2 = PaginationFilter().obs;
+  final _paginationFilter3 = PaginationFilter().obs;
 
   final _lastPage = false.obs;
   final _lastPage2 = false.obs;
+  final _lastPage3 = false.obs;
 
   int get limit => _paginationFilter.value.limit!;
   int get _page => _paginationFilter.value.page!;
@@ -34,7 +39,11 @@ class CommunityController extends GetxController with StateMixin<dynamic> {
 
   int get limit2 => _paginationFilter.value.limit!;
   int get _page2 => _paginationFilter.value.page!;
-  bool get lastPage2 => _lastPage.value;
+  bool get lastPage2 => _lastPage2.value;
+
+  int get limit3 => _paginationFilter.value.limit!;
+  int get _page3 => _paginationFilter.value.page!;
+  bool get lastPage3 => _lastPage3.value;
 
   final ImagePicker imagePicker = ImagePicker();
   List<XFile>? imageFileList = [];
@@ -44,13 +53,14 @@ class CommunityController extends GetxController with StateMixin<dynamic> {
     textContentController.clear();
     super.onInit();
     var token = storage.get(STORAGE_KEYS.token);
-    if(token!=null){
+    print("token = ");
+    print(token);
+    if (token != null) {
       ever(_paginationFilter, (_) => getPosts());
       _changePaginationFilter(0, 10);
       ever(_paginationFilter2, (_) => getMyPosts());
       _changePaginationFilter2(0, 10);
     }
-
   }
 
   @override
@@ -68,6 +78,11 @@ class CommunityController extends GetxController with StateMixin<dynamic> {
     update();
   }
 
+  void removeImages(index) async {
+    imageFileList!.removeAt(index);
+    update();
+  }
+
   Future<void> getPostBySerial() async {}
 
   Future<void> getPosts() async {
@@ -77,8 +92,6 @@ class CommunityController extends GetxController with StateMixin<dynamic> {
           _lastPage.value = true;
         }
         posts = posts + value;
-        print("posts = ${posts[0].comments!}");
-
         postsList = posts;
         change(value, status: RxStatus.success());
       });
@@ -146,6 +159,23 @@ class CommunityController extends GetxController with StateMixin<dynamic> {
     _changePaginationFilter2(_page2 + 1, limit);
   }
 
+  void changeTotalPerPage3(int limitValue) {
+    userPosts.clear();
+    _lastPage3.value = false;
+    _changePaginationFilter3(1, limitValue);
+  }
+
+  void _changePaginationFilter3(int page, int limit) {
+    _paginationFilter3.update((val) {
+      val!.page = page;
+      val.limit = limit;
+    });
+  }
+
+  void loadNextPage3() {
+    _changePaginationFilter3(_page2 + 1, limit);
+  }
+
   Future<void> addPost() async {
     try {
       print("add post");
@@ -158,7 +188,6 @@ class CommunityController extends GetxController with StateMixin<dynamic> {
 
           Get.snackbar('Success'.tr, "Post added successfully",
               backgroundColor: Colors.green, colorText: Colors.white);
-
         }
       });
     } on SocketException catch (ex) {

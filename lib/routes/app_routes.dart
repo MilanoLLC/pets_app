@@ -9,6 +9,7 @@ abstract class Routes {
   static const EDITPROFILE = '/editProfile';
   static const SIGNIN = '/signIn';
   static const forbidden = '/forbidden';
+  static const FAV = '/favorite';
 
   static const HOME = '/';
   static const BUY = '/Home';
@@ -18,7 +19,8 @@ abstract class Routes {
   static const SEARCH = '/search';
   static const MYORDERS = '/myOrder';
   static const TRACKORDER = '/trackOrder';
-  static const ADDRESS = '/address';
+  static const ADDADDRESS = '/addaddress';
+  static const EDITADDRESS = '/editaddress';
 
   static const CATEGORIES = '/categories';
 
@@ -34,13 +36,16 @@ abstract class Routes {
   static const ADDPOST = '/addPost';
   static const EDITPOST = '/editPost';
   static const MYPOST = '/myPost';
+  static const PROFILE = '/profile';
+
 
   static const PRODUCTDETAILS = '/productDetail';
-  static const CHECKOUT = '/checkOut';
   static const CONFIRM = '/confirm';
   static const ORDERDETAILS = '/orderDetails';
   static const ADDRESSPAGE = '/newAddress';
   static const CHECKADDRESS = '/checkAddress';
+  static const CHECKPAYMENT = '/checkPayment';
+
   static const MYCART = '/myCart';
 
 

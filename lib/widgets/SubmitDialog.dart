@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pets_app/widgets/button_widget.dart';
 
 import '../helpers/constant.dart';
 import 'CustomWidget.dart';
@@ -29,8 +30,8 @@ class _SubmitDialogState extends State<SubmitDialog> {
     return Stack(
       children: <Widget>[
         Container(
-          padding:
-              const EdgeInsets.only(left: padding, right: padding, bottom: padding),
+          padding: const EdgeInsets.only(
+              left: padding, right: padding, bottom: padding),
           margin: const EdgeInsets.only(top: avatarRadius),
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -43,23 +44,24 @@ class _SubmitDialogState extends State<SubmitDialog> {
               SizedBox(
                 height: getScreenPercentSize(context, 5),
               ),
-              getCustomTextWithFontFamilyWidget('Your Request has been\nsubmitted',
-                  textColor, getScreenPercentSize(context, 2.2),
-                  FontWeight.w500, TextAlign.center, 2),
+              getCustomTextWidget(
+                  'Your Request has been\nsubmitted',
+                  textColor,
+                  getScreenPercentSize(context, 2.2),
+                  FontWeight.w500,
+                  TextAlign.center,
+                  2,
+                  context),
               SizedBox(
                 height: getScreenPercentSize(context, 5),
               ),
-
-
-              getButtonWithoutSpaceWidget(context, "Ok",primaryColor, (){
+              buttonWidget(context, "Ok", primaryColor,Colors.white, () {
                 Navigator.of(context).pop();
                 widget.func!();
               }),
-
               SizedBox(
                 height: getScreenPercentSize(context, 1.5),
               ),
-
             ],
           ),
         ),

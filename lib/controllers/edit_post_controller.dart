@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:pets_app/helpers/Constant.dart';
 import 'package:pets_app/model/Post_model.dart';
 import 'package:pets_app/repositories/community_repository.dart';
 import 'package:pets_app/routes/app_pages.dart';
@@ -15,6 +16,7 @@ class EditPostController extends GetxController with StateMixin<dynamic> {
   var communityRepository = getIt<ICommunityRepository>();
   TextEditingController textContentController = TextEditingController();
   List<String> images = [];
+  List<String> imagesModel = [];
   String? selectedCategory = "";
   final ImagePicker imagePicker = ImagePicker();
   List<XFile>? imageFileList = [];
@@ -30,6 +32,7 @@ class EditPostController extends GetxController with StateMixin<dynamic> {
   getPostDetails() async {
     textContentController.text = model.postContent!;
     images = model.images!;
+    imagesModel=model.images!;
   }
 
   void selectImages() async {
@@ -58,5 +61,17 @@ class EditPostController extends GetxController with StateMixin<dynamic> {
       Get.snackbar('Error'.tr, ex.toString(),
           backgroundColor: Colors.red, colorText: Colors.white);
     }
+  }
+
+  void removeImages(index) async {
+    imageFileList!.removeAt(index);
+    update();
+  }
+
+
+  void deleteImage(index) async {
+    imagesModel.removeAt(index);
+    //need api delete
+    update();
   }
 }
